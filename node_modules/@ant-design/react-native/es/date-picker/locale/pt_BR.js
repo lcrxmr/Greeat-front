@@ -1,0 +1,1 @@
+var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:true});exports["default"]=void 0;var _pt_BR=_interopRequireDefault(require("../datepicker/locale/pt_BR"));var _default={okText:'OK',dismissText:'Cancelar',extra:'Selecione',DatePickerLocale:_pt_BR["default"]};exports["default"]=_default;
