@@ -1,52 +1,65 @@
-import { StyleSheet, Text, View } from 'react-native';
-import MapboxGL from "@react-native-mapbox-gl/maps";
+import React, { useState, useEffect } from "react";
+import { View } from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+
+// Import map & marker
+import MapView from 'react-native-maps';
+import {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { LocationGeofencingEventType } from 'expo-location';
 
 
-MapboxGL.setAccessToken("pk.eyJ1IjoiZWRnYXJnaXJyIiwiYSI6ImNsMzhsazdqajAxNDIzaW4yZGo2dTR5OGIifQ.49D5sIvjC69D1UAE9nyPXAexpo");
+export default function Map() {
+
+      const [location, setLocation] = useState({ lat: 0, long: 0 });
 
 
-export default function Map () {
-  const [coordinates] = useState([78.9629, 20.5937]);
+      // Load map + location on loading of the screen
+      useEffect(() => {
+        (async () => {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status == "granted") {
+            Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+              setLocation({
+                lat: location.coords.latitude,
+                long: location.coords.longitude,
+              });
+            });
+          }
+        })();
+      }, []);
+    
+      
+    
+        return (
+    
+          <View
+          style={{
+            flex: 1,
+          }}
+        >
+            
+            <MapView
+            style={{ flex: 1 }}
+            region={{
+              latitude: location.lat,
+              longitude: location.long,
+              latitudeDelta: 0.012,
+              longitudeDelta: 0.004,
+            }}
+            showsIndoors={true}
+            showsCompass={true}
+            provider={PROVIDER_GOOGLE}
+          >
+            <Marker
+              coordinate={{ latitude: location.lat, longitude: location.long }}
+              title="Hi"
+              description="You are here"
+              pinColor="#eb3467"
+              style={{ "width": 250, "height": 50 }}
+            />
+          </MapView>
+        </View>
+    
 
-return (
- <View style={styles.page}>
-    <View style={styles.container}>
-      <MapboxGL.MapView style={styles.map}>
-        <MapboxGL.Camera
-          zoomLevel={4}
-          centerCoordinate={coordinates}
-        />
-        <MapboxGL.PointAnnotation coordinate={coordinates} />
-      </MapboxGL.MapView>
-    </View>
-  </View>
-);
-}
-
-const styles = StyleSheet.create({
-page: {
-flex: 1,
-justifyContent: "center",
-alignItems: "center",
-backgroundColor: "#F5FCFF"
-},
-container: {
-height: '100%',
-width: '100%',
-backgroundColor: 'blue',
-},
-map: {
-flex: 1
-}
-});
-
-
-
-
-
-
-
-
-
-
-
+        );}
