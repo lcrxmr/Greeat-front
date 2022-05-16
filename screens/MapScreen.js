@@ -1,20 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import {Image} from 'react-native'
-import {createStore, combineReducers} from 'redux';
+import MapboxGL from "@react-native-mapbox-gl/maps";
+
+
+MapboxGL.setAccessToken("pk.eyJ1IjoiZWRnYXJnaXJyIiwiYSI6ImNsMzhsazdqajAxNDIzaW4yZGo2dTR5OGIifQ.49D5sIvjC69D1UAE9nyPXAexpo");
+
+
+export default function Map () {
+  const [coordinates] = useState([78.9629, 20.5937]);
+
+return (
+ <View style={styles.page}>
+    <View style={styles.container}>
+      <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.Camera
+          zoomLevel={4}
+          centerCoordinate={coordinates}
+        />
+        <MapboxGL.PointAnnotation coordinate={coordinates} />
+      </MapboxGL.MapView>
+    </View>
+  </View>
+);
+}
+
+const styles = StyleSheet.create({
+page: {
+flex: 1,
+justifyContent: "center",
+alignItems: "center",
+backgroundColor: "#F5FCFF"
+},
+container: {
+height: '100%',
+width: '100%',
+backgroundColor: 'blue',
+},
+map: {
+flex: 1
+}
+});
 
 
 
 
-export default function Map() {
-    return (
 
-     <View>
-       <Text>Recipe Page</Text>
-     </View>
 
-    );
-    }
+
+
+
+
+
