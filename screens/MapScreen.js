@@ -40,11 +40,11 @@ export default function Map() {
             
             <MapView
             style={{ flex: 1 }}
-            initialRegion={{
-              latitude: 45.7594085,
-              longitude: 4.8551651,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+            region={{
+              latitude: location.lat,
+              longitude: location.long,
+              latitudeDelta: 0.014,
+              longitudeDelta: 0.004,
             }}
           >
             <Marker
