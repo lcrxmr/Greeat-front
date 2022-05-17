@@ -45,16 +45,7 @@ export default function Map() {
       }}
     >
 
-      <MapView
-        style={{ flex: 1 }}
-        region={{
-          latitude: location.lat,
-          longitude: location.long,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      >
-        <GooglePlacesAutocomplete
+<GooglePlacesAutocomplete
         //autocomplete input
         placeholder="Search"
         query={{
@@ -69,6 +60,17 @@ export default function Map() {
           useOnPlatform: 'web',
         }} // this in only required for use on the web. See https://git.io/JflFv more for details.
       />
+
+      <MapView
+        style={{ flex: 1 }}
+        region={{
+          latitude: location.lat,
+          longitude: location.long,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
           title="Hi"
