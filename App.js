@@ -7,8 +7,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import {Image} from 'react-native'
 import {createStore, combineReducers} from 'redux';
+
 // import {Provider} from 'react-redux';
 const Tab = createBottomTabNavigator();
+
 // const store = createStore(combineReducers({}));
 const Stack = createStackNavigator();
 const Tab2 = createMaterialTopTabNavigator();
@@ -37,14 +39,21 @@ function BottomNavigator() {
           return <Image source={require('./assets/favicon.png')} />
         }
       },
-      })}
-    tabBarOptions={{
-      activeTintColor: '#',
-      inactiveTintColor: '#',
-      style: {
-        backgroundColor: '#',
+      
+      // Warning corrected due to previous code deprecated
+        tabBarActiveTintColor: '#',
+        tabBarInactiveTintColor: '#',
+        sttabBarStyleyle: [{
+          backgroundColor: '#',
+          display: "flex"
+        },
+        null
+      ]
       }
-    }}
+      )}
+  
+    
+
   >
     <Tab.Screen name="Map" component={Map} />
     <Tab.Screen name="Myevent" component={MyEvent} />
@@ -53,22 +62,6 @@ function BottomNavigator() {
   </Tab.Navigator>
 );
 }
-
-// function ProfileTab() {
-//   return (
-
-//   <Tab2.Navigator>
-
-//     <Tab2.Screen name="Profile" component={Profile} />
-//     <Tab2.Screen name="MyEventsPublic" component={MyEventsPublic} />
-//     <Tab2.Screen name="MyRecipe" component={MyRecipe} />
-
-//   </Tab2.Navigator>
-
-
-//   );
-// }
-
 
 
 export default function App() {
@@ -80,7 +73,6 @@ return (
         <Stack.Screen name="ProfileFromMenu" component={Profile} />
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
         <Stack.Screen name="MyRecipe" component={MyRecipe}  />
-        {/* <Stack.Screen name="ProfileTab" component={ProfileTab} /> */}
         <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
