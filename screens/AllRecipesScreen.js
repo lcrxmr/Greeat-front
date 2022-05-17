@@ -6,8 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Image } from 'react-native'
 import { createStore, combineReducers } from 'redux';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import AllRecipes from './AllRecipesScreen'
-import MyRecipes from './MyRecipesScreen'
+import HomeScreen from './HomeScreen'
+import MyEventScreen from './MyEventScreen'
 
 
 
@@ -17,15 +17,16 @@ const Tab = createMaterialTopTabNavigator();
 
 
 export default function Recipe() {
-  return (
+    return (
 
 
-    <Tab.Navigator>
-      <Tab.Screen name="All" component={AllRecipes} />
-      <Tab.Screen name="My Recipes" component={MyRecipes} />
-    </Tab.Navigator>
+        <View>
+            <Text>
+                All
+            </Text>
+        </View>
 
 
 
-  );
+    );
 }
