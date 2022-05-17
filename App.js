@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import {Image} from 'react-native'
 import {createStore, combineReducers} from 'redux';
+LogBox.ignoreLogs(['Warning: ...']);
 
 // import {Provider} from 'react-redux';
 const Tab = createBottomTabNavigator();
