@@ -52,8 +52,6 @@ function BottomNavigator() {
       }
       )}
   
-    
-
   >
     <Tab.Screen name="Map" component={Map} />
     <Tab.Screen name="Myevent" component={MyEvent} />
