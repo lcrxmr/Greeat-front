@@ -1,20 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import {Image} from 'react-native'
-import {createStore, combineReducers} from 'redux';
+import React from 'react'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Going from './goingScreenMyEvents'
+import Created from './CreatScreenMyEvents'
 
 
+const Tab = createMaterialTopTabNavigator();
 
+export default function myEvent() {
 
-export default function MyEvent() {
     return (
-
-     <View>
-       <Text>Recipe Page</Text>
-     </View>
-
+    <Tab.Navigator>
+        <Tab.Screen name="Going" component={Going} />
+        <Tab.Screen name="Created" component={Created} />
+    </Tab.Navigator>
     );
     }
