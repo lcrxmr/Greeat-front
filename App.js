@@ -25,6 +25,8 @@ import Map from './screens/MapScreen'
 import Profile from './screens/Profile'
 import MyEventsPublic from './screens/MyEventsPublic'
 import MyRecipe from './screens/MyRecipe'
+import EditProfil from "./screens/editProfilScreen"
+import Create from "./screens/CreateEventScreen"
 
 function BottomNavigator() {
   return (
@@ -74,6 +76,10 @@ return (
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
         <Stack.Screen name="MyRecipe" component={MyRecipe}  />
         <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+        <Stack.Screen name="editProfil" component={EditProfil} />
+        <Stack.Screen name="Create" component={Create} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
 
