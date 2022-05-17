@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, ScrollView, Card} from 'react-native';
 
 
 
-
 export default function MyRecipe(props) {
     return (
 

@@ -15,7 +15,7 @@ export default function Going(props) {
       >
 
         <Card >
-        <Button title = "Edit" titleStyle={{ fontSize: 8 }} containerStyle={{
+        <Button title = "Show" titleStyle={{ fontSize: 8 }} containerStyle={{
                     justifyContent: "center", //Centered horizontally
                     alignItems: "center", //Centered vertically
                     flex: 1,
