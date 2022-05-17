@@ -38,7 +38,6 @@
     "react-redux": "^8.0.1",
     "redux": "^4.2.0",
     "simple-carousel-react-native": "^1.0.2",
-    "undefined": "rnmapbox/maps#main",
     "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {
