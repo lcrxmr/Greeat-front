@@ -13,8 +13,6 @@ const GOOGLE_PLACES_API_KEY = 'AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA'; // neve
 
 
 
-
-
 export default function Map() {
 
   const [location, setLocation] = useState({ lat: 0, long: 0 });
