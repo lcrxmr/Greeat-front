@@ -54,8 +54,7 @@ export default function Map() {
           longitudeDelta: 0.0421,
         }}
       >
-
-<GooglePlacesAutocomplete
+        <GooglePlacesAutocomplete
         //autocomplete input
         placeholder="Search"
         query={{
@@ -70,8 +69,6 @@ export default function Map() {
           useOnPlatform: 'web',
         }} // this in only required for use on the web. See https://git.io/JflFv more for details.
       />
-
-
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
           title="Hi"
