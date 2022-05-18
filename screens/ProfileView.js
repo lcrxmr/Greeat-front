@@ -17,6 +17,7 @@ export default function Profile() {
             style={{ marginLeft: "auto", marginRight: 20, marginBottom: 20 }}
           >
             Greeats: {greeat}
+            {/* //voir le onPress plus bas pour la valeur de 'greeat'  */}
           </Text>
         </View>
         <Carousel >
@@ -84,7 +85,7 @@ export default function Profile() {
           style={{ marginTop: 50 }}
           onPress={() => {
             setGreeat(greeat + 1);
-          }}
+          }} // useState implement
         ></Button>
       </View>
     </ScrollView>
