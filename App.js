@@ -45,10 +45,10 @@ function BottomNavigator() {
       },
       
       // Warning corrected due to previous code deprecated
-        tabBarActiveTintColor: '#',
-        tabBarInactiveTintColor: '#',
-        sttabBarStyleyle: [{
-          backgroundColor: '#',
+        tabBarActiveTintColor: '#000000', //! Use a real color code, not only #
+        tabBarInactiveTintColor: '#000000',
+        tabBarStyle: [{
+          backgroundColor: '#ffffff',
           display: "flex"
         },
         null
