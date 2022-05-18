@@ -43,11 +43,8 @@ export default function Map() {
           }
         );
         places = await rawResponse.json();
-        setListPins([places]);
+        setListPins(places);
   
-        // for (let i = 0; i < listPins.length; i++) {
-        //   console.log("Data from fetch: ", listPins[i].placeName);
-        // }
       }
     })();
 
@@ -59,63 +56,25 @@ export default function Map() {
 console.log("------List of places fetched from back: ",listPins,"------");
 
 
-
-  //? Display pins of nearby places around us on the map 
-  pinsAroundMe = listPins.map((Pin, i) => {
-    console.log("------Nearby place marker: ", Pin.places[i].coordinate.latitude, "------");
+    //! Second solution to display pins of nearby places around us on the map 
+    pinsAroundMe = listPins.map((Pin, i) => {
+      console.log("------Nearby place marker: ", Pin, "------");
+        return (
+          <Marker
+            coordinate={{
+              latitude: Pin.coordinate.latitude,
+              longitude: Pin.coordinate.longitude,
+            }}
+            title={Pin.placeName}
+            description={Pin.placeId}
+            pinColor="#5c49eb"
+            key={i}
+          />
+        );
     
-    return (
-      <Marker
-        coordinate={{
-          latitude: Pin.places[i].coordinate.latitude,
-          longitude: Pin.places[i].coordinate.longitude,
-        }}
-        title={Pin.places[i].placeName}
-        description={Pin.places[i].placeId}
-        pinColor="#5c49eb"
-        key={i}
-      />
-    );
-  });
+      });
 
   console.log("------Pins around me:",pinsAroundMe,"------")
-
-
-
-    // //! Second solution to display pins of nearby places around us on the map 
-    // var pinsAroundMe = listPins.map((Pin, index) => {
-    //   console.log("------List of pins : ", Pin, "------");
-  
-    //   for(let markers in Pin){
-    //     console.log("------Markers in Pin: ", Pin[markers], "------");
-  
-    //     console.log("------Pin length: ",Pin[markers].length,"------" )
-    //     for(let i=10; i< 15; i++){
-    //       console.log("------",i,"------")
-    //       console.log("------Pin[markers][i]",Pin[markers][i],"------")
-    //       console.log("------Marker in markers array: ", Pin[markers][0], "------");
-    //       return (
-    //         <Marker
-    //           coordinate={{
-    //             latitude: Pin[markers][i].coordinate.latitude,
-    //             longitude: Pin[markers][i].coordinate.longitude,
-    //           }}
-    //           title={Pin[markers][i].placeName}
-    //           description={Pin[markers][i].placeId}
-    //           pinColor="#5c49eb"
-    //           key={index}
-    //         />
-    //       );
-    //       // console.log("------ Latitude:", Pin[markers][i].coordinate.latitude, "------")
-    //       // console.log("------ Name:", Pin[markers][i].placeName, "------")
-    //       // console.log("------ Name:", Pin[markers][i].placeId, "------")
-    //     }
-        
-    //   }
-  
-    //  console.log("------Pins around me:",pinsAroundMe,"------")
-      
-    // });
 
 
 
