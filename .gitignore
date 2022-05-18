@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 node_modules/
+=======
+
+>>>>>>> ceb19dd2110547b2c0014a82f9fd984588ed43f2
 .expo/
 dist/
 npm-debug.*
@@ -12,4 +16,7 @@ web-build/
 
 # macOS
 .DS_Store
+<<<<<<< HEAD
+=======
 node_modules/
+>>>>>>> ceb19dd2110547b2c0014a82f9fd984588ed43f2
