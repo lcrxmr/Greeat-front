@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, KeyboardAvoidingView } from "react-native";
+import { View, KeyboardAvoidingView, Image} from "react-native";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { LogBox } from "react-native";
+import Carousel from "simple-carousel-react-native";
 LogBox.ignoreLogs(["Warning: ..."]);
 
 // Import map & marker
@@ -37,7 +38,7 @@ export default function Map() {
 
          //? Fetch places from backend route /nearby-places
         var rawResponse = await fetch(
-          "http://172.16.190.148:3000/nearby-places",
+          "http://172.16.190.143:3000/nearby-places",
           {
             method: "GET",
           }
