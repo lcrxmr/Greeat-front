@@ -178,7 +178,7 @@ for (let i = 0; i <10; i++) {
 //! ---------------------- Cards array ----------------------
 var carouselRestaurant = [];
 for (let i = 0; i <5; i++) {
-  cards.push(
+  carouselRestaurant.push(
     
     <Card
       borderRadius={15}
@@ -256,7 +256,7 @@ for (let i = 0; i <5; i++) {
 
 var carouselEvent = [];
 for (let i = 0; i <5; i++) {
-  cards.push(
+  carouselEvent.push(
     
     <Card
       borderRadius={15}
