@@ -176,7 +176,7 @@ export default function Map() {
     );
   }
 
-  //! ---------------------- Cards array ----------------------
+  //! ---------------------- Restaurant carousel ----------------------
 
   for (let i = 0; i < 2; i++) {
     carouselRestaurant.push(
@@ -250,6 +250,8 @@ export default function Map() {
     );
   }
 
+  //! ---------------------- Events carousel ----------------------
+
   for (let i = 0; i < 5; i++) {
     carouselEvent.push(
       <Card borderRadius={15} containerStyle={styles.card}>
@@ -321,6 +323,8 @@ export default function Map() {
       </Card>
     );
   }
+
+  //! ---------------------- Component return ----------------------
 
   return (
     <View
