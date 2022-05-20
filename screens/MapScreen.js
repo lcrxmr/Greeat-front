@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import { View, LogBox, Image, Dimensions, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  LogBox,
+  Image,
+  Dimensions,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView
+} from "react-native";
 import CardSlider from "react-native-cards-slider";
-import { Overlay, Card, Badge, Button } from "react-native-elements";
+import { Card, Badge, Button } from "react-native-elements";
+import { MaterialIcons } from "@expo/vector-icons";
 LogBox.ignoreLogs(["Warning: ..."]);
 
 // Import map & marker
@@ -49,7 +59,8 @@ export default function Map() {
     // Cleanup function
     // return () => (mounted = false);
   }, []);
-
+  
+  // console.log("------List of places fetched from back: ", listPins, "------");
 
 useEffect(() => {
   (async () => {
@@ -128,137 +139,200 @@ setCarousel(carouselRestaurant);
     }
   });
 
-  var carouselRestaurant = (
-    <CardSlider
-      style={{
-        flex: 1,
-        position: "absolute",
-        bottom: 0,
-        marginLeft: 0,
-        marginRight: 0,
-        width: width,
-      }}
-    >
-      <View style={{ paddingBottom: 20 }}>
-        <Card
-          borderRadius={15}
-          containerStyle={{
-            shadowColor: "#171717",
-            shadowOffset: { width: 5, height: 15 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 20,
-            width: width * 0.88,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 0.8 }}>
+
+  //! ---------------------- Icons filter array ----------------------
+var filterIcons = [];
+for (let i = 0; i <10; i++) {
+  filterIcons.push(
+    <View style={{ alignItems: "center", paddingLeft: 10, marginTop: 10, marginLeft:6, marginRight:6 }}>
+            <View
+              style={styles.filter}
+            >
               <Image
-                style={{ borderRadius: 10, height: 120, width: 120 }}
-                source={require("../assets/photo1.jpg")}
-              />
-            </View>
-            <View style={{ flex: 1, alignItems: "flex-start" }}>
-              <Text
+                source={require("../assets/fastfood.png")}
                 style={{
-                  paddingTop: 10,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                }}
-              >
-                Le restaurant la Vergeverte
-              </Text>
-
-              <Badge
-                containerStyle={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginBottom: 10,
-                }}
-                value="Teub de poney"
-                badgeStyle={{
-                  backgroundColor: "grey",
-                  height: 25,
-                  borderRadius: 20,
-                }}
-                textStyle={{
-                  marginLeft: 10,
-                  marginRight: 10,
+                  backgroundColor: "white",
+                  color: "grey",
+                  height: 24,
+                  width: 24,
+                  padding: 5,
                 }}
               />
             </View>
+            <Text
+              style={{
+                paddingTop: 5,
+                fontWeight: "bold",
+                fontSize: 10,
+                justifyContent: "flex-start",
+              }}
+            >
+              French
+            </Text>
           </View>
-        </Card>
-      </View>
-    </CardSlider>
-  );
+  )
+  
+}
 
-  var carouselEvent = (
-    <CardSlider
-      style={{
-        flex: 1,
-        position: "absolute",
-        bottom: 0,
-        marginLeft: 0,
-        marginRight: 0,
-        width: width,
-      }}
+
+//! ---------------------- Cards array ----------------------
+var carouselRestaurant = [];
+for (let i = 0; i <5; i++) {
+  cards.push(
+    
+    <Card
+      borderRadius={15}
+      containerStyle={styles.card}
     >
-      <View style={{ paddingBottom: 20 }}>
-        <Card
-          borderRadius={15}
-          containerStyle={{
-            shadowColor: "#171717",
-            shadowOffset: { width: 5, height: 15 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 20,
-            width: width * 0.88,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 0.8 }}>
-              <Image
-                style={{ borderRadius: 10, height: 120, width: 120 }}
-                source={require("../assets/photo1.jpg")}
-              />
-            </View>
-            <View style={{ flex: 1, alignItems: "flex-start" }}>
-              <Text
-                style={{
-                  paddingTop: 10,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                }}
-              >
-                Event la Vergeverte
-              </Text>
-
-              <Badge
-                containerStyle={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginBottom: 10,
-                }}
-                value="Teub de poney"
-                badgeStyle={{
-                  backgroundColor: "grey",
-                  height: 25,
-                  borderRadius: 20,
-                }}
-                textStyle={{
-                  marginLeft: 10,
-                  marginRight: 10,
-                }}
-              />
-            </View>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 0.8 }}>
+          <Image
+            style={{ borderRadius: 10, height: 120, width: 120 }}
+            source={require("../assets/photo1.jpg")}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: "flex-start" }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontWeight: "bold",
+              fontSize: 16,
+              justifyContent: "flex-start",
+            }}
+          >
+            Le restaurant la Vergeverte
+          </Text>
+          <View style={{flexDirection: "row", alignItems: "center", }}>
+          <Image
+            style={{  height: 18, width: 15, marginRight: 3, marginTop:5 }}
+            source={require("../assets/location.png")}
+          />
+          <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 16,
+              justifyContent: "flex-start",
+              marginRight: 3,
+              marginBottom: 3,
+            }}
+          > 4 
+             </Text>
+             <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 12,
+              justifyContent: "flex-start",
+            }}
+          >
+            Km away
+          </Text>
+         
+         
           </View>
-        </Card>
+
+          <Badge
+            containerStyle={{
+              flex: 1,
+              justifyContent: "flex-end",
+              marginBottom: 10,
+            }}
+            value="Teub de poney"
+            badgeStyle={{
+              backgroundColor: "#476A70",
+              height: 25,
+              borderRadius: 20,
+            }}
+            textStyle={{
+              marginLeft: 10,
+              marginRight: 10,
+            }}
+          />
+        </View>
       </View>
-    </CardSlider>
-  );
+    </Card>
+
+    )
+}
+
+var carouselEvent = [];
+for (let i = 0; i <5; i++) {
+  cards.push(
+    
+    <Card
+      borderRadius={15}
+      containerStyle={styles.card}
+    >
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 0.8 }}>
+          <Image
+            style={{ borderRadius: 10, height: 120, width: 120 }}
+            source={require("../assets/photo1.jpg")}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: "flex-start" }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontWeight: "bold",
+              fontSize: 16,
+              justifyContent: "flex-start",
+            }}
+          >
+            Le restaurant la Vergeverte
+          </Text>
+          <View style={{flexDirection: "row", alignItems: "center", }}>
+          <Image
+            style={{  height: 18, width: 15, marginRight: 3, marginTop:5 }}
+            source={require("../assets/location.png")}
+          />
+          <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 16,
+              justifyContent: "flex-start",
+              marginRight: 3,
+              marginBottom: 3,
+            }}
+          > 4 
+             </Text>
+             <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 12,
+              justifyContent: "flex-start",
+            }}
+          >
+            Km away
+          </Text>
+         
+         
+          </View>
+
+          <Badge
+            containerStyle={{
+              flex: 1,
+              justifyContent: "flex-end",
+              marginBottom: 10,
+            }}
+            value="Teub de poney"
+            badgeStyle={{
+              backgroundColor: "#476A70",
+              height: 25,
+              borderRadius: 20,
+            }}
+            textStyle={{
+              marginLeft: 10,
+              marginRight: 10,
+            }}
+          />
+        </View>
+      </View>
+    </Card>
+
+    )
+}
+
+
 
   return (
     <View
@@ -282,8 +356,14 @@ setCarousel(carouselRestaurant);
           }}
         ></Button>
       </View>
+
+      {/* <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+         
+      > */}
+     
       <MapView
-        style={{ flex: 1, width: width, height: height }}
+        style={{ flex: 1, minHeight: height*0.7}}
         region={{
           latitude: location.lat,
           longitude: location.long,
@@ -291,23 +371,8 @@ setCarousel(carouselRestaurant);
           longitudeDelta: 0.00421,
         }}
       >
-        <GooglePlacesAutocomplete
-          //autocomplete input
-          style={{
-            position: "absolute",
-          }}
-          placeholder="Search"
-          query={{
-            key: GOOGLE_PLACES_API_KEY,
-            language: "en", // language of the results
-          }}
-          onPress={(data, details = null) => console.log(data)}
-          onFail={(error) => console.error(error)}
-          requestUrl={{
-            url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
-            useOnPlatform: "web",
-          }} // this in only required for use on the web. See https://git.io/JflFv more for details.
-        />
+        
+        
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
           title="Hi"
@@ -319,7 +384,115 @@ setCarousel(carouselRestaurant);
         {eventsAroundMe}
         {pinsAroundMe}
       </MapView>
-      {carousel}
+      {/* </KeyboardAvoidingView> */}
+
+      <View style={{ 
+        flex: 1, 
+    position: "absolute",
+    
+    width: width,
+    zIndex: 2}}>
+
+        <GooglePlacesAutocomplete
+        //autocomplete input
+        style={{
+          // flex: 1,
+          // zIndex: 2,
+          // position: "absolute",
+        }}
+        minLength={1}
+        placeholder="Search"
+        query={{
+          key: GOOGLE_PLACES_API_KEY,
+          language: "en", // language of the results
+        }}
+        onPress={(data, details = null) => console.log(data)}
+        onFail={(error) => console.error(error)}
+        requestUrl={{
+          url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
+          useOnPlatform: "web",
+        }} // this in only required for use on the web. See https://git.io/JflFv more for details.
+      />
+     
+      </View>
+
+      {/* Filter list slider */}
+      <View style={styles.filterContainer}>
+        <ScrollView
+          contentContainerStyle={styles.horizontalFilterScrollContent}
+          style={styles.horizontalFilterScroll}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
+          {filterIcons}
+        </ScrollView>
+      </View>
+
+      {/* //! Restaurants cards slider */}
+      <CardSlider
+        style={styles.cardSlider}
+      >
+       {carousel}
+
+      </CardSlider>
     </View>
   );
 }
+
+
+//! ---------------------- STYLES ----------------------
+
+const styles = StyleSheet.create({
+  cardSlider: {
+    flex: 1,
+    position: "absolute",
+    bottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    width: Dimensions.get("window").width,
+  },
+  container: {
+    flex: 1,
+  },
+  filterContainer: {
+    flex: 1,
+    position: "absolute",
+    top: 50,
+  },
+  horizontalFilterScroll: {
+    width: Dimensions.get("window").width,
+  },
+  horizontalFilterScrollContent: {
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  filter: {
+    backgroundColor: "white",
+    borderRadius: 25,
+    shadowColor: "black",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 20,
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  card: {
+    marginLeft: 3,
+    marginRight: -0.5,
+    marginBottom: 20,
+    shadowColor: '#171717',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 15,
+    width: Dimensions.get("window").width * 0.89,
+    border: "none",
+  },
+  cardSlider:{
+    position: 'absolute',
+    bottom: 0,
+  }
+});
