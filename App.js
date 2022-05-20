@@ -35,18 +35,20 @@ function BottomNavigator() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           if (route.name == 'Map') {
-            return <Image source={require('./assets/favicon.png')} />
+            return <Image source={require('./assets/Map.png')} />
           } else if (route.name == 'Myevent') {
-            return <Image source={require('./assets/favicon.png')} />
+            return <Image source={require('./assets/Events.png')} />
           } else if (route.name == 'Recipe') {
-            return <Image source={require('./assets/favicon.png')} />
+            return <Image source={require('./assets/Recipes.png')} />
           } else if (route.name == 'Menu') {
-            return <Image source={require('./assets/favicon.png')} />
+            return <Image source={require('./assets/Other.png')} />
           }
         },
 
+        tabBarHideOnKeyboard: true,
         // Warning corrected due to previous code deprecated
-        tabBarActiveTintColor: '#000000', //! Use a real color code, not only #
+
+        tabBarActiveTintColor: '#000000', //? Use a real color code, not only #
         tabBarInactiveTintColor: '#000000',
         tabBarStyle: [{
           backgroundColor: '#ffffff',
@@ -76,11 +78,9 @@ export default function App() {
         <Stack.Screen name="ProfileFromMenu" component={Profile} />
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
         <Stack.Screen name="MyRecipe" component={MyRecipe} />
-        <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
         <Stack.Screen name="editProfil" component={EditProfil} />
         <Stack.Screen name="Create" component={CreateRecipeScreen} />
-        <Stack.Screen name="Recipes" component={MyRecipes} />
-
+        <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
 
 
       </Stack.Navigator>

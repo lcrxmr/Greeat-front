@@ -1,18 +1,17 @@
-import React, { useState, useRef, useEffect } from "react"
-import { View, TextInput, StyleSheet, Button, Text } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from "react";
+import { View, TextInput, StyleSheet, Button, Text } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 //import DatePicker from 'react-native-date-picker'
 
-
 export default function CreateEvent(props) {
   const [text, setText] = useState("");
-  const [adress, setAdress] = useState("")
+  const [adress, setAdress] = useState("");
   const [event, setEvent] = useState("");
   const [desc, setDesc] = useState("");
 
   const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
@@ -27,37 +26,17 @@ export default function CreateEvent(props) {
   };
 
   const showDatepicker = () => {
-    showMode('date');
-    console.log(date)
-
+    showMode("date");
+    console.log(date);
   };
 
   const showTimepicker = () => {
-    showMode('time');
-
+    showMode("time");
   };
-
-  const nameRef = useRef('initial name')
-  nameRef.current.textContent = 'Text changed'
-
-
-
-  useEffect(() => {
-
-    nameRef.current.textContent = 'Text changed'
-
-
-  }, [])
-
-
-
 
   return (
     <View>
-
       <TextInput
-
-        ref={nameRef}
         style={styles.input}
         defaultValue='Raida'
       /* onChangeText={setText}
@@ -78,7 +57,6 @@ export default function CreateEvent(props) {
         value={date}
         placeholder="Time and date"
         keyboardType="numeric"
-
       />
 
       <View>
@@ -128,35 +106,39 @@ export default function CreateEvent(props) {
         placeholder="Description"
       />
 
+      <Button
+        title="Creat even"
+        titleStyle={{ fontSize: 8 }}
+        containerStyle={{
+          justifyContent: "center", //Centered horizontally
+          alignItems: "center", //Centered vertically
+          flex: 1,
+          width: 30,
+          height: 20,
+        }}
+        onPress={() => {
+          props.navigation.navigate("MyEvent", { screen: "MyEventScreen" });
+          console.log("");
+        }}
+      />
 
-
-      <Button title="Create even" titleStyle={{ fontSize: 8 }} containerStyle={{
-        justifyContent: "center", //Centered horizontally
-        alignItems: "center", //Centered vertically
-        flex: 1,
-        width: 30,
-        height: 20
-      }} onPress={() => {
-        handleCreate();
-        props.navigation.navigate("MyEvent", { screen: "MyEventScreen" })
-        console.log('')
-      }} />
-
-      <Button title="Cancel" titleStyle={{ fontSize: 8, color: 'white' }} containerStyle={{
-        justifyContent: "center", //Centered horizontally
-        alignItems: "center", //Centered vertically
-        flex: 1,
-        width: 30,
-        height: 20
-      }} onPress={() => {
-        props.navigation.navigate("MyEvent", { screen: "MyEventScreen" })
-        console.log('')
-      }} />
-
-
+      <Button
+        title="Cancel"
+        titleStyle={{ fontSize: 8, color: "white" }}
+        containerStyle={{
+          justifyContent: "center", //Centered horizontally
+          alignItems: "center", //Centered vertically
+          flex: 1,
+          width: 30,
+          height: 20,
+        }}
+        onPress={() => {
+          props.navigation.navigate("MyEvent", { screen: "MyEventScreen" });
+          console.log("");
+        }}
+      />
     </View>
-
-  )
+  );
 }
 
 const styles = StyleSheet.create({
