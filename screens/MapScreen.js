@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
-import { Card, Badge } from "react-native-elements";
+import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 LogBox.ignoreLogs(["Warning: ..."]);
 
@@ -22,11 +22,17 @@ import { Marker } from "react-native-maps";
 
 // Import search autocomplete lib
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"; // npm install react-native-google-places-autocomplete (if issues with npm add --legacy-peer-deps)
+import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
 export default function Map() {
-  const [location, setLocation] = useState({ lat: 0, long: 0 });
+
+
+  const [location, setLocation] = useState({});
   const [listPins, setListPins] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [mapSwitch, setMapSwitch] = useState(false);
+  const [carousel, setCarousel] = useState(carouselRestaurant);
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
@@ -36,54 +42,104 @@ export default function Map() {
 
   // Load map + location on loading of the screen
   useEffect(() => {
-    let mounted = true;
-
+    // let mounted = true;
     // Get our location
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status == "granted" && mounted) {
-        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+      if (status == "granted") {
+        Location.watchPositionAsync({ distanceInterval: 50 }, (location) => {
           setLocation({
             lat: location.coords.latitude,
             long: location.coords.longitude,
           });
         });
-
-        //? Fetch places from backend route /nearby-places
-        // var rawResponse = await fetch(
-        //   "http://172.16.190.148:3000/nearby-places",
-        //   {
-        //     method: "GET",
-        //   }
-        // );
-        // places = await rawResponse.json();
-        // setListPins(places);
+        
+        console.log("______________ location", location, );
+       
       }
     })();
-
     // Cleanup function
-    return () => (mounted = false);
+    // return () => (mounted = false);
   }, []);
   
   // console.log("------List of places fetched from back: ", listPins, "------");
 
+useEffect(() => {
+  (async () => {
+    //? Fetch places from backend route /nearby-places
+
+    await fetch(
+      "http://172.16.190.143:3000/nearby-places",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `lat=${location.lat}&long=${location.long}`,
+      }
+    );
+
+    var rawResponse = await fetch(
+      "http://172.16.190.143:3000/nearby-places",
+      {
+        method: "GET",
+      }
+    );
+    places = await rawResponse.json();
+    setListPins(places);
+    // Events from back
+    var rawEvent = await fetch("http://172.16.190.143:3000/events", {
+      method: "GET",
+    });
+    var eventFromBack = await rawEvent.json();
+    setEvents(eventFromBack);
+  })();
+setCarousel(carouselRestaurant);
+}, [location]);
+
+
+
+  // console.log("------List of places fetched from back: ", listPins, "------");
+  // console.log('___________events from back', events)
+
   //! Second solution to display pins of nearby places around us on the map
   pinsAroundMe = listPins.map((Pin, i) => {
-    console.log("------Nearby place marker: ", Pin, "------");
-    return (
-      <Marker
-        coordinate={{
-          latitude: Pin.coordinate.latitude,
-          longitude: Pin.coordinate.longitude,
-        }}
-        title={Pin.placeName}
-        description={Pin.placeId}
-        pinColor="#5c49eb"
-        key={i}
-      />
-    );
+    // console.log("------Nearby place marker: ", Pin, "------");
+    if (mapSwitch == false) {
+      return (
+        <Marker
+          coordinate={{
+            latitude: Pin.coordinate.latitude,
+            longitude: Pin.coordinate.longitude,
+          }}
+          title={Pin.placeName}
+          description={Pin.placeId}
+          pinColor="#5c49eb"
+          key={i}
+        />
+      );
+    }
   });
-  console.log("------Pins around me:", pinsAroundMe, "------");
+  // console.log("------Pins around me:", pinsAroundMe, "------");
+
+  //  ------------ display events around me
+
+  var eventsAroundMe = events.map((event, i) => {
+    // console.log("------Nearby place marker: ", Pin, "------");
+    // event.latitude && event.longitude missing from DB
+    if (mapSwitch == true) {
+      return (
+        <Marker
+          coordinate={{
+            latitude: location.lat,
+            longitude: location.long,
+          }}
+          title={event.name}
+          description={event.date}
+          pinColor="#0afa72"
+          key={i}
+        />
+      );
+    }
+  });
 
 
   //! ---------------------- Icons filter array ----------------------
@@ -122,9 +178,87 @@ for (let i = 0; i <10; i++) {
 
 
 //! ---------------------- Cards array ----------------------
-var cards = [];
+var carouselRestaurant = [];
 for (let i = 0; i <5; i++) {
-  cards.push(
+  carouselRestaurant.push(
+    
+    <Card
+      borderRadius={15}
+      containerStyle={styles.card}
+    >
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 0.8 }}>
+          <Image
+            style={{ borderRadius: 10, height: 120, width: 120 }}
+            source={require("../assets/photo1.jpg")}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: "flex-start" }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontWeight: "bold",
+              fontSize: 16,
+              justifyContent: "flex-start",
+            }}
+          >
+            Le restaurant la Vergeverte
+          </Text>
+          <View style={{flexDirection: "row", alignItems: "center", }}>
+          <Image
+            style={{  height: 18, width: 15, marginRight: 3, marginTop:5 }}
+            source={require("../assets/location.png")}
+          />
+          <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 16,
+              justifyContent: "flex-start",
+              marginRight: 3,
+              marginBottom: 3,
+            }}
+          > 4 
+             </Text>
+             <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 12,
+              justifyContent: "flex-start",
+            }}
+          >
+            Km away
+          </Text>
+         
+         
+          </View>
+
+          <Badge
+            containerStyle={{
+              flex: 1,
+              justifyContent: "flex-end",
+              marginBottom: 10,
+            }}
+            value="Teub de poney"
+            badgeStyle={{
+              backgroundColor: "#476A70",
+              height: 25,
+              borderRadius: 20,
+            }}
+            textStyle={{
+              marginLeft: 10,
+              marginRight: 10,
+            }}
+          />
+        </View>
+      </View>
+    </Card>
+
+    )
+}
+
+var carouselEvent = [];
+for (let i = 0; i <5; i++) {
+  carouselEvent.push(
     
     <Card
       borderRadius={15}
@@ -208,6 +342,22 @@ for (let i = 0; i <5; i++) {
         flex: 1,
       }}
     >
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <Button
+          title="Restaurants"
+          onPress={() => {
+            setMapSwitch(false);
+            setCarousel(carouselRestaurant);
+          }}
+        ></Button>
+        <Button
+          title="Events"
+          onPress={() => {
+            setMapSwitch(true);
+            setCarousel(carouselEvent);
+          }}
+        ></Button>
+      </View>
 
       {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -232,6 +382,8 @@ for (let i = 0; i <5; i++) {
           pinColor="#eb3467"
           style={{ width: 100, height: 50, zIndex: 2 }}
         />
+
+        {eventsAroundMe}
         {pinsAroundMe}
       </MapView>
       {/* </KeyboardAvoidingView> */}
@@ -282,7 +434,7 @@ for (let i = 0; i <5; i++) {
       <CardSlider
         style={styles.cardSlider}
       >
-       {cards}
+       {carousel}
 
       </CardSlider>
     </View>
