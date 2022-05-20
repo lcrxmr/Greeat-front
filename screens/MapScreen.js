@@ -26,6 +26,8 @@ import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
 export default function Map() {
+
+
   const [location, setLocation] = useState({});
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
@@ -127,8 +129,8 @@ setCarousel(carouselRestaurant);
       return (
         <Marker
           coordinate={{
-            latitude: 45.761043,
-            longitude: 4.855658,
+            latitude: location.lat,
+            longitude: location.long,
           }}
           title={event.name}
           description={event.date}
