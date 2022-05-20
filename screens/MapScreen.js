@@ -10,10 +10,6 @@ import {
   Text,
   ScrollView,
   KeyboardAvoidingView,
-<<<<<<< HEAD
-  PushNotificationIOS
-=======
->>>>>>> eeab26530dd5415a8c78370dc90740d4a2ed2411
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
@@ -71,14 +67,14 @@ export default function Map() {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-      await fetch("http://172.16.190.143:3000/nearby-places", {
+      await fetch("http://172.16.190.141:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.143:3000/nearby-places",
+        "http://172.16.190.141:3000/nearby-places",
         {
           method: "GET",
         }
@@ -86,7 +82,7 @@ export default function Map() {
       places = await rawResponse.json();
       setListPins(places);
       // Events from back
-      var rawEvent = await fetch("http://172.16.190.143:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.141:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -121,18 +117,11 @@ export default function Map() {
   //  ------------ display events around me
 
   var eventsAroundMe = events.map((event, i) => {
-<<<<<<< HEAD
-    // console.log("------Nearby event: ", event, "------");
-    console.log("**************************************");
-    // event.lat && event.long missing from DB
-    if (mapSwitch == true) {
-=======
     // console.log("------Nearby place marker: ", Pin, "------");
     // event.latitude && event.longitude missing from DB
     console.log("------ event coord: ", event, "------");
   
     if (mapSwitch) {
->>>>>>> eeab26530dd5415a8c78370dc90740d4a2ed2411
       return (
         <Marker
           coordinate={{
@@ -189,14 +178,15 @@ export default function Map() {
 
   //! ---------------------- Cards array ----------------------
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < listPins.length; i++) {
+    // var imageurl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + listPins[i].gallery + '&key=key=AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA';
     carouselRestaurant.push(
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
             <Image
               style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={require("../assets/photo1.jpg")}
+              source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + listPins[i].gallery + '&key=SyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA'}}
             />
           </View>
           <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -208,7 +198,7 @@ export default function Map() {
                 justifyContent: "flex-start",
               }}
             >
-              Le restaurant la Vergeverte
+              {listPins[i].placeName}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
@@ -260,8 +250,9 @@ export default function Map() {
       </Card>
     );
   }
-
-  for (let i = 0; i < 5; i++) {
+  console.log('***********',events)
+  for (let i = 0; i < events.length; i++) {
+    
     carouselEvent.push(
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
@@ -280,94 +271,8 @@ export default function Map() {
                 justifyContent: "flex-start",
               }}
             >
-              Event la Vergeverte
+              {events[i].name}
             </Text>
-<<<<<<< HEAD
-          </View>
-  )
-  
-}
-
-
-//! ---------------------- Cards array ----------------------
-
-for (let i = 0; i <listPins.length; i++) {
-  carouselRestaurant.push(
-    
-    <Card
-      borderRadius={15}
-      containerStyle={styles.card}
-    >
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ flex: 0.8 }}>
-          <Image
-            style={{ borderRadius: 10, height: 120, width: 120 }}
-            source={require("../assets/photo1.jpg")}
-          />
-        </View>
-        <View style={{ flex: 1, alignItems: "flex-start" }}>
-          <Text
-            style={{
-              paddingTop: 10,
-              fontWeight: "bold",
-              fontSize: 16,
-              justifyContent: "flex-start",
-            }}
-          >
-            {listPins[i].placeName}
-          </Text>
-          <View style={{flexDirection: "row", alignItems: "center", }}>
-          <Image
-            style={{  height: 18, width: 15, marginRight: 3, marginTop:5 }}
-            source={{uri:listPins[i].gallery}}
-          />
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginRight: 3,
-              marginBottom: 3,
-            }}
-          > 4 
-             </Text>
-             <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
-              justifyContent: "flex-start",
-            }}
-          >
-            Km away
-          </Text>
-         
-         
-          </View>
-
-          <Badge
-            containerStyle={{
-              flex: 1,
-              justifyContent: "flex-end",
-              marginBottom: 10,
-            }}
-            value="Teub de poney"
-            badgeStyle={{
-              backgroundColor: "#476A70",
-              height: 25,
-              borderRadius: 20,
-            }}
-            textStyle={{
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-          />
-        </View>
-      </View>
-    </Card>
-
-    )
-}
-=======
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
@@ -392,10 +297,9 @@ for (let i = 0; i <listPins.length; i++) {
                   justifyContent: "flex-start",
                 }}
               >
-                Km away
+                {events[i].location}
               </Text>
             </View>
->>>>>>> eeab26530dd5415a8c78370dc90740d4a2ed2411
 
             <Badge
               containerStyle={{
