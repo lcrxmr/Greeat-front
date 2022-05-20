@@ -11,6 +11,7 @@ import { Marker } from "react-native-maps";
 
 // Import search autocomplete lib
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"; // npm install react-native-google-places-autocomplete (if issues with npm add --legacy-peer-deps)
+import { convertLegacyProps } from "antd/lib/button/button";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
 export default function Map() {
@@ -35,16 +36,16 @@ export default function Map() {
           });
         });
 
-         //? Fetch places from backend route /nearby-places
-        var rawResponse = await fetch(
-          "http://172.16.190.148:3000/nearby-places",
-          {
-            method: "GET",
-          }
-        );
-        places = await rawResponse.json();
-        setListPins([places]);
-  
+        //? Fetch places from backend route /nearby-places
+        /*  var rawResponse = await fetch(
+           "http://192.168.1.173:3000/nearby-places",
+           {
+             method: "GET",
+           }
+         );
+         places = await rawResponse.json();
+         setListPins([places]); */
+
         // for (let i = 0; i < listPins.length; i++) {
         //   console.log("Data from fetch: ", listPins[i].placeName);
         // }
@@ -56,66 +57,65 @@ export default function Map() {
 
   }, []);
 
-console.log("------List of places fetched from back: ",listPins,"------");
+  console.log("------List of places fetched from back: ", listPins, "------");
 
-
+  console.log(listPins[0])
 
   //? Display pins of nearby places around us on the map 
-  pinsAroundMe = listPins.map((Pin, i) => {
-    console.log("------Nearby place marker: ", Pin.places[i].coordinate.latitude, "------");
-    
+  /* pinsAroundMe = listPins.places.map((Pin, i) => {
+    console.log("------Nearby place marker: ", Pin.coordinate.latitude, "------");
     return (
       <Marker
         coordinate={{
-          latitude: Pin.places[i].coordinate.latitude,
-          longitude: Pin.places[i].coordinate.longitude,
+          latitude: Pin.coordinate.latitude,
+          longitude: Pin.coordinate.longitude,
         }}
-        title={Pin.places[i].placeName}
-        description={Pin.places[i].placeId}
+        title={Pin.placeName}
+        description={Pin.placeId}
         pinColor="#5c49eb"
         key={i}
       />
     );
   });
 
-  console.log("------Pins around me:",pinsAroundMe,"------")
+  console.log("------Pins around me:", pinsAroundMe, "------")
+ */
 
 
+  // //! Second solution to display pins of nearby places around us on the map 
+  // var pinsAroundMe = listPins.map((Pin, index) => {
+  //   console.log("------List of pins : ", Pin, "------");
 
-    // //! Second solution to display pins of nearby places around us on the map 
-    // var pinsAroundMe = listPins.map((Pin, index) => {
-    //   console.log("------List of pins : ", Pin, "------");
-  
-    //   for(let markers in Pin){
-    //     console.log("------Markers in Pin: ", Pin[markers], "------");
-  
-    //     console.log("------Pin length: ",Pin[markers].length,"------" )
-    //     for(let i=10; i< 15; i++){
-    //       console.log("------",i,"------")
-    //       console.log("------Pin[markers][i]",Pin[markers][i],"------")
-    //       console.log("------Marker in markers array: ", Pin[markers][0], "------");
-    //       return (
-    //         <Marker
-    //           coordinate={{
-    //             latitude: Pin[markers][i].coordinate.latitude,
-    //             longitude: Pin[markers][i].coordinate.longitude,
-    //           }}
-    //           title={Pin[markers][i].placeName}
-    //           description={Pin[markers][i].placeId}
-    //           pinColor="#5c49eb"
-    //           key={index}
-    //         />
-    //       );
-    //       // console.log("------ Latitude:", Pin[markers][i].coordinate.latitude, "------")
-    //       // console.log("------ Name:", Pin[markers][i].placeName, "------")
-    //       // console.log("------ Name:", Pin[markers][i].placeId, "------")
-    //     }
-        
-    //   }
-  
-    //  console.log("------Pins around me:",pinsAroundMe,"------")
-      
-    // });
+  //   for(let markers in Pin){
+  //     console.log("------Markers in Pin: ", Pin[markers], "------");
+
+  //     console.log("------Pin length: ",Pin[markers].length,"------" )
+  //     for(let i=10; i< 15; i++){
+  //       console.log("------",i,"------")
+  //       console.log("------Pin[markers][i]",Pin[markers][i],"------")
+  //       console.log("------Marker in markers array: ", Pin[markers][0], "------");
+  //       return (
+  //         <Marker
+  //           coordinate={{
+  //             latitude: Pin[markers][i].coordinate.latitude,
+  //             longitude: Pin[markers][i].coordinate.longitude,
+  //           }}
+  //           title={Pin[markers][i].placeName}
+  //           description={Pin[markers][i].placeId}
+  //           pinColor="#5c49eb"
+  //           key={index}
+  //         />
+  //       );
+  //       // console.log("------ Latitude:", Pin[markers][i].coordinate.latitude, "------")
+  //       // console.log("------ Name:", Pin[markers][i].placeName, "------")
+  //       // console.log("------ Name:", Pin[markers][i].placeId, "------")
+  //     }
+
+  //   }
+
+  //  console.log("------Pins around me:",pinsAroundMe,"------")
+
+  // });
 
 
 

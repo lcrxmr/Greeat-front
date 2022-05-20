@@ -6,12 +6,12 @@ import Created from './CreatScreenMyEvents'
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function myEvent() {
+export default function MyEvent() {
 
     return (
-    <Tab.Navigator>
-        <Tab.Screen name="Going" component={Going} />
-        <Tab.Screen name="Created" component={Created} />
-    </Tab.Navigator>
+        <Tab.Navigator>
+            <Tab.Screen name="Going" component={Going} />
+            <Tab.Screen name="Created" component={Created} />
+        </Tab.Navigator>
     );
-    }
+}
