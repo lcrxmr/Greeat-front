@@ -26,13 +26,19 @@ import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
 export default function Map() {
-  const [location, setLocation] = useState({lat: 0, long: 0});
+  const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
   const [mapSwitch, setMapSwitch] = useState(false);
   const [carousel, setCarousel] = useState([]);
   const [carouselRestaurant, setCarouselRestaurant] = useState([]);
   const [carouselEvent, setCarouselEvent] = useState([]);
+
+  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("green");
+  const [switchRestaurantsButtonTextColor, setSwitchRestaurantsButtonTextColor] = useState("white");
+  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("white");
+  const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] = useState("black");
+
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
@@ -120,7 +126,7 @@ export default function Map() {
     // console.log("------Nearby place marker: ", Pin, "------");
     // event.latitude && event.longitude missing from DB
     console.log("------ event coord: ", event, "------");
-  
+
     if (mapSwitch) {
       return (
         <Marker
@@ -324,6 +330,39 @@ export default function Map() {
     );
   }
 
+  // var switchRestaurantsButtonBgColor;
+  // var switchEventsButtonBgColor;
+  // var switchEventsButtonTextColor;
+  // var switchRestaurantsButtonTextColor;
+
+  var onPressRestaurants = () => {
+
+    setMapSwitch(false)
+    setCarousel(carouselRestaurant);
+    if(mapSwitch){
+      setSwitchRestaurantsButtonBgColor("#A8DD62")
+      setSwitchRestaurantsButtonTextColor("white")
+      setSwitchEventsButtonBgColor("white")
+      setSwitchEventsButtonTextColor("black")
+      
+    }
+  }
+
+  var onPressEvents = () => {
+
+    setMapSwitch(true)
+    setCarousel(carouselEvent);
+    if(!mapSwitch){
+      setSwitchRestaurantsButtonBgColor("white")
+      setSwitchRestaurantsButtonTextColor("black")
+      setSwitchEventsButtonBgColor("#A8DD62")
+      setSwitchEventsButtonTextColor("white")
+    }
+   
+  }
+
+
+
   //! ---------------------- Component return ----------------------
 
   return (
@@ -384,8 +423,6 @@ export default function Map() {
           zIndex: 2,
         }}
       >
-       
-
         <GooglePlacesAutocomplete
           //autocomplete input
           style={
@@ -410,36 +447,59 @@ export default function Map() {
         />
       </View>
 
-      <View style={{ position: "absolute", flexDirection: "row", alignItems: "center", padding: 10, top: 30,  }}>
-          <Button
-          containerStyle={{ shadowColor: "black",
-          shadowOffset: { width: 5, height: 10 },
-          shadowOpacity: 0.2,
-          shadowRadius: 10,
-          elevation: 20,}}
-          buttonStyle={{ margin: 10, width: 170, backgroundColor:"white", borderRadius: 25, }}
-          titleStyle={{color: 'grey'}}
-            title="Restaurants"
-            onPress={() => {
-              setMapSwitch(false);
-              setCarousel(carouselRestaurant);
-            }}
-          ></Button>
-          <Button
-         containerStyle={{ shadowColor: "black",
-         shadowOffset: { width: 5, height: 10 },
-         shadowOpacity: 0.2,
-         shadowRadius: 10,
-         elevation: 20,}}
-         buttonStyle={{ margin: 10, width: 170, backgroundColor:"white", borderRadius: 25, }}
-         titleStyle={{color: 'grey'}}
-            title="Events"
-            onPress={() => {
-              setMapSwitch(true);
-              setCarousel(carouselEvent);
-            }}
-          ></Button>
-        </View>
+      <View
+        style={{
+          position: "absolute",
+          flexDirection: "row",
+          alignItems: "center",
+          paddingTop: 10,
+          paddingLeft: 6,
+          top: 30,
+        }}
+      >
+        <Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 25,
+          }}
+          buttonStyle={{
+            margin: 10,
+            width: 170,
+            shadowRadius: 10,
+            backgroundColor : switchRestaurantsButtonBgColor,
+            borderRadius: 25,
+          }}
+          titleStyle={{ color: switchRestaurantsButtonTextColor }}
+          title="Restaurants"
+          onPress={() => 
+            onPressRestaurants()
+          }
+        ></Button>
+        <Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 25,
+          }}
+          buttonStyle={{
+            margin: 10,
+            width: 170,
+            shadowRadius: 10,
+            backgroundColor: switchEventsButtonBgColor,
+            borderRadius: 25,
+          }}
+          titleStyle={{ color: switchEventsButtonTextColor }}
+          title="Events"
+          onPress={() => onPressEvents()}
+        ></Button>
+      </View>
 
       {/* Filter list slider */}
       <View style={styles.filterContainer}>
