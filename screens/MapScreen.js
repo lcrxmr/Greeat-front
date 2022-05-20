@@ -9,7 +9,8 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  PushNotificationIOS
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
@@ -99,12 +100,12 @@ setCarousel(carouselRestaurant);
 
 
 
-  // console.log("------List of places fetched from back: ", listPins, "------");
+  console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
-
+ // console.log("------Nearby place marker: ", Pin, "------");
   //! Second solution to display pins of nearby places around us on the map
   pinsAroundMe = listPins.map((Pin, i) => {
-    // console.log("------Nearby place marker: ", Pin, "------");
+   
     if (mapSwitch == false) {
       return (
         <Marker
@@ -125,14 +126,15 @@ setCarousel(carouselRestaurant);
   //  ------------ display events around me
 
   var eventsAroundMe = events.map((event, i) => {
-    // console.log("------Nearby place marker: ", Pin, "------");
-    // event.latitude && event.longitude missing from DB
+    // console.log("------Nearby event: ", event, "------");
+    console.log("**************************************");
+    // event.lat && event.long missing from DB
     if (mapSwitch == true) {
       return (
         <Marker
           coordinate={{
-            latitude: location.lat,
-            longitude: location.long,
+            latitude: JSON.parse(event.lat),
+            longitude: JSON.parse(event.long),
           }}
           title={event.name}
           description={event.date}
@@ -181,7 +183,7 @@ for (let i = 0; i <10; i++) {
 
 //! ---------------------- Cards array ----------------------
 
-for (let i = 0; i <5; i++) {
+for (let i = 0; i <listPins.length; i++) {
   carouselRestaurant.push(
     
     <Card
@@ -204,12 +206,12 @@ for (let i = 0; i <5; i++) {
               justifyContent: "flex-start",
             }}
           >
-            Le restaurant la Vergeverte
+            {listPins[i].placeName}
           </Text>
           <View style={{flexDirection: "row", alignItems: "center", }}>
           <Image
             style={{  height: 18, width: 15, marginRight: 3, marginTop:5 }}
-            source={require("../assets/location.png")}
+            source={{uri:listPins[i].gallery}}
           />
           <Text
             style={{
