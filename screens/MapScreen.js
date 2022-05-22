@@ -34,7 +34,7 @@ export default function Map() {
   const [carouselRestaurant, setCarouselRestaurant] = useState([]);
   const [carouselEvent, setCarouselEvent] = useState([]);
 
-  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("green");
+  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("#A8DD62");
   const [switchRestaurantsButtonTextColor, setSwitchRestaurantsButtonTextColor] = useState("white");
   const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("white");
   const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] = useState("black");
@@ -143,7 +143,9 @@ export default function Map() {
     }
   });
 
+
   //! ---------------------- Icons filter array ----------------------
+
   var filterIcons = [];
   for (let i = 0; i < 10; i++) {
     filterIcons.push(
@@ -181,6 +183,7 @@ export default function Map() {
       </View>
     );
   }
+
 
   //! ---------------------- Restaurant carousel ----------------------
 
@@ -255,6 +258,7 @@ export default function Map() {
       </Card>
     );
   }
+
 
   //! ---------------------- Events carousel ----------------------
 
@@ -344,7 +348,6 @@ export default function Map() {
       setSwitchRestaurantsButtonTextColor("white")
       setSwitchEventsButtonBgColor("white")
       setSwitchEventsButtonTextColor("black")
-      
     }
   }
 
@@ -358,9 +361,7 @@ export default function Map() {
       setSwitchEventsButtonBgColor("#A8DD62")
       setSwitchEventsButtonTextColor("white")
     }
-   
   }
-
 
 
   //! ---------------------- Component return ----------------------

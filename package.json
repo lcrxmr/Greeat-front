@@ -46,6 +46,7 @@
     "react-redux": "^8.0.1",
     "redux": "^4.2.0",
     "simple-carousel-react-native": "^1.0.2",
+    "switch-button-react-native": "^1.0.3",
     "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {
