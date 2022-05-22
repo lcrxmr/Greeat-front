@@ -26,13 +26,19 @@ import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
 export default function Map() {
-  const [location, setLocation] = useState({lat: 0, long: 0});
+  const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
   const [mapSwitch, setMapSwitch] = useState(false);
   const [carousel, setCarousel] = useState([]);
   const [carouselRestaurant, setCarouselRestaurant] = useState([]);
   const [carouselEvent, setCarouselEvent] = useState([]);
+
+  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("#A8DD62");
+  const [switchRestaurantsButtonTextColor, setSwitchRestaurantsButtonTextColor] = useState("white");
+  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("white");
+  const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] = useState("black");
+
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
@@ -67,14 +73,14 @@ export default function Map() {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-      await fetch("http://172.16.190.141:3000/nearby-places", {
+      await fetch("http://172.16.190.131:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.141:3000/nearby-places",
+        "http://172.16.190.131:3000/nearby-places",
         {
           method: "GET",
         }
@@ -82,7 +88,7 @@ export default function Map() {
       places = await rawResponse.json();
       setListPins(places);
       // Events from back
-      var rawEvent = await fetch("http://172.16.190.141:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.131:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -120,7 +126,7 @@ export default function Map() {
     // console.log("------Nearby place marker: ", Pin, "------");
     // event.latitude && event.longitude missing from DB
     console.log("------ event coord: ", event, "------");
-  
+
     if (mapSwitch) {
       return (
         <Marker
@@ -176,7 +182,7 @@ export default function Map() {
     );
   }
 
-  //! ---------------------- Cards array ----------------------
+  //! ---------------------- Restaurant carousel ----------------------
 
   for (let i = 0; i < listPins.length; i++) {
     // var imageurl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + listPins[i].gallery + '&key=key=AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA';
@@ -324,6 +330,41 @@ export default function Map() {
     );
   }
 
+  // var switchRestaurantsButtonBgColor;
+  // var switchEventsButtonBgColor;
+  // var switchEventsButtonTextColor;
+  // var switchRestaurantsButtonTextColor;
+
+  var onPressRestaurants = () => {
+
+    setMapSwitch(false)
+    setCarousel(carouselRestaurant);
+    if(mapSwitch){
+      setSwitchRestaurantsButtonBgColor("#A8DD62")
+      setSwitchRestaurantsButtonTextColor("white")
+      setSwitchEventsButtonBgColor("white")
+      setSwitchEventsButtonTextColor("black")
+      
+    }
+  }
+
+  var onPressEvents = () => {
+
+    setMapSwitch(true)
+    setCarousel(carouselEvent);
+    if(!mapSwitch){
+      setSwitchRestaurantsButtonBgColor("white")
+      setSwitchRestaurantsButtonTextColor("black")
+      setSwitchEventsButtonBgColor("#A8DD62")
+      setSwitchEventsButtonTextColor("white")
+    }
+   
+  }
+
+
+
+  //! ---------------------- Component return ----------------------
+
   return (
     <View
       style={{
@@ -382,8 +423,6 @@ export default function Map() {
           zIndex: 2,
         }}
       >
-       
-
         <GooglePlacesAutocomplete
           //autocomplete input
           style={
@@ -408,36 +447,59 @@ export default function Map() {
         />
       </View>
 
-      <View style={{ position: "absolute", flexDirection: "row", alignItems: "center", padding: 10, top: 30,  }}>
-          <Button
-          containerStyle={{ shadowColor: "black",
-          shadowOffset: { width: 5, height: 10 },
-          shadowOpacity: 0.2,
-          shadowRadius: 10,
-          elevation: 20,}}
-          buttonStyle={{ margin: 10, width: 170, backgroundColor:"white", borderRadius: 25, }}
-          titleStyle={{color: 'grey'}}
-            title="Restaurants"
-            onPress={() => {
-              setMapSwitch(false);
-              setCarousel(carouselRestaurant);
-            }}
-          ></Button>
-          <Button
-         containerStyle={{ shadowColor: "black",
-         shadowOffset: { width: 5, height: 10 },
-         shadowOpacity: 0.2,
-         shadowRadius: 10,
-         elevation: 20,}}
-         buttonStyle={{ margin: 10, width: 170, backgroundColor:"white", borderRadius: 25, }}
-         titleStyle={{color: 'grey'}}
-            title="Events"
-            onPress={() => {
-              setMapSwitch(true);
-              setCarousel(carouselEvent);
-            }}
-          ></Button>
-        </View>
+      <View
+        style={{
+          position: "absolute",
+          flexDirection: "row",
+          alignItems: "center",
+          paddingTop: 10,
+          paddingLeft: 6,
+          top: 30,
+        }}
+      >
+        <Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 25,
+          }}
+          buttonStyle={{
+            margin: 10,
+            width: 170,
+            shadowRadius: 10,
+            backgroundColor : switchRestaurantsButtonBgColor,
+            borderRadius: 25,
+          }}
+          titleStyle={{ color: switchRestaurantsButtonTextColor }}
+          title="Restaurants"
+          onPress={() => 
+            onPressRestaurants()
+          }
+        ></Button>
+        <Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 25,
+          }}
+          buttonStyle={{
+            margin: 10,
+            width: 170,
+            shadowRadius: 10,
+            backgroundColor: switchEventsButtonBgColor,
+            borderRadius: 25,
+          }}
+          titleStyle={{ color: switchEventsButtonTextColor }}
+          title="Events"
+          onPress={() => onPressEvents()}
+        ></Button>
+      </View>
 
       {/* Filter list slider */}
       <View style={styles.filterContainer}>

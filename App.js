@@ -29,6 +29,11 @@ import EditProfil from "./screens/editProfilScreen"
 import Create from "./screens/CreateEventScreen"
 
 function BottomNavigator() {
+
+  
+
+
+
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({
@@ -59,7 +64,7 @@ function BottomNavigator() {
       )}
   
   >
-    <Tab.Screen name="Map" component={Map} />
+    <Tab.Screen name="Map" component={Map} options={{title: 'Greeat'}} /> 
     <Tab.Screen name="Myevent" component={MyEvent} />
     <Tab.Screen name="Recipe" component={Recipe} />
     <Tab.Screen name="Menu" component={Menu} />
@@ -71,8 +76,8 @@ function BottomNavigator() {
 export default function App() {
 return (
 
-    <NavigationContainer>
-      <Stack.Navigator >
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="ProfileFromMenu" component={Profile} />
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
