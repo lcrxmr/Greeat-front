@@ -73,14 +73,14 @@ export default function Map() {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-      await fetch("http://172.16.190.143:3000/nearby-places", {
+      await fetch("http://172.16.190.131:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.143:3000/nearby-places",
+        "http://172.16.190.131:3000/nearby-places",
         {
           method: "GET",
         }
@@ -88,7 +88,7 @@ export default function Map() {
       places = await rawResponse.json();
       setListPins(places);
       // Events from back
-      var rawEvent = await fetch("http://172.16.190.143:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.131:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -97,12 +97,15 @@ export default function Map() {
     setCarousel(carouselRestaurant);
   }, [location]);
 
-  // console.log("------List of places fetched from back: ", listPins, "------");
+  console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
+ // console.log("------Nearby place marker: ", Pin, "------");
+
 
   //! Second solution to display pins of nearby places around us on the map
+
   pinsAroundMe = listPins.map((Pin, i) => {
-    // console.log("------Nearby place marker: ", Pin, "------");
+   
     if (mapSwitch == false) {
       return (
         <Marker
@@ -187,14 +190,15 @@ export default function Map() {
 
   //! ---------------------- Restaurant carousel ----------------------
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < listPins.length; i++) {
+    // var imageurl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + listPins[i].gallery + '&key=key=AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA';
     carouselRestaurant.push(
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
             <Image
               style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={require("../assets/photo1.jpg")}
+              source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + listPins[i].gallery + '&key=SyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA'}}
             />
           </View>
           <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -206,7 +210,7 @@ export default function Map() {
                 justifyContent: "flex-start",
               }}
             >
-              Le restaurant la Vergeverte
+              {listPins[i].placeName}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
@@ -259,10 +263,12 @@ export default function Map() {
     );
   }
 
+    //! ---------------------- Events carousel ----------------------
 
-  //! ---------------------- Events carousel ----------------------
+  console.log('***********',events)
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < events.length; i++) {
+    
     carouselEvent.push(
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
@@ -281,7 +287,7 @@ export default function Map() {
                 justifyContent: "flex-start",
               }}
             >
-              Event la Vergeverte
+              {events[i].name}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
@@ -307,7 +313,7 @@ export default function Map() {
                   justifyContent: "flex-start",
                 }}
               >
-                Km away
+                {events[i].location}
               </Text>
             </View>
 
