@@ -14,6 +14,7 @@ import {
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
+import {getDistance, getPreciseDistance} from 'geolib';
 LogBox.ignoreLogs(["Warning: ..."]);
 
 // Import map & marker
@@ -30,7 +31,7 @@ export default function Map() {
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
   const [mapSwitch, setMapSwitch] = useState(false);
-  const [carousel, setCarousel] = useState([restaurants]);
+  const [carousel, setCarousel] = useState([]);
   // const [carouselRestaurant, setCarouselRestaurant] = useState([]);
   // const [carouselEvent, setCarouselEvent] = useState([]);
 
@@ -51,6 +52,8 @@ export default function Map() {
   useEffect(() => {
     // let mounted = true;
     // Get our location
+    // setMapSwitch(false)
+    // setCarousel(restaurants);
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status == "granted") {
@@ -60,15 +63,14 @@ export default function Map() {
             long: location.coords.longitude,
           });
         });
-
+        
         // console.log("______________ location", location);
       }
     })();
+    
     // Cleanup function
     // return () => (mounted = false);
   }, []);
-
-
 
   useEffect(() => {
     (async () => {
@@ -88,16 +90,17 @@ export default function Map() {
       );
       places = await rawResponse.json();
       setListPins(places);
-      console.log('*********** places:',places, '*********')
+      // console.log('*********** places:',places, '*********')
       // Events from back
       var rawEvent = await fetch("http://172.16.190.142:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
       setEvents(eventFromBack);
-      
     })();
-    setCarousel(restaurants);
+    
+    setCarousel(restaurants)
+
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
 
@@ -110,7 +113,6 @@ export default function Map() {
   //! Second solution to display pins of nearby places around us on the map
 
   pinsAroundMe = listPins.map((Pin, i) => {
-   
     if (mapSwitch == false) {
       return (
         <Marker
@@ -127,14 +129,37 @@ export default function Map() {
     }
   });
     //! ---------------------- Restaurant carousel ----------------------
+
+
+//       const calculateDistance = () => {
+//         var dis = getDistance(
+//           {latitude: location.lat, longitude: location.long },
+//           {latitude: listPins.coordinate.latitude, longitude: listPins.coordinate.longitude},
+//         );
+//         alert(
+//           `Distance\n\n${dis} Meter\nOR\n${dis / 1000} KM`
+//         );
+//         // return calculateDistance
+//       }
+      
+// console.log(alert)
+
   restaurants = listPins.map((restaurant, i) => {
+
+    var dis = (getDistance(
+      {latitude: location.lat, longitude: location.long },
+      {latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude},
+    )/1000).toFixed(1);
+    
+    console.log(dis)
+    // console.log(restaurant.gallery[0])
     return(
     <Card borderRadius={15} containerStyle={styles.card}>
           <View style={{ flexDirection: "row" }}>
             <View style={{ flex: 0.8 }}>
               <Image
                 style={{ borderRadius: 10, height: 120, width: 120 }}
-                source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + listPins[i].gallery + '&key=SyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA'}}
+                source={{uri: restaurant.gallery[0]}}
               />
             </View>
             <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -163,7 +188,7 @@ export default function Map() {
                   }}
                 >
                   {" "}
-                  4
+                  {dis}
                 </Text>
                 <Text
                   style={{
@@ -199,7 +224,7 @@ export default function Map() {
     )
   })
   // console.log("------Pins around me:", pinsAroundMe, "------");
-  console.log('************ Restaurants', restaurants )
+  // console.log('************ Restaurants', restaurants )
   //  ------------ display events around me
 
   var eventsAroundMe = events.map((event, i) => {
