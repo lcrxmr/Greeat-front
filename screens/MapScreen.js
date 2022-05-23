@@ -97,9 +97,10 @@ export default function Map() {
       });
       var eventFromBack = await rawEvent.json();
       setEvents(eventFromBack);
+      setCarousel(restaurants)
     })();
     
-    setCarousel(restaurants)
+    
 
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
