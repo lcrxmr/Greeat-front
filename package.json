@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^5.0.0",
+    "@expo-google-fonts/inter": "^0.2.2",
+    "@expo-google-fonts/poppins": "^0.2.2",
     "@expo/webpack-config": "~0.16.2",
     "@react-native-community/datetimepicker": "6.1.2",
     "@react-native-community/masked-view": "^0.1.11",
@@ -21,6 +23,7 @@
     "antd": "^4.20.4",
     "expo": "~45.0.0",
     "expo-dev-client": "~0.9.6",
+    "expo-font": "~10.1.0",
     "expo-image-picker": "~13.1.1",
     "expo-location": "~14.2.2",
     "expo-permissions": "~13.2.0",

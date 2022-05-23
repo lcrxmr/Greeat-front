@@ -16,6 +16,7 @@ import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import Svg, { G, Path } from "react-native-svg";
 import {getDistance, getPreciseDistance} from 'geolib';
+
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
 
