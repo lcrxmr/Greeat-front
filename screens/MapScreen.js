@@ -105,7 +105,10 @@ export default function Map() {
   console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
  // console.log("------Nearby place marker: ", Pin, "------");
+
+
   //! Second solution to display pins of nearby places around us on the map
+
   pinsAroundMe = listPins.map((Pin, i) => {
    
     if (mapSwitch == false) {
@@ -345,7 +348,6 @@ export default function Map() {
       setSwitchRestaurantsButtonTextColor("white")
       setSwitchEventsButtonBgColor("white")
       setSwitchEventsButtonTextColor("black")
-      
     }
   }
 
@@ -359,9 +361,7 @@ export default function Map() {
       setSwitchEventsButtonBgColor("#A8DD62")
       setSwitchEventsButtonTextColor("white")
     }
-   
   }
-
 
 
   //! ---------------------- Component return ----------------------
