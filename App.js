@@ -79,7 +79,7 @@ return (
     <NavigationContainer >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="ProfileFromMenu" component={Profile} />
+        <Stack.Screen name="ProfileFromMenu" component={Profile} options={{header: true}}/>
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
         <Stack.Screen name="MyRecipe" component={MyRecipe}  />
         <Stack.Screen name="editProfil" component={EditProfil} />
