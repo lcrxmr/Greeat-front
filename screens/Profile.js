@@ -14,7 +14,7 @@ export default function ProfileContent() {
 
     return (
 
-    <Tab.Navigator>
+    <Tab.Navigator style={{flex:1, justifyContent:'center', marginTop:50}}>
 
         <Tab.Screen name="Profile" component={ProfileView} />
         <Tab.Screen name="Events" component={MyEventsPublic} />

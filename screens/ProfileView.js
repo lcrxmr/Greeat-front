@@ -1,5 +1,5 @@
 import { Text, View, ScrollView } from "react-native";
-import { Button } from "react-native";
+import { Card, Badge, Button } from "react-native-elements";
 import { Image } from "react-native";
 import React, { useState } from "react";
 import Carousel from "simple-carousel-react-native";
@@ -7,6 +7,7 @@ import Carousel from "simple-carousel-react-native";
 export default function Profile() {
 
   const [greeat, setGreeat] = useState(0);
+  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("#A8DD62");
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -82,9 +83,24 @@ export default function Profile() {
 
         <Button
           title="Greeat"
-          style={{ marginTop: 50 }}
+          // containerStyle={{
+          //   shadowColor: "grey",
+          //   shadowOffset: { width: 5, height: 10 },
+          //   shadowOpacity: 0.2,
+          //   shadowRadius: 10,
+          //   elevation: 15,
+          //   borderRadius: 25,
+          // }}
+          buttonStyle={{
+            margin: 10,
+            width: 170,
+            shadowRadius: 10,
+            backgroundColor: switchEventsButtonBgColor,
+            borderRadius: 25,
+          }}
           onPress={() => {
             setGreeat(greeat + 1);
+            setSwitchEventsButtonBgColor('red')
           }} // useState implement
         ></Button>
       </View>
