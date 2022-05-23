@@ -14,8 +14,10 @@ import {
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
+import Svg, { G, Path } from "react-native-svg";
 import {getDistance, getPreciseDistance} from 'geolib';
 LogBox.ignoreLogs(["Warning: ..."]);
+LogBox.ignoreAllLogs();
 
 // Import map & marker
 import MapView from "react-native-maps";
@@ -35,11 +37,16 @@ export default function Map() {
   // const [carouselRestaurant, setCarouselRestaurant] = useState([]);
   // const [carouselEvent, setCarouselEvent] = useState([]);
 
-  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("#A8DD62");
-  const [switchRestaurantsButtonTextColor, setSwitchRestaurantsButtonTextColor] = useState("white");
-  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("white");
-  const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] = useState("black");
-
+  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] =
+    useState("#A8DD62");
+  const [
+    switchRestaurantsButtonTextColor,
+    setSwitchRestaurantsButtonTextColor,
+  ] = useState("white");
+  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] =
+    useState("white");
+  const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] =
+    useState("black");
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
@@ -75,15 +82,15 @@ export default function Map() {
   useEffect(() => {
     (async () => {
       //? Fetch places from backend route /nearby-places
-      //setListPins([]); 
-      await fetch("http://172.16.190.142:3000/nearby-places", {
+      //setListPins([]);
+      await fetch("http://172.16.190.145:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.142:3000/nearby-places",
+        "http://172.16.190.145:3000/nearby-places",
         {
           method: "GET",
         }
@@ -92,7 +99,7 @@ export default function Map() {
       setListPins(places);
       // console.log('*********** places:',places, '*********')
       // Events from back
-      var rawEvent = await fetch("http://172.16.190.142:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.145:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -108,10 +115,7 @@ export default function Map() {
   // console.log("------List of places fetched from back: ", listPins, "------");
   console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
- // console.log("------Nearby place marker: ", Pin, "------");
-
-
-  //! Second solution to display pins of nearby places around us on the map
+  // console.log("------Nearby place marker: ", Pin, "------");
 
   pinsAroundMe = listPins.map((Pin, i) => {
     if (mapSwitch == false) {
@@ -125,25 +129,19 @@ export default function Map() {
           description={Pin.placeId}
           pinColor="#5c49eb"
           key={i}
-        />
+        >
+          <Image
+            source={require("../assets/pin.png")}
+            style={{
+              width: 40,
+              height: 50,
+            }}
+          />
+        </Marker>
       );
     }
   });
     //! ---------------------- Restaurant carousel ----------------------
-
-
-//       const calculateDistance = () => {
-//         var dis = getDistance(
-//           {latitude: location.lat, longitude: location.long },
-//           {latitude: listPins.coordinate.latitude, longitude: listPins.coordinate.longitude},
-//         );
-//         alert(
-//           `Distance\n\n${dis} Meter\nOR\n${dis / 1000} KM`
-//         );
-//         // return calculateDistance
-//       }
-      
-// console.log(alert)
 
   restaurants = listPins.map((restaurant, i) => {
 
@@ -155,75 +153,74 @@ export default function Map() {
     console.log(dis)
     // console.log(restaurant.gallery[0])
     return(
-    <Card borderRadius={15} containerStyle={styles.card}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 0.8 }}>
-              <Image
-                style={{ borderRadius: 10, height: 120, width: 120 }}
-                source={{uri: restaurant.gallery[0]}}
-              />
-            </View>
-            <View style={{ flex: 1, alignItems: "flex-start" }}>
-              <Text
-                style={{
-                  paddingTop: 10,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                }}
-              >
-                {restaurant.placeName}
-              </Text>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Image
-                  style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
-                  source={require("../assets/location.png")}
-                />
-                <Text
-                  style={{
-                    paddingTop: 10,
-                    fontSize: 16,
-                    justifyContent: "flex-start",
-                    marginRight: 3,
-                    marginBottom: 3,
-                  }}
-                >
-                  {" "}
-                  {dis}
-                </Text>
-                <Text
-                  style={{
-                    paddingTop: 10,
-                    fontSize: 12,
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  Km away
-                </Text>
-              </View>
-  
-              <Badge
-                containerStyle={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginBottom: 10,
-                }}
-                value="Teub de poney"
-                badgeStyle={{
-                  backgroundColor: "#476A70",
-                  height: 25,
-                  borderRadius: 20,
-                }}
-                textStyle={{
-                  marginLeft: 10,
-                  marginRight: 10,
-                }}
-              />
-            </View>
+      <Card borderRadius={15} containerStyle={styles.card}>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 0.8 }}>
+          <Image
+            style={{ borderRadius: 10, height: 120, width: 120 }}
+            source={{uri: restaurant.gallery[0]}}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: "flex-start" }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontWeight: "bold",
+              fontSize: 16,
+              justifyContent: "flex-start",
+            }}
+          >
+            {restaurant.placeName}
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
+              source={require("../assets/location.png")}
+            />
+            <Text
+              style={{
+                paddingTop: 10,
+                fontSize: 16,
+                justifyContent: "flex-start",
+                marginRight: 3,
+                marginBottom: 3,
+              }}
+            >
+              {" "}
+              {dis}
+            </Text>
+            <Text
+              style={{
+                paddingTop: 10,
+                fontSize: 12,
+                justifyContent: "flex-start",
+              }}
+            >
+              Km away
+            </Text>
           </View>
-        </Card>
-    )
-  })
+          <Badge
+            containerStyle={{
+              flex: 1,
+              justifyContent: "flex-end",
+              marginBottom: 10,
+            }}
+            value="Teub de poney"
+            badgeStyle={{
+              backgroundColor: "#476A70",
+              height: 25,
+              borderRadius: 20,
+            }}
+            textStyle={{
+              marginLeft: 10,
+              marginRight: 10,
+            }}
+          />
+        </View>
+      </View>
+    </Card>
+    );
+  });
   // console.log("------Pins around me:", pinsAroundMe, "------");
   // console.log('************ Restaurants', restaurants )
   //  ------------ display events around me
@@ -318,77 +315,69 @@ export default function Map() {
           </View>
         </View>
       </Card>
-    )
-  })
+    );
+  });
 
   //! ---------------------- Icons filter array ----------------------
-  var filterIcons = [];
-  for (let i = 0; i < 10; i++) {
-    filterIcons.push(
-      <View
-        style={{
-          alignItems: "center",
-          paddingLeft: 10,
-          marginTop: 10,
-          marginLeft: 6,
-          marginRight: 6,
-        }}
-      >
-        <View style={styles.filter}>
-          <Image
-            source={require("../assets/fastfood.png")}
-            style={{
-              backgroundColor: "white",
-              color: "grey",
-              height: 24,
-              width: 24,
-              padding: 5,
-            }}
-          />
-        </View>
-        <Text
-          style={{
-            paddingTop: 5,
-            fontWeight: "bold",
-            fontSize: 10,
-            justifyContent: "flex-start",
-          }}
-        >
-          French
-        </Text>
-      </View>
-    );
-  }
-   
-  // var switchRestaurantsButtonBgColor;
-  // var switchEventsButtonBgColor;
-  // var switchEventsButtonTextColor;
-  // var switchRestaurantsButtonTextColor;
+  // var filterIcons = [];
+  // for (let i = 0; i < 10; i++) {
+  //   filterIcons.push(
+  //     <View
+  //       style={{
+  //         alignItems: "center",
+  //         paddingLeft: 10,
+  //         marginTop: 10,
+  //         marginLeft: 6,
+  //         marginRight: 6,
+  //       }}
+  //     >
+  //       <View style={styles.filter}>
+  //         <Image
+  //           source={require("../assets/fastfood.png")}
+  //           style={{
+  //             backgroundColor: "white",
+  //             color: "grey",
+  //             height: 24,
+  //             width: 24,
+  //             padding: 5,
+  //           }}
+  //         />
+  //       </View>
+  //       <Text
+  //         style={{
+  //           paddingTop: 5,
+  //           fontWeight: "bold",
+  //           fontSize: 10,
+  //           justifyContent: "flex-start",
+  //         }}
+  //       >
+  //         French
+  //       </Text>
+  //     </View>
+  //   );
+  // }
 
   var onPressRestaurants = () => {
-
-    setMapSwitch(false)
+    setMapSwitch(false);
     setCarousel(restaurants);
-    if(mapSwitch){
-      setSwitchRestaurantsButtonBgColor("#A8DD62")
-      setSwitchRestaurantsButtonTextColor("white")
-      setSwitchEventsButtonBgColor("white")
-      setSwitchEventsButtonTextColor("black")
+    if (mapSwitch) {
+      setSwitchRestaurantsButtonBgColor("#A8DD62");
+      setSwitchRestaurantsButtonTextColor("white");
+      setSwitchEventsButtonBgColor("white");
+      setSwitchEventsButtonTextColor("black");
     }
-  }
+  };
 
   var onPressEvents = () => {
-
-    setMapSwitch(true)
+    setMapSwitch(true);
     setCarousel(eventList);
-    if(!mapSwitch){
-      setSwitchRestaurantsButtonBgColor("white")
-      setSwitchRestaurantsButtonTextColor("black")
-      setSwitchEventsButtonBgColor("#A8DD62")
-      setSwitchEventsButtonTextColor("white")
+    if (!mapSwitch) {
+      setSwitchRestaurantsButtonBgColor("white");
+      setSwitchRestaurantsButtonTextColor("black");
+      setSwitchEventsButtonBgColor("#A8DD62");
+      setSwitchEventsButtonTextColor("white");
     }
-  }
-
+  };
 
   //! ---------------------- Component return ----------------------
 
@@ -421,12 +410,12 @@ export default function Map() {
       > */}
 
       <MapView
-        style={{ flex: 1, minHeight: height * 0.7 }}
+        style={{ flex: 1, minHeight: height * 0.8,  }}
         region={{
           latitude: location.lat,
           longitude: location.long,
-          latitudeDelta: 0.00922,
-          longitudeDelta: 0.00421,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0055,
         }}
       >
         <Marker
@@ -434,8 +423,18 @@ export default function Map() {
           title="Hi"
           description="You are here"
           pinColor="#eb3467"
-          style={{ width: 100, height: 50, zIndex: 2 }}
-        />
+          // style={{ width: 50, height: 50, zIndex: 2 }}
+          anchor={{ x: 0.5, y: 0.4 }}
+          centerOffset={{ x: 0, y: 0 }}
+        >
+          <Image
+            source={require("../assets/my-pin.png")}
+            style={{
+              width: 50,
+              height: 50,
+            }}
+          />
+        </Marker>
 
         {eventsAroundMe}
         {pinsAroundMe}
@@ -497,14 +496,12 @@ export default function Map() {
             margin: 10,
             width: 170,
             shadowRadius: 10,
-            backgroundColor : switchRestaurantsButtonBgColor,
+            backgroundColor: switchRestaurantsButtonBgColor,
             borderRadius: 25,
           }}
           titleStyle={{ color: switchRestaurantsButtonTextColor }}
           title="Restaurants"
-          onPress={() => 
-            onPressRestaurants()
-          }
+          onPress={() => onPressRestaurants()}
         ></Button>
         <Button
           containerStyle={{
@@ -524,8 +521,9 @@ export default function Map() {
           }}
           titleStyle={{ color: switchEventsButtonTextColor }}
           title="Events"
-          onPress={() => {onPressEvents()
-            }}
+          onPress={() => {
+            onPressEvents();
+          }}
         ></Button>
       </View>
 
@@ -537,7 +535,7 @@ export default function Map() {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         >
-          {filterIcons}
+          {/* {filterIcons} */}
         </ScrollView>
       </View>
 
