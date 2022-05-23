@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,7 +15,11 @@ import Svg, {
   Defs,
   Stop,
   LinearGradient,
+  TSpan,
+  Text,
 } from "react-native-svg";
+// import SvgUri from 'react-native-svg-uri-updated';
+
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
@@ -37,6 +41,67 @@ import MyEventsPublic from "./screens/MyEventsPublic";
 import MyRecipe from "./screens/MyRecipe";
 import EditProfil from "./screens/editProfilScreen";
 import Create from "./screens/CreateEventScreen";
+
+// Function to display logo
+function Logo() {
+  return (
+    <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    width={132.033}
+    height={79.24}
+    viewBox="21 -6 132.033 79.24"
+  >
+    <Defs>
+      <LinearGradient
+        id="linear-gradient"
+        y1={1}
+        x2={1}
+        gradientUnits="objectBoundingBox"
+      >
+        <Stop offset={0} stopColor="#bcea64" />
+        <Stop offset={1} stopColor="#80c35f" />
+      </LinearGradient>
+    </Defs>
+    <G
+      id="Component_62_1"
+      data-name="Component 62 \u2013 1"
+      transform="translate(21 17)"
+    >
+      <Text
+        id="Greeat"
+        transform="translate(35.033 26.63)"
+        fill="#011936"
+        fontSize={21}
+        fontFamily="Poppins-SemiBold, Poppins"
+        fontWeight={600}
+        letterSpacing="0.02em"
+      >
+        <TSpan x={0} y={0}>
+          {"Greeat"}
+        </TSpan>
+      </Text>
+      <G id="Group_939" data-name="Group 939">
+        <G transform="matrix(1, 0, 0, 1, -21, -17)" filter="url(#Path_69)">
+          <Path
+            id="Path_69-2"
+            data-name="Path 69"
+            d="M723.219,2804.77c-8.077,0-14.625,6.807-14.625,15.2a18.66,18.66,0,0,0,1.651,7.023c2.676,6.628,11.471,15.012,12.974,15.012,1.6,0,10.18-8.61,12.86-14.788a18.122,18.122,0,0,0,1.765-7.247C737.844,2811.577,731.3,2804.77,723.219,2804.77Z"
+            transform="translate(-687.59 -2787.77)"
+            fill="url(#linear-gradient)"
+          />
+        </G>
+        <Path
+          id="leaf"
+          d="M17.5,1.378C13.3,3.747,13.6,8.613,10.652,10.809c-2.218,1.653-5.348.816-7.158.1A16.764,16.764,0,0,0,1.387,14.38c-.295.665-1.588-.068-1.361-.63C2.9,6.627,12.688,3.073,12.688,3.073A15.057,15.057,0,0,0,1.169,8.579,7.036,7.036,0,0,1,4.414,1.488C9.258-1.488,18.487.826,17.5,1.378Z"
+          transform="matrix(0.848, -0.53, 0.53, 0.848, 4.957, 13.947)"
+          fill="#fff"
+        />
+      </G>
+    </G>
+  </Svg>
+  );
+}
 
 function BottomNavigator() {
   return (
@@ -512,7 +577,14 @@ function BottomNavigator() {
         focused: true,
       })}
     >
-      <Tab.Screen name="Map" component={Map} options={{ title: "Greeat" }} />
+      <Tab.Screen
+        name="Map"
+        component={Map}
+        options={{
+          title: "Greeat",
+          headerTitle: (props) => <Logo {...props} />,
+        }}
+      />
       <Tab.Screen name="Myevent" component={MyEvent} />
       <Tab.Screen name="Recipe" component={Recipe} />
       <Tab.Screen name="Menu" component={Menu} />
@@ -525,7 +597,11 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="ProfileFromMenu" component={Profile} options={{header: true}}/>
+        <Stack.Screen
+          name="ProfileFromMenu"
+          component={Profile}
+          options={{ header: true }}
+        />
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
         <Stack.Screen name="MyRecipe" component={MyRecipe} />
         <Stack.Screen name="editProfil" component={EditProfil} />

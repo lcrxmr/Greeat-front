@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="132.033" height="79.24" viewBox="0 0 132.033 79.24">
+  <defs>
+    <linearGradient id="linear-gradient" y1="1" x2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#bcea64"/>
+      <stop offset="1" stop-color="#80c35f"/>
+    </linearGradient>
+    <filter id="Path_69" x="0" y="0" width="71.25" height="79.24" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feFlood flood-color="#486a6f" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Component_62_1" data-name="Component 62 – 1" transform="translate(21 17)">
+    <text id="Greeat" transform="translate(35.033 26.63)" fill="#011936" font-size="21" font-family="Poppins-SemiBold, Poppins" font-weight="600" letter-spacing="0.02em"><tspan x="0" y="0">Greeat</tspan></text>
+    <g id="Group_939" data-name="Group 939">
+      <g transform="matrix(1, 0, 0, 1, -21, -17)" filter="url(#Path_69)">
+        <path id="Path_69-2" data-name="Path 69" d="M723.219,2804.77c-8.077,0-14.625,6.807-14.625,15.2a18.66,18.66,0,0,0,1.651,7.023c2.676,6.628,11.471,15.012,12.974,15.012,1.6,0,10.18-8.61,12.86-14.788a18.122,18.122,0,0,0,1.765-7.247C737.844,2811.577,731.3,2804.77,723.219,2804.77Z" transform="translate(-687.59 -2787.77)" fill="url(#linear-gradient)"/>
+      </g>
+      <path id="leaf" d="M17.5,1.378C13.3,3.747,13.6,8.613,10.652,10.809c-2.218,1.653-5.348.816-7.158.1A16.764,16.764,0,0,0,1.387,14.38c-.295.665-1.588-.068-1.361-.63C2.9,6.627,12.688,3.073,12.688,3.073A15.057,15.057,0,0,0,1.169,8.579,7.036,7.036,0,0,1,4.414,1.488C9.258-1.488,18.487.826,17.5,1.378Z" transform="matrix(0.848, -0.53, 0.53, 0.848, 4.957, 13.947)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
