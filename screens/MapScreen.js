@@ -14,7 +14,9 @@ import {
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
+import Svg, { G, Path } from 'react-native-svg';
 LogBox.ignoreLogs(["Warning: ..."]);
+LogBox.ignoreAllLogs();
 
 // Import map & marker
 import MapView from "react-native-maps";
@@ -101,8 +103,6 @@ export default function Map() {
   // console.log('___________events from back', events)
  // console.log("------Nearby place marker: ", Pin, "------");
 
-
-  //! Second solution to display pins of nearby places around us on the map
 
   pinsAroundMe = listPins.map((Pin, i) => {
    
