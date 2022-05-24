@@ -11,11 +11,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
-import { MaterialIcons } from "@expo/vector-icons";
 import Svg, {
   G,
   Path,
@@ -59,13 +57,10 @@ export default function Map(props) {
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
-  const CARD_WIDTH = width * 0.8;
   var places;
   var pinsAroundMe = [];
   var restaurants;
-
-  let mapIndex = 0;
-  let animation = new Animated.Value(0);
+  const mapRef = useRef(null);
 
   // Load map + location on loading of the screen
   useEffect(() => {
@@ -93,14 +88,14 @@ export default function Map(props) {
       
           //? Fetch places from backend route /nearby-places
 
-      await fetch("http://172.16.190.140:3000/nearby-places", {
+      await fetch("http://172.16.190.145:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.140:3000/nearby-places",
+        "http://172.16.190.145:3000/nearby-places",
         {
           method: "GET",
         }
@@ -110,7 +105,7 @@ export default function Map(props) {
       
           //? Events from back
 
-      var rawEvent = await fetch("http://172.16.190.140:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.145:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -121,72 +116,15 @@ export default function Map(props) {
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
 
-  console.log("------List of places fetched from back: ", listPins, "------");
+  // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
-  // console.log("------Nearby place marker: ", Pin, "------");
-  // const [state, setState] = useState(initialMapState);
- 
+  // console.log("------Nearby place marker: ", Pin, "------"); 
 
-      //! ---------------------- Animated pins ----------------------
-
-  useEffect(() => {
-    animation.addListener(({ value }) => {
-      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= listPins.length) {
-        index = listPins.length - 1;
-      }
-      if (index <= 0) {
-        index = 0;
-      }
-
-      clearTimeout(regionTimeout);
-      const regionTimeout = setTimeout(() => {
-        if (mapIndex !== index) {
-          mapIndex = index;
-          const { coordinate } = listPins[index];
-          mapRef.current.animateToRegion(
-            {
-              ...coordinate,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0055,
-            },
-            350
-          );
-        }
-      }, 10);
-    });
-  }, []);
-
-
-  const interpolations = listPins.map((marker, index) => {
-    const inputRange = [
-      (index - 1) * CARD_WIDTH,
-      index * CARD_WIDTH,
-      ((index + 1) * CARD_WIDTH),
-    ];
-
-    const scale = animation.interpolate({
-      inputRange,
-      outputRange: [1, 1.5, 1],
-      extrapolate: "clamp"
-    });
-
-    return { scale };
-  });
-
-  const mapRef = useRef(null);
 
       //! ---------------------- Restaurants pins ----------------------
 
   pinsAroundMe = listPins.map((Pin, i) => {
-    const scaleStyle = {
-      transform: [
-        {
-          scale: interpolations[i].scale,
-        },
-      ],
-    };
     if (mapSwitch == false) {
       return (
         <Marker
@@ -194,8 +132,8 @@ export default function Map(props) {
             latitude: Pin.coordinate.latitude,
             longitude: Pin.coordinate.longitude,
           }}
-          // title={Pin.placeName}
-          // description={Pin.placeId}
+          title={Pin.placeName}
+          description={Pin.placeId}
           pinColor="#5c49eb"
           key={i}
         >
@@ -205,7 +143,7 @@ export default function Map(props) {
             style={{
               width: 40,
               height: 50,
-              scaleStyle
+              
             }}
           />
         </Marker>
@@ -303,8 +241,8 @@ export default function Map(props) {
             latitude: JSON.parse(event.lat),
             longitude: JSON.parse(event.long),
           }}
-          // title={event.name}
-          // description={event.date}
+          title={event.name}
+          description={event.date}
           pinColor="#0afa72"
           key={i}
         />
@@ -414,7 +352,7 @@ export default function Map(props) {
   //   );
   // }
 
-  //! ---------------------- Switch buttons' functions (Restaurants / events) ----------------------
+  //! ---------------------- Switch buttons' functions (Restaurants - events) ----------------------
 
   var onPressRestaurants = () => {
     setMapSwitch(false);
@@ -450,11 +388,8 @@ export default function Map(props) {
     mapRef.current.animateToRegion(region, 1000)
   }
 
-  //! ---------------------- Animate pin when slider moves ----------------------
 
-
-
-  //! ---------------------- Component return ----------------------
+  // ! ---------------------- Component return ----------------------
 
   return (
     <View
@@ -674,20 +609,7 @@ export default function Map(props) {
       </View>
 
       {/* //? Restaurants cards slider */}
-      <CardSlider style={styles.cardSlider}
-      onScroll={Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: {
-                x: animation,
-              }
-            },
-          },
-        ],
-        {useNativeDriver: true}
-      )}
-      >{carousel}</CardSlider>
+      <CardSlider style={styles.cardSlider}>{carousel}</CardSlider>
     </View>
   );
 }
