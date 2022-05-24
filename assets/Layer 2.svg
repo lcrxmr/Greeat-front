@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30.203" height="25.641" viewBox="0 0 30.203 25.641">
+  <defs>
+    <linearGradient id="linear-gradient" y1="1" x2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#bcea64"/>
+      <stop offset="1" stop-color="#80c35f"/>
+    </linearGradient>
+    <filter id="Path_2688" x="0" y="0" width="30.203" height="25.641" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Layer_2" data-name="Layer 2" transform="translate(6.101 1.822)">
+    <g id="eye" transform="translate(-0.118 -0.118)">
+      <rect id="Rectangle_4425" data-name="Rectangle 4425" width="18" height="18" transform="translate(0.118 0.118)" opacity="0"/>
+      <circle id="Ellipse_212" data-name="Ellipse 212" cx="1.14" cy="1.14" r="1.14" transform="translate(7.978 7.978)" fill="#c5cbd3"/>
+      <g transform="matrix(1, 0, 0, 1, -5.98, -1.7)" filter="url(#Path_2688)">
+        <path id="Path_2688-2" data-name="Path 2688" d="M17.1,9.938c-.486-.843-3.161-5.076-7.7-4.939C5.19,5.105,2.759,8.8,2.1,9.938a.76.76,0,0,0,0,.76c.479.828,3.039,4.939,7.515,4.939H9.8c4.2-.106,6.641-3.8,7.294-4.939A.76.76,0,0,0,17.1,9.938ZM9.6,12.977a2.659,2.659,0,1,1,2.659-2.659A2.659,2.659,0,0,1,9.6,12.977Z" transform="translate(5.5 0.5)" fill="url(#linear-gradient)"/>
+      </g>
+    </g>
+  </g>
+</svg>
