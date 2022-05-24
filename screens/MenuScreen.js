@@ -193,7 +193,7 @@ export default function Menu(props) {
           titleStyle={{ color: "white" }}
           title="Logout"
           onPress={() => {
-            props.navigation.navigate("Home", { screen: "HomeScreen" });
+            props.navigation.navigate("SignIn", { screen: "SignIn" });
           }}
         ></Button>
       </View>

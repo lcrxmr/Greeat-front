@@ -15,7 +15,7 @@ const SignUp = (props) => {
   const [listErrorsSignup, setErrorsSignup] = useState([]);
 
   var handleSubmitSignUp = async () => {
-    const data = await fetch("http://192.168.43.193:3000/sign-up", {
+    const data = await fetch("http://172.16.190.140:3000/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `username=${name}&email=${email}&password=${password}`,
