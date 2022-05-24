@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, Text } from "react-native";
 import { connect } from "react-redux";
-import MapScreen from "./MapScreen";
+
 // import SubmitButton from "../components/SubmitButton";
 
 // import Logo from "../components/Logo";
@@ -24,7 +24,7 @@ const SignUp = (props) => {
 
     if (body.result == true) {
       props.addToken(body.token);
-      props.navigation.navigate("MapScreen");
+      props.navigation.navigate("BottomNavigator" , {screen: 'Map'});
     } else {
       
       setErrorsSignup(body.error);

@@ -28,7 +28,7 @@ function SignIn (props)  {
       if (body.result == true) {
         props.addToken(body.token);
         // setUserExists(true);
-        props.navigation.navigate("MapScreen");
+        props.navigation.navigate("BottomNavigator" , {screen: 'Map'});
       } else {
         setErrorsSignin(body.error);
       }}
