@@ -37,29 +37,27 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
+  //! ---------------------- Main function ----------------------
+
 export default function Map(props) {
+
+      //* ---------------------- Hooks ----------------------
+
   const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
   const [mapSwitch, setMapSwitch] = useState(false);
   const [carousel, setCarousel] = useState([]);
-  // const [carouselRestaurant, setCarouselRestaurant] = useState([]);
-  // const [carouselEvent, setCarouselEvent] = useState([]);
+  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("#A8DD62");
+  const [switchRestaurantsButtonTextColor, setSwitchRestaurantsButtonTextColor,] = useState("white");
+  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("white");
+  const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] = useState("black");
 
-  const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] =
-    useState("#A8DD62");
-  const [
-    switchRestaurantsButtonTextColor,
-    setSwitchRestaurantsButtonTextColor,
-  ] = useState("white");
-  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] =
-    useState("white");
-  const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] =
-    useState("black");
+
+  //* ---------------------- Globale variables ----------------------
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
-
   var places;
   var pinsAroundMe = [];
   var restaurants;
@@ -70,8 +68,6 @@ export default function Map(props) {
   useEffect(() => {
     // let mounted = true;
     // Get our location
-    // setMapSwitch(false)
-    // setCarousel(restaurants);
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status == "granted") {
@@ -92,8 +88,9 @@ export default function Map(props) {
 
   useEffect(() => {
     (async () => {
-      //? Fetch places from backend route /nearby-places
-      //setListPins([]);
+      
+          //? Fetch places from backend route /nearby-places
+
       await fetch("http://172.16.190.140:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -108,8 +105,9 @@ export default function Map(props) {
       );
       places = await rawResponse.json();
       setListPins(places);
-      // console.log('*********** places:',places, '*********')
-      // Events from back
+      
+          //? Events from back
+
       var rawEvent = await fetch("http://172.16.190.140:3000/events", {
         method: "GET",
       });
@@ -117,14 +115,12 @@ export default function Map(props) {
       setEvents(eventFromBack);
       setCarousel(restaurants)
     })();
-    
-    
 
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
 
   // console.log("------List of places fetched from back: ", listPins, "------");
-  console.log("------List of places fetched from back: ", listPins, "------");
+  // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
   // console.log("------Nearby place marker: ", Pin, "------");
 
@@ -229,7 +225,8 @@ export default function Map(props) {
   });
   // console.log("------Pins around me:", pinsAroundMe, "------");
   // console.log('************ Restaurants', restaurants )
-  //  ------------ display events around me
+
+      //! ---------------------- Event pins ----------------------
 
   var eventsAroundMe = events.map((event, i) => {
     // console.log("------Nearby place marker: ", Pin, "------");
@@ -251,7 +248,9 @@ export default function Map(props) {
       );
     }
   });
+
   //! ---------------------- Event carousel ----------------------
+  
   var eventList = events.map((e, i) => {
     var dis = (getDistance(
       {latitude: location.lat, longitude: location.long },
@@ -368,6 +367,8 @@ export default function Map(props) {
   //   );
   // }
 
+  //! ---------------------- Switch buttons' functions (Restaurants / events) ----------------------
+
   var onPressRestaurants = () => {
     setMapSwitch(false);
     setCarousel(restaurants);
@@ -390,6 +391,8 @@ export default function Map(props) {
     }
   };
 
+  //! ---------------------- Locator buttons function ----------------------
+
   var region = {
     latitude: location.lat,
     longitude: location.long,
@@ -408,22 +411,6 @@ export default function Map(props) {
         flex: 1,
       }}
     >
-      {/* <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <Button
-          title="Restaurants"
-          onPress={() => {
-            setMapSwitch(false);
-            setCarousel(carouselRestaurant);
-          }}
-        ></Button>
-        <Button
-          title="Events"
-          onPress={() => {
-            setMapSwitch(true);
-            setCarousel(carouselEvent);
-          }}
-        ></Button>
-      </View> */}
 
       {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -445,7 +432,6 @@ export default function Map(props) {
           title="Hi"
           description="You are here"
           pinColor="#eb3467"
-          // style={{ width: 50, height: 50, zIndex: 2 }}
           anchor={{ x: 0.5, y: 0.4 }}
           centerOffset={{ x: 0, y: 0 }}
         >
@@ -549,7 +535,7 @@ export default function Map(props) {
         ></Button>
       </View>
 
-      {/* //! ---------------------- Recenter pin button ---------------------- */}
+      {/* //! ---------------------- Locator pin button ---------------------- */}
 
       <View
         style={{
@@ -636,7 +622,7 @@ export default function Map(props) {
         </ScrollView>
       </View>
 
-      {/* //! Restaurants cards slider */}
+      {/* //? Restaurants cards slider */}
       <CardSlider style={styles.cardSlider}>{carousel}</CardSlider>
     </View>
   );
