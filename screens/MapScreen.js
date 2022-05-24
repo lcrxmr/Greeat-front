@@ -10,6 +10,7 @@ import {
   Text,
   ScrollView,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
@@ -22,7 +23,7 @@ import Svg, {
   Stop,
   LinearGradient,
 } from "react-native-svg";
-import { getDistance, getPreciseDistance } from "geolib";
+import {getDistance, getPreciseDistance} from 'geolib';
 
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
@@ -31,9 +32,6 @@ LogBox.ignoreAllLogs();
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 
-// Floating button to relocate ourselves
-import { FloatingAction } from "react-native-floating-action";
-
 // Import search autocomplete lib
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"; // npm install react-native-google-places-autocomplete (if issues with npm add --legacy-peer-deps)
 import { renderNode } from "react-native-elements/dist/helpers";
@@ -41,23 +39,20 @@ const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // neve
 
   //! ---------------------- Main function ----------------------
 
-export default function Map() {
+export default function Map(props) {
 
-    //* ---------------------- Hooks ----------------------
+      //* ---------------------- Hooks ----------------------
 
   const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
   const [mapSwitch, setMapSwitch] = useState(false);
   const [carousel, setCarousel] = useState([]);
-  // const [carouselRestaurant, setCarouselRestaurant] = useState([]);
-  // const [carouselEvent, setCarouselEvent] = useState([]);
-
-  // Restaurants / Events button style switch
   const [switchRestaurantsButtonBgColor, setSwitchRestaurantsButtonBgColor] = useState("#A8DD62");
   const [switchRestaurantsButtonTextColor, setSwitchRestaurantsButtonTextColor,] = useState("white");
   const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("white");
   const [switchEventsButtonTextColor, setSwitchEventsButtonTextColor] = useState("black");
+
 
   //* ---------------------- Globale variables ----------------------
 
@@ -66,8 +61,8 @@ export default function Map() {
   var places;
   var pinsAroundMe = [];
   var restaurants;
-  const mapRef = useRef(null)
 
+  const mapRef = useRef(null)
 
   // Load map + location on loading of the screen
   useEffect(() => {
@@ -82,46 +77,44 @@ export default function Map() {
             long: location.coords.longitude,
           });
         });
-
+        
         // console.log("______________ location", location);
       }
     })();
-
+    
     // Cleanup function
     // return () => (mounted = false);
   }, []);
 
-  
-
   useEffect(() => {
     (async () => {
-      //? Fetch places from backend route /nearby-places
+      
+          //? Fetch places from backend route /nearby-places
 
-      await fetch("http://192.168.125.78:3000/nearby-places", {
+      await fetch("http://172.16.190.140:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://192.168.125.78:3000/nearby-places",
+        "http://172.16.190.140:3000/nearby-places",
         {
           method: "GET",
         }
       );
       places = await rawResponse.json();
       setListPins(places);
+      
+          //? Events from back
 
-      //? Events from back
-
-      var rawEvent = await fetch("http://192.168.125.78:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.140:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
       setEvents(eventFromBack);
+      setCarousel(restaurants)
     })();
-
-    setCarousel(restaurants);
 
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
@@ -155,95 +148,86 @@ export default function Map() {
       );
     }
   });
-  //! ---------------------- Restaurant carousel ----------------------
+    //! ---------------------- Restaurant carousel ----------------------
 
   restaurants = listPins.map((restaurant, i) => {
-    var dis = (
-      getDistance(
-        { latitude: location.lat, longitude: location.long },
-        {
-          latitude: restaurant.coordinate.latitude,
-          longitude: restaurant.coordinate.longitude,
-        }
-      ) / 1000
-    ).toFixed(1);
 
-    console.log(dis);
+    var dis = (getDistance(
+      {latitude: location.lat, longitude: location.long },
+      {latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude},
+    )/1000).toFixed(1);
+    
+    console.log(dis)
     // console.log(restaurant.gallery[0])
-    return (
-      <Card borderRadius={15} containerStyle={styles.card}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ flex: 0.8 }}>
+    return(
+      <TouchableOpacity onPress={() => {  props.navigation.navigate('RestaurantDetailScreen', { screen: 'RestaurantDetailScreen', restaurant: restaurant } ) }}>
+      <Card borderRadius={15} containerStyle={styles.card} >
+      <View style={{ flexDirection: "row" }} >
+        <View style={{ flex: 0.8 }}>
+          <Image
+            style={{ borderRadius: 10, height: 120, width: 120 }}
+            source={{uri: restaurant.gallery[0]}}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: "flex-start" }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontWeight: "bold",
+              fontSize: 16,
+              justifyContent: "flex-start",
+            }}
+          >
+            {restaurant.placeName}
+            
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
-              style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={{ uri: restaurant.gallery[0] }}
+              style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
+              source={require("../assets/location.png")}
             />
-          </View>
-          <View style={{ flex: 1, alignItems: "flex-start" }}>
             <Text
               style={{
                 paddingTop: 10,
-                fontWeight: "bold",
                 fontSize: 16,
+                justifyContent: "flex-start",
+                marginRight: 3,
+                marginBottom: 3,
+              }}
+            >
+              {" "}
+              {dis}
+            </Text>
+            <Text
+              style={{
+                paddingTop: 10,
+                fontSize: 12,
                 justifyContent: "flex-start",
               }}
             >
-              {restaurant.placeName}
+              Km away 
             </Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image
-                style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
-                source={require("../assets/location.png")}
-              />
-              <Text
-                style={{
-                  paddingTop: 10,
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                  marginRight: 3,
-                  marginBottom: 3,
-                }}
-              >
-                {" "}
-                {dis}
-              </Text>
-              <Text
-                style={{
-                  paddingTop: 10,
-                  fontSize: 12,
-                  justifyContent: "flex-start",
-                }}
-              >
-                Km away
-              </Text>
-            </View>
-            <Badge
-              containerStyle={{
-                flex: 1,
-                justifyContent: "flex-end",
-                marginBottom: 10,
-              }}
-              value="Teub de poney"
-              badgeStyle={{
-                backgroundColor: "#476A70",
-                height: 25,
-                borderRadius: 20,
-              }}
-              textStyle={{
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            />
+          </View>
+           <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{
+                fontSize: 12,
+                justifyContent: "flex-start",
+                marginLeft: 'auto'
+              }}>
+              Note: {restaurant.rating}/5 
+            </Text>
           </View>
         </View>
-      </Card>
+      </View>
+    </Card>
+    </TouchableOpacity>
     );
   });
   // console.log("------Pins around me:", pinsAroundMe, "------");
   // console.log('************ Restaurants', restaurants )
-  //  ------------ display events around me
 
-    //! ---------------------- Event pins ----------------------
+      //! ---------------------- Event pins ----------------------
+
   var eventsAroundMe = events.map((event, i) => {
     // console.log("------Nearby place marker: ", Pin, "------");
     // event.latitude && event.longitude missing from DB
@@ -265,16 +249,20 @@ export default function Map() {
     }
   });
 
-
   //! ---------------------- Event carousel ----------------------
+  
   var eventList = events.map((e, i) => {
+    var dis = (getDistance(
+      {latitude: location.lat, longitude: location.long },
+      {latitude: e.lat, longitude: e.long},
+    )/1000).toFixed(1);
     return (
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
             <Image
               style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={require("../assets/photo1.jpg")}
+              source={{ uri: events[i].image}}
             />
           </View>
           <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -303,7 +291,7 @@ export default function Map() {
                 }}
               >
                 {" "}
-                4
+                {dis}
               </Text>
               <Text
                 style={{
@@ -312,7 +300,8 @@ export default function Map() {
                   justifyContent: "flex-start",
                 }}
               >
-                {events[i].location}
+                Km away
+                {/* {events[i].location} */}
               </Text>
             </View>
 
@@ -322,7 +311,7 @@ export default function Map() {
                 justifyContent: "flex-end",
                 marginBottom: 10,
               }}
-              value="Teub de poney"
+              value="Voir les détails"
               badgeStyle={{
                 backgroundColor: "#476A70",
                 height: 25,
@@ -378,7 +367,8 @@ export default function Map() {
   //   );
   // }
 
-    //! ---------------------- Switch buttons' functions (Restaurants / events) ----------------------
+  //! ---------------------- Switch buttons' functions (Restaurants / events) ----------------------
+
   var onPressRestaurants = () => {
     setMapSwitch(false);
     setCarousel(restaurants);
@@ -401,6 +391,7 @@ export default function Map() {
     }
   };
 
+  //! ---------------------- Locator buttons function ----------------------
 
   var region = {
     latitude: location.lat,
@@ -411,9 +402,6 @@ export default function Map() {
   var onPressRelocate = () => {
     mapRef.current.animateToRegion(region, 1000)
   }
-
-
-
 
   //! ---------------------- Component return ----------------------
 
@@ -430,8 +418,7 @@ export default function Map() {
       > */}
 
       <MapView
-        
-        style={{ flex: 1, minHeight: height * 0.8 }}
+        style={{ flex: 1, minHeight: height * 0.8,  }}
         region={{
           latitude: location.lat,
           longitude: location.long,
@@ -445,7 +432,6 @@ export default function Map() {
           title="Hi"
           description="You are here"
           pinColor="#eb3467"
-          // style={{ width: 50, height: 50, zIndex: 2 }}
           anchor={{ x: 0.5, y: 0.4 }}
           centerOffset={{ x: 0, y: 0 }}
         >
@@ -549,8 +535,7 @@ export default function Map() {
         ></Button>
       </View>
 
-
-      {/* //! ---------------------- Recenter pin button ---------------------- */}
+      {/* //! ---------------------- Locator pin button ---------------------- */}
 
       <View
         style={{
