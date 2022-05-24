@@ -16,6 +16,7 @@ import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import Svg, { G, Path } from "react-native-svg";
 import {getDistance, getPreciseDistance} from 'geolib';
+
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
 
@@ -28,7 +29,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
-export default function Map() {
+export default function Map(props) {
   const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
@@ -83,14 +84,14 @@ export default function Map() {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
-      await fetch("http://172.16.190.145:3000/nearby-places", {
+      await fetch("http://172.16.190.140:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.145:3000/nearby-places",
+        "http://172.16.190.140:3000/nearby-places",
         {
           method: "GET",
         }
@@ -99,7 +100,7 @@ export default function Map() {
       setListPins(places);
       // console.log('*********** places:',places, '*********')
       // Events from back
-      var rawEvent = await fetch("http://172.16.190.145:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.140:3000/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -171,6 +172,7 @@ export default function Map() {
             }}
           >
             {restaurant.placeName}
+            
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
@@ -196,7 +198,7 @@ export default function Map() {
                 justifyContent: "flex-start",
               }}
             >
-              Km away
+              Km away 
             </Text>
           </View>
           <Badge
@@ -205,7 +207,7 @@ export default function Map() {
               justifyContent: "flex-end",
               marginBottom: 10,
             }}
-            value="Teub de poney"
+            value="Voir les détails"
             badgeStyle={{
               backgroundColor: "#476A70",
               height: 25,
@@ -215,7 +217,17 @@ export default function Map() {
               marginLeft: 10,
               marginRight: 10,
             }}
+            onPress={() => {  props.navigation.navigate('RestaurantDetailScreen', { screen: 'RestaurantDetailScreen', restaurant: restaurant } ) }}
           />
+           <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{
+                fontSize: 12,
+                justifyContent: "flex-start",
+                marginLeft: 'auto'
+              }}>
+              Note: {restaurant.rating}/5 
+            </Text>
+          </View>
         </View>
       </View>
     </Card>
@@ -247,13 +259,17 @@ export default function Map() {
   });
   //! ---------------------- Event carousel ----------------------
   var eventList = events.map((e, i) => {
+    var dis = (getDistance(
+      {latitude: location.lat, longitude: location.long },
+      {latitude: e.lat, longitude: e.long},
+    )/1000).toFixed(1);
     return (
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
             <Image
               style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={require("../assets/photo1.jpg")}
+              source={{ uri: events[i].image}}
             />
           </View>
           <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -282,7 +298,7 @@ export default function Map() {
                 }}
               >
                 {" "}
-                4
+                {dis}
               </Text>
               <Text
                 style={{
@@ -291,7 +307,8 @@ export default function Map() {
                   justifyContent: "flex-start",
                 }}
               >
-                {events[i].location}
+                Km away
+                {/* {events[i].location} */}
               </Text>
             </View>
 
@@ -301,7 +318,7 @@ export default function Map() {
                 justifyContent: "flex-end",
                 marginBottom: 10,
               }}
-              value="Teub de poney"
+              value="Voir les détails"
               badgeStyle={{
                 backgroundColor: "#476A70",
                 height: 25,

@@ -7,6 +7,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Image } from "react-native";
 import { createStore, combineReducers } from "redux";
+
+
 import Svg, {
   G,
   Path,
@@ -41,9 +43,16 @@ import MyEventsPublic from "./screens/MyEventsPublic";
 import MyRecipe from "./screens/MyRecipe";
 import EditProfil from "./screens/editProfilScreen";
 import Create from "./screens/CreateEventScreen";
+import { useFonts } from 'expo-font';
+import RestaurantDetailScreen from './screens/RestaurantDetailScreen'
+import RestaurantListScreen from './screens/RestaurantListScreen'
 
 // Function to display logo
 function Logo() {
+  let [fontsLoaded] = useFonts({
+    'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+  });
   return (
     <Svg
     xmlns="http://www.w3.org/2000/svg"
@@ -602,6 +611,7 @@ export default function App() {
           component={Profile}
           options={{ header: true }}
         />
+        <Stack.Screen name="RestaurantDetailScreen" component={RestaurantDetailScreen} />
         <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
         <Stack.Screen name="MyRecipe" component={MyRecipe} />
         <Stack.Screen name="editProfil" component={EditProfil} />
