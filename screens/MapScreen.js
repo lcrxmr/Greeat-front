@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import {
@@ -10,11 +10,19 @@ import {
   Text,
   ScrollView,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
-import Svg, { G, Path } from "react-native-svg";
+import Svg, {
+  G,
+  Path,
+  Circle,
+  Defs,
+  Stop,
+  LinearGradient,
+} from "react-native-svg";
 import {getDistance, getPreciseDistance} from 'geolib';
 
 LogBox.ignoreLogs(["Warning: ..."]);
@@ -55,6 +63,8 @@ export default function Map(props) {
   var places;
   var pinsAroundMe = [];
   var restaurants;
+
+  const mapRef = useRef(null)
 
   // Load map + location on loading of the screen
   useEffect(() => {
@@ -154,8 +164,9 @@ export default function Map(props) {
     console.log(dis)
     // console.log(restaurant.gallery[0])
     return(
-      <Card borderRadius={15} containerStyle={styles.card}>
-      <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity onPress={() => {  props.navigation.navigate('RestaurantDetailScreen', { screen: 'RestaurantDetailScreen', restaurant: restaurant } ) }}>
+      <Card borderRadius={15} containerStyle={styles.card} >
+      <View style={{ flexDirection: "row" }} >
         <View style={{ flex: 0.8 }}>
           <Image
             style={{ borderRadius: 10, height: 120, width: 120 }}
@@ -201,24 +212,6 @@ export default function Map(props) {
               Km away 
             </Text>
           </View>
-          <Badge
-            containerStyle={{
-              flex: 1,
-              justifyContent: "flex-end",
-              marginBottom: 10,
-            }}
-            value="Voir les détails"
-            badgeStyle={{
-              backgroundColor: "#476A70",
-              height: 25,
-              borderRadius: 20,
-            }}
-            textStyle={{
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-            onPress={() => {  props.navigation.navigate('RestaurantDetailScreen', { screen: 'RestaurantDetailScreen', restaurant: restaurant } ) }}
-          />
            <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={{
                 fontSize: 12,
@@ -231,6 +224,7 @@ export default function Map(props) {
         </View>
       </View>
     </Card>
+    </TouchableOpacity>
     );
   });
   // console.log("------Pins around me:", pinsAroundMe, "------");
@@ -396,6 +390,16 @@ export default function Map(props) {
     }
   };
 
+  var region = {
+    latitude: location.lat,
+    longitude: location.long,
+    latitudeDelta: 0.015,
+    longitudeDelta: 0.0055,}
+
+  var onPressRelocate = () => {
+    mapRef.current.animateToRegion(region, 1000)
+  }
+
   //! ---------------------- Component return ----------------------
 
   return (
@@ -434,6 +438,7 @@ export default function Map(props) {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0055,
         }}
+        ref = {mapRef}
       >
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
@@ -540,6 +545,81 @@ export default function Map(props) {
           title="Events"
           onPress={() => {
             onPressEvents();
+          }}
+        ></Button>
+      </View>
+
+      {/* //! ---------------------- Recenter pin button ---------------------- */}
+
+      <View
+        style={{
+          position: "absolute",
+          right: 10,
+          bottom: 170,
+        }}
+      >
+        <Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 25,
+          }}
+          buttonStyle={{
+            margin: 10,
+            width: 52,
+            height: 52,
+            shadowRadius: 10,
+            backgroundColor: "white",
+            borderRadius: 30,
+          }}
+          icon={
+            <Svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              width={23.18}
+              height={26.013}
+              viewBox="0 0 23.18 26.013"
+            >
+              <Defs>
+                <LinearGradient
+                  id="linear-gradient"
+                  y1={1}
+                  x2={1}
+                  gradientUnits="objectBoundingBox"
+                >
+                  <Stop offset={0} stopColor="#bcea64" />
+                  <Stop offset={1} stopColor="#80c35f" />
+                </LinearGradient>
+              </Defs>
+              <G
+                id="Group_47020"
+                data-name="Group 47020"
+                transform="translate(-351 -1389.923)"
+              >
+                <Circle
+                  id="Ellipse_34"
+                  data-name="Ellipse 34"
+                  cx={4.539}
+                  cy={4.539}
+                  r={4.539}
+                  transform="translate(365.103 1389.923)"
+                  fill="#011936"
+                />
+                <Path
+                  id="Path_2702"
+                  data-name="Path 2702"
+                  d="M17.82,6A10.034,10.034,0,0,0,8,16.213,12.539,12.539,0,0,0,9.1,20.932a24.226,24.226,0,0,0,4.653,6.71c1.762,1.891,3.544,3.372,4.062,3.372,1.1,0,6.87-5.861,8.638-9.934a12.314,12.314,0,0,0,1.185-4.867A10.034,10.034,0,0,0,17.82,6Zm1.118,15.2V19.929a1,1,0,0,0-2,0v1.255a5.708,5.708,0,0,1-4.582-4.694h1.257a1,1,0,0,0,0-2H12.382a5.711,5.711,0,0,1,4.556-4.526v1.088a1,1,0,0,0,2,0v-1.1a5.716,5.716,0,0,1,4.651,4.539H22.261a1,1,0,0,0,0,2h1.355A5.705,5.705,0,0,1,18.938,21.2Z"
+                  transform="translate(343.006 1384.922)"
+                  fill="url(#linear-gradient)"
+                />
+              </G>
+            </Svg>
+          }
+          onPress={() => {
+            onPressRelocate();
           }}
         ></Button>
       </View>
