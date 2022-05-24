@@ -56,7 +56,6 @@ function Logo() {
     width={131.3}
     height={80.2}
     viewBox="21 -6 131.3 80.2"
-
   >
     <Defs>
       <LinearGradient
@@ -612,6 +611,7 @@ function BottomNavigator() {
           null,
         ],
         focused: true,
+        showIcon: true 
       })}
     >
       <Tab.Screen
@@ -632,8 +632,8 @@ function BottomNavigator() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen
           name="ProfileFromMenu"
           component={Profile}
