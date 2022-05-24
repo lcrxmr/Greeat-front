@@ -40,7 +40,7 @@ const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // neve
 
 export default function Map(props) {
 
-      //* ---------------------- Hooks ----------------------
+  //* ---------------------- Hooks ----------------------
 
   const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
@@ -61,6 +61,7 @@ export default function Map(props) {
   var pinsAroundMe = [];
   var restaurants;
   const mapRef = useRef(null);
+
 
   // Load map + location on loading of the screen
   useEffect(() => {
@@ -113,9 +114,9 @@ export default function Map(props) {
       setCarousel(restaurants)
     })();
 
-    // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
-
+  
+  // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
@@ -132,12 +133,12 @@ export default function Map(props) {
             latitude: Pin.coordinate.latitude,
             longitude: Pin.coordinate.longitude,
           }}
-          title={Pin.placeName}
-          description={Pin.placeId}
+          // title={Pin.placeName}
+          // description={Pin.placeId}
           pinColor="#5c49eb"
           key={i}
         >
-         
+
           <Image
             source={require("../assets/pin.png")}
             style={{
@@ -150,7 +151,7 @@ export default function Map(props) {
       );
     }
   });
-    //! ---------------------- Restaurant carousel ----------------------
+    // ! ---------------------- Restaurant carousel ----------------------
 
   restaurants = listPins.map((restaurant, i) => {
 
@@ -227,7 +228,7 @@ export default function Map(props) {
   // console.log("------Pins around me:", pinsAroundMe, "------");
   // console.log('************ Restaurants', restaurants )
 
-      //! ---------------------- Event pins ----------------------
+      // ! ---------------------- Event pins ----------------------
 
   var eventsAroundMe = events.map((event, i) => {
     // console.log("------Nearby place marker: ", Pin, "------");
@@ -250,7 +251,7 @@ export default function Map(props) {
     }
   });
 
-  //! ---------------------- Event carousel ----------------------
+  // ! ---------------------- Event carousel ----------------------
   
   var eventList = events.map((e, i) => {
     var dis = (getDistance(
@@ -313,7 +314,7 @@ export default function Map(props) {
     );
   });
 
-  //! ---------------------- Icons filter array ----------------------
+  // ! ---------------------- Icons filter array ----------------------
   // var filterIcons = [];
   // for (let i = 0; i < 10; i++) {
   //   filterIcons.push(
@@ -352,7 +353,7 @@ export default function Map(props) {
   //   );
   // }
 
-  //! ---------------------- Switch buttons' functions (Restaurants - events) ----------------------
+  // ! ---------------------- Switch buttons' functions (Restaurants - events) ----------------------
 
   var onPressRestaurants = () => {
     setMapSwitch(false);
@@ -376,7 +377,7 @@ export default function Map(props) {
     }
   };
 
-  //! ---------------------- Locator buttons function ----------------------
+  // ! ---------------------- Locator buttons function ----------------------
 
   var region = {
     latitude: location.lat,
@@ -458,8 +459,8 @@ export default function Map(props) {
             key: GOOGLE_PLACES_API_KEY,
             language: "en", // language of the results
           }}
-          onPress={(data, details = null) => console.log(data)}
-          onFail={(error) => console.error(error)}
+          // onPress={(data, details = null) => console.log(data)}
+          // onFail={(error) => console.error(error)}
           requestUrl={{
             url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
             useOnPlatform: "web",
@@ -614,7 +615,7 @@ export default function Map(props) {
   );
 }
 
-//! ---------------------- STYLES ----------------------
+// ! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
   cardSlider: {
