@@ -80,7 +80,6 @@ export default function Map(props) {
             long: location.coords.longitude,
           });
         });
-        
         // console.log("______________ location", location);
       }
     })();
@@ -321,6 +320,7 @@ export default function Map(props) {
       {latitude: e.lat, longitude: e.long},
     )/1000).toFixed(1);
     return (
+      <TouchableOpacity onPress={() => {  props.navigation.navigate('EventDetailScreen', { screen: 'EventDetailScreen', event: e } ) }}>
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
@@ -368,27 +368,10 @@ export default function Map(props) {
                 {/* {events[i].location} */}
               </Text>
             </View>
-
-            <Badge
-              containerStyle={{
-                flex: 1,
-                justifyContent: "flex-end",
-                marginBottom: 10,
-              }}
-              value="Voir les détails"
-              badgeStyle={{
-                backgroundColor: "#476A70",
-                height: 25,
-                borderRadius: 20,
-              }}
-              textStyle={{
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            />
           </View>
         </View>
       </Card>
+      </TouchableOpacity>
     );
   });
 
