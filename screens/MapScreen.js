@@ -62,7 +62,6 @@ export default function Map(props) {
   var restaurants;
   const mapRef = useRef(null);
 
-
   // Load map + location on loading of the screen
   useEffect(() => {
     // let mounted = true;
@@ -89,41 +88,46 @@ export default function Map(props) {
       
           //? Fetch places from backend route /nearby-places
 
-      await fetch("http://172.16.190.145:3000/nearby-places", {
+      await fetch("http://172.16.190.136:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.145:3000/nearby-places",
+        "http://172.16.190.136:3000/nearby-places",
         {
           method: "GET",
         }
       );
+
       places = await rawResponse.json();
+      console.log("------List of places fetched from back: ", places, "------");
+      // console.log("Hello Here", places)
       setListPins(places);
       
           //? Events from back
 
-      var rawEvent = await fetch("http://172.16.190.145:3000/events", {
+      var rawEvent = await fetch("http://172.16.190.136:3000/events", {
         method: "GET",
       });
+
+      
       var eventFromBack = await rawEvent.json();
+      console.log('___________events from back', eventFromBack)
       setEvents(eventFromBack);
       setCarousel(restaurants)
+  
     })();
 
-  }, [location]);
+  }, []);
   
   // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
-  // console.log("------List of places fetched from back: ", listPins, "------");
-  // console.log("------List of places fetched from back: ", listPins, "------");
-  // console.log('___________events from back', events)
+
   // console.log("------Nearby place marker: ", Pin, "------"); 
 
 
-      //! ---------------------- Restaurants pins ----------------------
+  //! ---------------------- Restaurants pins ----------------------
 
   pinsAroundMe = listPins.map((Pin, i) => {
     if (mapSwitch == false) {
@@ -151,6 +155,7 @@ export default function Map(props) {
       );
     }
   });
+
     // ! ---------------------- Restaurant carousel ----------------------
 
   restaurants = listPins.map((restaurant, i) => {
@@ -250,9 +255,10 @@ export default function Map(props) {
       );
     }
   });
-
-  // ! ---------------------- Event carousel ----------------------
   
+    // ! ---------------------- Event carousel ----------------------
+
+
   var eventList = events.map((e, i) => {
     var dis = (getDistance(
       {latitude: location.lat, longitude: location.long },
@@ -459,8 +465,8 @@ export default function Map(props) {
             key: GOOGLE_PLACES_API_KEY,
             language: "en", // language of the results
           }}
-          // onPress={(data, details = null) => console.log(data)}
-          // onFail={(error) => console.error(error)}
+          onPress={(data, details = null) => console.log(data)}
+          onFail={(error) => console.error(error)}
           requestUrl={{
             url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
             useOnPlatform: "web",

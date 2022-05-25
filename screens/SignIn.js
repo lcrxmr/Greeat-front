@@ -11,18 +11,18 @@ function SignIn (props)  {
 
   const [errorsSignin, setErrorsSignin] = useState([]);
 
-  console.log(email),
-  console.log(password)
+  // console.log(email),
+  // console.log(password)
 
   var handleSubmitSignIn = async () => {
-    const data = await fetch("http://172.16.190.145:3000/sign-in", {
+    const data = await fetch("http://172.16.190.136:3000/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `email=${email}&password=${password}`,
     });
     
     const body = await data.json();
-    console.log (body);
+    // console.log (body);
 
     
       if (body.result == true) {
