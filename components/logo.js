@@ -14,7 +14,7 @@ const Logo = (props) => (
 
 
 
-<View style={{ justifyContent: "center", alignItems: "center", marginTop:100 }}>
+<View style={{ justifyContent: "center", alignItems: "center" }}>
 <Svg
 xmlns="http://www.w3.org/2000/svg"
 xmlnsXlink="http://www.w3.org/1999/xlink"
