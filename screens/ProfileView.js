@@ -3,15 +3,31 @@ import { Card, Badge, Button } from "react-native-elements";
 import { Image } from "react-native";
 import React, { useState } from "react";
 import Carousel from "simple-carousel-react-native";
+import ProfilePic from "../components/profilepic";
+
 
 export default function Profile() {
 
   const [greeat, setGreeat] = useState(0);
   const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("#A8DD62");
+  const [greeatClick, setGreeatClick] = useState(false)
+  const [greatButtonBgColor, setGreeatButtonBgColor] = useState("#476A70");
+
+  var onPressGreat = () => {
+    setGreeatClick(!greeatClick);
+    if (!greeatClick) {
+      setGreeatButtonBgColor("#A8DD62");
+      setGreeat(greeat + 1);
+    } else {
+      setGreeatButtonBgColor("#476A70");
+      setGreeat(greeat - 1);
+    }
+  };
 
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ alignItems: "center" }}>
+        <ProfilePic/>
         <View style={{ flexDirection: "row", marginTop: 10 }}>
           <Text style={{ marginLeft: 20, marginBottom: 20 }}>UserName </Text>
           <Text
@@ -96,12 +112,14 @@ export default function Profile() {
             width: 170,
             shadowRadius: 10,
             backgroundColor: switchEventsButtonBgColor,
+            backgroundColor: greatButtonBgColor,
             borderRadius: 25,
           }}
           onPress={() => {
             setGreeat(greeat + 1);
             setSwitchEventsButtonBgColor('red')
-          }} // useState implement
+            onPressGreat()
+          }}  // useState implement
         ></Button>
       </View>
     </ScrollView>
