@@ -1,4 +1,5 @@
 import Logo from './components/logo';
+import Search from './components/search';
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -60,7 +61,9 @@ function BottomNavigator() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, focused }) => {
           if (route.name == "Map") {
+            
             if (focused) {
+              
               return (
                 <Svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -524,15 +527,18 @@ function BottomNavigator() {
           null,
         ],
         focused: true,
-        showIcon: true 
+        showIcon: true,      
       })}
     >
       <Tab.Screen
         name="Map"
         component={Map}
+        screensOptions={{
+          tabBarVisible: false  
+        }}
         options={{
-          title: "Greeat",
           headerTitle: () => <Logo />,
+          headerRight:() => <Search />,
         }}
       />
       <Tab.Screen name="Myevent" component={MyEvent} />
@@ -546,7 +552,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator >
+        <Stack.Navigator>
           <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
           <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
