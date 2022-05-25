@@ -44,7 +44,6 @@ import EditProfil from "./screens/editProfilScreen";
 import Create from "./screens/CreateEventScreen";
 import { useFonts } from "expo-font";
 import RestaurantDetailScreen from "./screens/RestaurantDetailScreen";
-import RestaurantListScreen from "./screens/RestaurantListScreen";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import ForgetPassword from "./screens/ForgetPasswordScreen";
@@ -53,6 +52,7 @@ import MapScreen from "./screens/MapScreen";
 const store = createStore(combineReducers({ token }));
 
 import EventDetailScreen from './screens/EventDetailScreen'
+import RestaurantListScreen from './screens/RestaurantListScreen'
 
 //? Function to display logo
 function Logo() {
