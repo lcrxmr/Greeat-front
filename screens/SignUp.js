@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View,TextInput,  Text } from "react-native";
 import { connect } from "react-redux";
 import { Button  } from "react-native-elements";
-import Logo from "../components/logo";
+import Logo from "../components/Logo";
 
 // import SubmitButton from "../components/SubmitButton";
 
