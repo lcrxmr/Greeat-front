@@ -1,4 +1,4 @@
-import { Logo } from './components/Logo';
+import Logo from './components/logo';
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -26,9 +26,8 @@ import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
 
-// import {Provider} from 'react-redux';
-const Tab = createBottomTabNavigator();
 
+const Tab = createBottomTabNavigator();
 // const store = createStore(combineReducers({}));
 const Stack = createStackNavigator();
 const Tab2 = createMaterialTopTabNavigator();
@@ -43,12 +42,11 @@ import MyEventsPublic from "./screens/MyEventsPublic";
 import MyRecipe from "./screens/MyRecipe";
 import EditProfil from "./screens/editProfilScreen";
 import Create from "./screens/CreateEventScreen";
-import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import RestaurantDetailScreen from "./screens/RestaurantDetailScreen";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import ForgetPassword from "./screens/ForgetPasswordScreen";
-import MapScreen from "./screens/MapScreen";
+// import MapScreen from "./screens/MapScreen";
 
 const store = createStore(combineReducers({ token }));
 
@@ -548,14 +546,14 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Navigator >
+          <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
+          <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
           <Stack.Screen
             name="ProfileFromMenu"
             component={Profile}
-            options={{ header: true }}
+            options={{ headerShown: true }}
           />
           <Stack.Screen
             name="RestaurantDetailScreen"

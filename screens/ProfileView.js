@@ -27,9 +27,9 @@ export default function Profile() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ alignItems: "center" }}>
-        <ProfilePic/>
+        
         <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Text style={{ marginLeft: 20, marginBottom: 20 }}>UserName </Text>
+          <Text style={{flex:'flex-start', marginLeft: 20, marginBottom: 20 , fontWeight: "600", fontSize: 14 }}>John Doe </Text>
           <Text
             style={{ marginLeft: "auto", marginRight: 20, marginBottom: 20 }}
           >

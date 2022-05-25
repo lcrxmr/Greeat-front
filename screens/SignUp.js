@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View,TextInput,  Text } from "react-native";
+import { View, TextInput, Text, Dimensions, Image } from "react-native";
 import { connect } from "react-redux";
-import { Button  } from "react-native-elements";
-import Logo from "../components/Logo";
+import { Button } from "react-native-elements";
+import Logo from "../components/logo";
 
 // import SubmitButton from "../components/SubmitButton";
 
@@ -23,23 +23,22 @@ const SignUp = (props) => {
       body: `username=${name}&email=${email}&password=${password}`,
     });
     const body = await data.json();
-    console.log('***********BODY', body)
-    
+    console.log("***********BODY", body);
+
     if (body.result == true) {
-      
       props.addToken(body.token);
-      props.navigation.navigate("BottomNavigator" , {screen: 'Map'});
-      console.log('***********BODY', body.token)
+      props.navigation.navigate("BottomNavigator", { screen: "Map" });
+      console.log("***********BODY", body.token);
     } else {
-      
       setErrorsSignup(body.error);
     }
-  
   };
- 
+
   var tabErrorsSignup = listErrorsSignup.map((error, i) => {
     return <Text>{error}</Text>;
   });
+
+  var width = Dimensions.get("window").width; //full width
 
   return (
     <View
@@ -47,19 +46,42 @@ const SignUp = (props) => {
         flex: 1,
         justifyContent: "center",
         marginVertical: 100,
-        alignItems: 'center',
-        marginTop: 150
+        alignItems: "center",
+        marginTop: 150,
       }}
     >
-      <Logo/>
+      <Image
+        style={{ width: width, marginLeft: 0, marginTop: -190 }}
+        source={require("../assets/MaskGroup2.png")}
+      />
+      <Logo />
 
-      <View style={{marginBottom: 30, justifyContent:'center', alignItems: 'center'}}>
-      <Text style={{fontWeight:"bold", fontSize: 40}}>Welcome!</Text>
-      <Text style={{fontWeight:'200', fontSize: 14}}>Create an account to join our community!</Text>
+      <View
+        style={{
+          marginBottom: 30,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ fontWeight: "bold", fontSize: 40 }}>Welcome!</Text>
+        <Text style={{ fontWeight: "200", fontSize: 14 }}>
+          Create an account to join our community!
+        </Text>
       </View>
 
       <TextInput
-      style={{marginTop:10,borderWidth: 1,height: 40, borderRadius: 20, width: 200, padding:5, borderColor: '#476A70'}}
+        style={{
+          marginTop: 10,
+          borderWidth: 0,
+          height: 40,
+          borderRadius: 20,
+          width: 300,
+          padding: 10,
+          opacity: 0.22,
+          fontColor: "#8A8C90",
+          backgroundColor: "#C5CBD3",
+        }}
+        placeholderTextColor={"#476A70"}
         name="NAME"
         value={name}
         placeholder="name"
@@ -68,7 +90,18 @@ const SignUp = (props) => {
         onChangeText={(val) => setName(val)}
       />
       <TextInput
-      style={{marginTop:10,borderWidth: 1,height: 40, borderRadius: 20, width: 200, padding:5, borderColor: '#476A70'}}
+        style={{
+          marginTop: 10,
+          borderWidth: 0,
+          height: 40,
+          borderRadius: 20,
+          width: 300,
+          padding: 10,
+          opacity: 0.22,
+          fontColor: "#8A8C90",
+          backgroundColor: "#C5CBD3",
+        }}
+        placeholderTextColor={"#476A70"}
         name="EMAIL"
         value={email}
         placeholder="email"
@@ -77,7 +110,18 @@ const SignUp = (props) => {
         onChangeText={(val) => setEmail(val)}
       />
       <TextInput
-      style={{marginTop:10,borderWidth: 1,height: 40, borderRadius: 20, width: 200, padding:5, borderColor: '#476A70'}}
+      placeholderTextColor={"#476A70"}
+        style={{
+          marginTop: 10,
+          borderWidth: 0,
+          height: 40,
+          borderRadius: 20,
+          width: 300,
+          padding: 10,
+          opacity: 0.22,
+          fontColor: "#8A8C90",
+          backgroundColor: "#C5CBD3",
+        }}
         name="PASSWORD"
         value={password}
         placeholder="password"
@@ -87,15 +131,15 @@ const SignUp = (props) => {
       />
 
       <Button
-       buttonStyle={{
-        marginTop: 60,
-        margin: 10,
-        width: 170,
-        shadowRadius: 10,
-        backgroundColor: "#476A70",
-        borderRadius: 25,
-      }}
-      titleStyle={{ color: "white" }}
+        buttonStyle={{
+          marginTop: 60,
+          margin: 10,
+          width: 170,
+          shadowRadius: 10,
+          backgroundColor: "#476A70",
+          borderRadius: 25,
+        }}
+        titleStyle={{ color: "white" }}
         title="Sign Up"
         onPress={() => {
           handleSubmitSignUp();
