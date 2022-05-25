@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import {  ScrollView, TextInput, Text, View } from "react-native";
+import {  ScrollView, TextInput, Text, View,Image, Dimensions} from "react-native";
 import { connect } from "react-redux";
 import {  Button  } from "react-native-elements";
 // import Logo from "../components/Logo";
+import Peinture from '../components/peinture'
 
 import Svg, {
   G,
@@ -26,23 +27,24 @@ function SignIn (props)  {
   // console.log(password)
 
   var handleSubmitSignIn = async () => {
-    const data = await fetch("http://172.16.190.136:3000/sign-in", {
+    const data = await fetch("http://172.16.190.134:3000/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `email=${email}&password=${password}`,
     });
     
     const body = await data.json();
-    // console.log (body);
-
-    
+    console.log ('**********BODY',body);
       if (body.result == true) {
-        props.addToken(body.token);
+        // on fait body.user.token car body a un object user
+        props.addToken(body.user.token);
         // setUserExists(true);
         props.navigation.navigate("BottomNavigator" , {screen: 'Map'});
       } else {
         setErrorsSignin(body.error);
       }}
+
+    console.log('-----Error',errorsSignin)
     
 
     // if (userExists) {
@@ -53,16 +55,20 @@ function SignIn (props)  {
     var tabErrorsSignin = errorsSignin.map((error, i) => {
       return (<Text>{error}</Text>);
     });
-  
+    var width = Dimensions.get("window").width; //full width
   return (
+
     <ScrollView
       contentContainerStyle={{
         flex: 1,
         justifyContent: "center",
         alignItems: 'center',
-        marginVertical: 100,
       }}
     >
+      <Image
+                  style={{ width : width, marginLeft: 0 , marginTop: -30 }}
+                  source={require("../assets/MaskGroup.png")}
+                />
       <View style={{ justifyContent: "center", alignItems: "center", marginTop:100 }}>
           <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -192,8 +198,8 @@ function SignIn (props)  {
         titleStyle={{ color: "white" }}
         title="Sign In"
         onPress={() => {
-          // handleSubmitSignIn();
-          props.navigation.navigate('BottomNavigator')
+          handleSubmitSignIn();
+          // props.navigation.navigate('BottomNavigator')
           
         }}
       />

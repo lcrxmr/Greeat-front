@@ -56,7 +56,6 @@ import EventDetailScreen from './screens/EventDetailScreen'
 import RestaurantListScreen from './screens/RestaurantListScreen'
 
 
-
 function BottomNavigator() {
   return (
     <Tab.Navigator

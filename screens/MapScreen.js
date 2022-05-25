@@ -11,7 +11,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
@@ -63,13 +62,10 @@ export default function Map(props) {
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
-  const CARD_WIDTH = width * 0.8;
   var places;
   var pinsAroundMe = [];
   var restaurants;
-
-  let mapIndex = 0;
-  let animation = new Animated.Value(0);
+  const mapRef = useRef(null);
 
   // Load map + location on loading of the screen
   useEffect(() => {
@@ -125,7 +121,7 @@ export default function Map(props) {
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
   }, [location]);
 
-  // console.log("------List of places fetched from back: ", listPins, "------");
+
   // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
   // console.log("------Nearby place marker: ", Pin, "------");
@@ -174,21 +170,11 @@ export default function Map(props) {
       extrapolate: "clamp",
     });
 
-    return { scale };
-  });
 
-  const mapRef = useRef(null);
 
   //! ---------------------- Restaurants pins ----------------------
 
   pinsAroundMe = listPins.map((Pin, i) => {
-    const scaleStyle = {
-      transform: [
-        {
-          scale: interpolations[i].scale,
-        },
-      ],
-    };
     if (mapSwitch == false) {
       return (
         <Marker
@@ -399,7 +385,7 @@ export default function Map(props) {
           <View style={{ flex: 0.8 }}>
             <Image
               style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={{ uri: events[i].image }}
+              source={{ uri: e.image}}
             />
           </View>
           <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -411,7 +397,7 @@ export default function Map(props) {
                 justifyContent: "flex-start",
               }}
             >
-              {events[i].name}
+              {e.name}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
@@ -541,8 +527,6 @@ export default function Map(props) {
     mapRef.current.animateToRegion(region, 1000);
   };
 
-  //! ---------------------- Animate pin when slider moves ----------------------
-
   //! ---------------------- Component return ----------------------
 
   return (
@@ -580,7 +564,6 @@ export default function Map(props) {
             }}
           />
         </Marker>
-
         {eventsAroundMe}
         {pinsAroundMe}
       </MapView>
@@ -779,7 +762,7 @@ export default function Map(props) {
       </CardSlider>
     </View>
   );
-}
+})
 
 //! ---------------------- STYLES ----------------------
 
@@ -836,4 +819,4 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
-});
+})

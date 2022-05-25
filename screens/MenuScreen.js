@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, Card} from 'react-native';
-import {Button } from 'react-native';
+import { Button } from "react-native-elements";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {Image} from 'react-native'
 import {createStore, combineReducers} from 'redux';
+import Svg, {
+  G,
+  Path,
+  Circle,
+  Rect,
+  Defs,
+  Stop,
+  LinearGradient,
+  TSpan,
+} from "react-native-svg";
 
 import Profile from './Profile'
 
