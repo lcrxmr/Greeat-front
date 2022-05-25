@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Text } from "react-native";
+import { View,TextInput,  Text } from "react-native";
 import { connect } from "react-redux";
+import { Button  } from "react-native-elements";
 
 // import SubmitButton from "../components/SubmitButton";
 
@@ -49,6 +50,7 @@ const SignUp = (props) => {
 
       <TextInput
         name="NAME"
+        style={{}}
         value={name}
         autoCapitalize="words"
         autoCorrect={false}

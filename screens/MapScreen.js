@@ -102,20 +102,21 @@ export default function Map(props) {
       );
 
       places = await rawResponse.json();
-      console.log("------List of places fetched from back: ", places, "------");
+      
       // console.log("Hello Here", places)
       setListPins(places);
+      console.log("------List of places fetched from back: ", listPins, "------");
       
           //? Events from back
 
       var rawEvent = await fetch("http://172.16.190.136:3000/events", {
         method: "GET",
       });
-
       
       var eventFromBack = await rawEvent.json();
-      console.log('___________events from back', eventFromBack)
+
       setEvents(eventFromBack);
+      console.log('___________events from back', eventFromBack)
       setCarousel(restaurants)
   
     })();
