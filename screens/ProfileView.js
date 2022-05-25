@@ -7,19 +7,7 @@ import Carousel from "simple-carousel-react-native";
 export default function Profile() {
 
   const [greeat, setGreeat] = useState(0);
-  const [greeatClick, setGreeatClick] = useState(false)
-  const [greatButtonBgColor, setGreeatButtonBgColor] = useState("#476A70");
-
-  var onPressGreat = () => {
-    setGreeatClick(!greeatClick);
-    if (!greeatClick) {
-      setGreeatButtonBgColor("#A8DD62");
-      setGreeat(greeat + 1);
-    } else {
-      setGreeatButtonBgColor("#476A70");
-      setGreeat(greeat - 1);
-    }
-  };
+  const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] = useState("#A8DD62");
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -33,7 +21,7 @@ export default function Profile() {
             {/* //voir le onPress plus bas pour la valeur de 'greeat'  */}
           </Text>
         </View>
-        <Carousel>
+        <Carousel >
           <View>
           <Image
           source={require('../assets/photo1.jpg')
@@ -107,11 +95,12 @@ export default function Profile() {
             margin: 10,
             width: 170,
             shadowRadius: 10,
-            backgroundColor: greatButtonBgColor,
+            backgroundColor: switchEventsButtonBgColor,
             borderRadius: 25,
           }}
           onPress={() => {
-            onPressGreat()
+            setGreeat(greeat + 1);
+            setSwitchEventsButtonBgColor('red')
           }} // useState implement
         ></Button>
       </View>

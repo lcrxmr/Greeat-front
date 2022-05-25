@@ -1,22 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView, Card } from "react-native";
-import { Button } from "react-native-elements";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { Image } from "react-native";
-import { createStore, combineReducers } from "redux";
-import Svg, {
-  Defs,
-  LinearGradient,
-  Stop,
-  G,
-  Rect,
-  Circle,
-  Path,
-} from "react-native-svg";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, ScrollView, Card} from 'react-native';
+import {Button } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import {Image} from 'react-native'
+import {createStore, combineReducers} from 'redux';
 
-import Profile from "./Profile";
+import Profile from './Profile'
 
 const Stack = createStackNavigator();
 
@@ -197,6 +188,7 @@ export default function Menu(props) {
           }}
         ></Button>
       </View>
-    </ScrollView>
-  );
-}
+  </ScrollView>
+
+    );
+    }

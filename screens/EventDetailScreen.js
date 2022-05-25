@@ -256,7 +256,7 @@ export default function EventDetailScreen({ route }) {
           }}
         >
           Participants: {userJoin}
-          {event.participants[0]}
+          {/* {event.participants[0]} */}
         </Text>
       </View>
       <View style={{ alignItems: "center" }}>
