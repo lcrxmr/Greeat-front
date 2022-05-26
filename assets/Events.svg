@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="Group_654" data-name="Group 654" transform="translate(-131 -21)">
+    <rect id="Rectangle_3353" data-name="Rectangle 3353" width="21" height="19" rx="3" transform="translate(131 23)" fill="#8a8c90"/>
+    <circle id="Ellipse_179" data-name="Ellipse 179" cx="6" cy="6" r="6" transform="translate(141 31)" fill="#c5cbd3"/>
+    <path id="Path_1344" data-name="Path 1344" d="M16.941,14a.941.941,0,0,1,.941.941v1.492l1.136,1.136a.941.941,0,1,1-1.33,1.33l-1.411-1.411A.941.941,0,0,1,16,16.822V14.941A.941.941,0,0,1,16.941,14Z" transform="translate(129.747 19.813)" fill="#8a8c90" fill-rule="evenodd"/>
+    <path id="Path_1345" data-name="Path 1345" d="M6.941,2a.941.941,0,0,1,.941.941V4.822A.941.941,0,1,1,6,4.822V2.941A.941.941,0,0,1,6.941,2Z" transform="translate(129.179 19)" fill="#c5cbd3" fill-rule="evenodd"/>
+    <path id="Path_1346" data-name="Path 1346" d="M16.941,2a.941.941,0,0,1,.941.941V4.822a.941.941,0,1,1-1.882,0V2.941A.941.941,0,0,1,16.941,2Z" transform="translate(129.624 19)" fill="#c5cbd3" fill-rule="evenodd"/>
+  </g>
+</svg>
