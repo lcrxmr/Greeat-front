@@ -16,7 +16,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStore, combineReducers } from "redux";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Card, Image, Button, FAB } from "react-native-elements";
+import { Card, Image, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { getDistance, getPreciseDistance } from "geolib";
 
@@ -264,7 +264,8 @@ const styles = StyleSheet.create({
   },
   card: {
     marginLeft: 10,
-    marginBottom: 5,
+    marginBottom: 10,
+    marginTop: 10,
     shadowColor: "#171717",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
