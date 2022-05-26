@@ -60,7 +60,7 @@ export default function EventDetails({ route }, props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
-      await fetch("http://172.17.188.2:3000/nearby-places", {
+      await fetch("http://192.168.43.193:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
@@ -95,8 +95,8 @@ export default function EventDetails({ route }, props) {
   console.log(dis);
   // console.log(restaurant.gallery[0])
   return (
-    <View style={{ flex: 1, alignItems: "center", paddingTop: 25, width: "100%" }}>
-
+    <View style={{ flex: 1, alignItems: "center", paddingTop: 25 , width: "100%" }}>
+      
       <Image
         style={{ borderRadius: 10, height: 200, width: 300 }}
         source={{ uri: restaurant.gallery[0] }}
@@ -117,78 +117,77 @@ export default function EventDetails({ route }, props) {
         />
       </View> */}
 
+      
+      
+        
 
-
-
-
-      <View
-        style={{
-          paddingTop: 25,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingBottom: 20
-        }}
-      >
-        <GoldStar />
-        <GoldStar />
-        <GoldStar />
-        <GoldStar />
-        <GoldStar />
-        <Text
+        <View
           style={{
-
-            fontSize: 12,
+            paddingTop:25,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom:20
           }}
         >
-          : {restaurant.rating} / 5
-        </Text>
-      </View>
-      <View
-        style={{
-          width: 327,
-          height: 65.82,
-          backgroundColor: "#ffffff",
-          borderRadius: 10,
-          opacity: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <LocationMarker />
-          <Text>{dis}km away</Text>
+          <GoldStar />
+          <GoldStar />
+          <GoldStar />
+          <GoldStar />
+          <GoldStar />
+          <Text
+            style={{
+              
+              fontSize: 12,
+            }}
+          >
+            Note: {restaurant.rating} 5 / 5
+          </Text>
         </View>
         <View
           style={{
-            width: 109,
-            height: 21,
-            backgroundColor: "#476A70",
+            width: 327,
+            height: 65.82,
+            backgroundColor: "#ffffff",
+            borderRadius: 10,
+            opacity: 1,
+            flexDirection: "row",
             alignItems: "center",
-            borderRadius: 11,
-
+            justifyContent: "space-around",
           }}
         >
-          <Text>French cuisine</Text>
-        </View>
-      </View>
-      <View style={{ width: '100%', paddingTop: 25 }}>
-        <Text style={{ fontSize: 12 }}>Location</Text>
-      </View>
-      <View style={{ width: '100%', paddingTop: 15 }}>
-        <RestaurantMapPicture />
-        <ArrowRestaurantDetailsMap style={{ marginTop: -80, marginLeft: 275 }} />
-        <Text style={{ marginTop: -80 }}>3 Rue de la Vergouille,{"\n"} 69003, Lyon. France</Text>
-        <View />
+          <View style={{ flexDirection: "row" }}>
+            <LocationMarker />
+            <Text>{dis}km away</Text>
+          </View>
+          <View
+            style={{
+              width: 109,
+              height: 21,
+              backgroundColor: "#476A70",
+              alignItems: "center",
+              borderRadius: 11,
 
-        <View style={{ paddingTop: 90 }}>
-          <Text style={{ fontSize: 12 }}>Description</Text>
-          <RestaurantDescription style={{ paddingTop: 15 }} />
+            }}
+          >
+            <Text>French cuisine</Text>
+          </View>
         </View>
-      </View>
-
+        <View style={{ width: '100%', paddingTop: 25 }}>
+          <Text style={{ fontSize: 12 }}>Location</Text>
+        </View>
+        <View style={{ width: '100%', paddingTop: 15 }}>
+          <RestaurantMapPicture  />
+          <ArrowRestaurantDetailsMap style={{ marginTop: -80, marginLeft: 275}}/>
+          <Text  style={{ marginTop: -80}}>3 Rue de la Vergouille,{"\n"} 69003, Lyon. France</Text>
+        <View/>
+        
+          <View style={{paddingTop: 90}}>
+            <Text style={{ fontSize: 12 }}>Description</Text>
+            <RestaurantDescription style={{paddingTop: 15}} />
+          </View>
+        </View>
+      
     </View>
   );
 }
-
