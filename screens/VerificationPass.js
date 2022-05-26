@@ -3,7 +3,7 @@ import { ScrollView, TextInput,  } from "react-native";
 import { connect } from "react-redux";
 
 
-function ForgetPassword () {
+function verificationPass () {
   
   return (
     <ScrollView

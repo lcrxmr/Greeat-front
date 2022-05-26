@@ -2,7 +2,7 @@ import React, {useState,useEffect} from "react"
 import { View, TextInput, StyleSheet, Button,Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function EditProfil(props) {
+export default function EditProfileScreen(props) {
     const [text, setText] = useState("");
     const [image, setImage] = useState(null);
 

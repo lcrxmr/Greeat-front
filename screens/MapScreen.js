@@ -123,7 +123,7 @@ export default function Map(props) {
     })();
 
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
-  }, [location]);
+  }, [location, listPins.length]);
 
   // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log("------List of places fetched from back: ", listPins, "------");
@@ -251,13 +251,11 @@ export default function Map(props) {
                 justifyContent: "flex-start",
               }}
             >
-              <View
-                style={{
-                  flex: 0.5,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                }}
-              >
+              <View style={{
+                flex: 0.5,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+              }}>
                 <Text
                   style={{
                     paddingTop: 10,
@@ -403,7 +401,7 @@ export default function Map(props) {
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
-          props.navigation.navigate("EventDetailScreen", {
+          props.navigation.navigate("EventDetail", {
             screen: "EventDetailScreen",
             event: e,
           });
@@ -530,7 +528,6 @@ export default function Map(props) {
 
             {/* //! ---------------------------------------------------- */}
 
-          
           </View>
         </Card>
       </TouchableOpacity>

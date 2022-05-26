@@ -59,7 +59,7 @@ console.log('********* restaurant from map',restaurant)
         (async () => {
           //? Fetch places from backend route /nearby-places
           //setListPins([]);
-          await fetch("http://172.16.190.142:3000/nearby-places", {
+          await fetch("http://172.16.190.132:3000/nearby-places", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `lat=${location.lat}&long=${location.long}`,

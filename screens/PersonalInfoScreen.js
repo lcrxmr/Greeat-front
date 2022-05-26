@@ -1,7 +1,7 @@
 import React from "react"
 import { View, TextInput, StyleSheet, Button,} from 'react-native';
 
-export default function Created(props) {
+export default function personalInfo(props) {
     const [name, setName] = useState(""); 
     const [email,setEmail] = useState("")
 
