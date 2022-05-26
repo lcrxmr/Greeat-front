@@ -251,11 +251,13 @@ export default function Map(props) {
                 justifyContent: "flex-start",
               }}
             >
-              <View  style={{
-                flex: 0.5,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}>
+              <View
+                style={{
+                  flex: 0.5,
+                  alignItems: "flex-start",
+                  justifyContent: "flex-start",
+                }}
+              >
                 <Text
                   style={{
                     paddingTop: 10,
@@ -268,7 +270,12 @@ export default function Map(props) {
                 </Text>
               </View>
               <View
-                style={{  flex: 0.5, justifyContent: "flex-end", alignItems: "flex-start", paddingBottom: 5 }}
+                style={{
+                  flex: 0.5,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-start",
+                  paddingBottom: 5,
+                }}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
@@ -371,12 +378,11 @@ export default function Map(props) {
           pinColor="#0afa72"
           key={i}
         >
-        <Image
+          <Image
             source={require("../assets/pin.png")}
             style={{
               width: 40,
               height: 50,
-   
             }}
           />
         </Marker>
@@ -394,79 +400,140 @@ export default function Map(props) {
       ) / 1000
     ).toFixed(1);
     return (
-      <Card borderRadius={15} containerStyle={styles.card}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ flex: 0.8 }}>
-            <Image
-              style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={{ uri: e.image }}
-            />
-          </View>
-          <View style={{ flex: 1, alignItems: "flex-start" }}>
-            <Text
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          props.navigation.navigate("EventDetailScreen", {
+            screen: "EventDetailScreen",
+            event: e,
+          });
+        }}
+      >
+        <Card borderRadius={15} containerStyle={styles.card}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 0.8 }}>
+              <Image
+                style={{ borderRadius: 10, height: 120, width: 120 }}
+                source={{ uri: e.image }}
+              />
+            </View>
+
+            {/* //! ---------------------------------------------------- */}
+
+            <View
               style={{
-                paddingTop: 10,
-                fontWeight: "bold",
-                fontSize: 16,
+                flex: 1,
+                alignItems: "flex-start",
                 justifyContent: "flex-start",
               }}
             >
-              {e.name}
-            </Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image
-                style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
-                source={require("../assets/location.png")}
-              /> 
-              <Text
+              <View
                 style={{
-                  paddingTop: 10,
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                  marginRight: 3,
-                  marginBottom: 3,
-                }}
-              >
-                {" "}
-                {dis}
-              </Text>
-              <Text
-                style={{
-                  paddingTop: 10,
-                  fontSize: 12,
+                  flex: 0.5,
+                  alignItems: "flex-start",
                   justifyContent: "flex-start",
                 }}
               >
-                Km away
-                {/* {events[i].location} */}
-              </Text>
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  {events[i].name}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 0.5,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-start",
+                  paddingBottom: 5,
+                }}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image
+                    style={{
+                      height: 18,
+                      width: 15,
+                      marginRight: 3,
+                      marginTop: 5,
+                    }}
+                    source={require("../assets/location.png")}
+                  />
+                  <Text
+                    style={{
+                      paddingTop: 10,
+                      fontSize: 16,
+                      justifyContent: "flex-start",
+                      marginRight: 3,
+                      marginBottom: 3,
+                    }}
+                  >
+                    {" "}
+                    {dis}
+                  </Text>
+                  <Text
+                    style={{
+                      paddingTop: 10,
+                      fontSize: 12,
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    Km away
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: -2,
+                  }}
+                >
+                  <Image
+                    style={{
+                      height: 17,
+                      width: 17,
+                      marginRight: 3,
+                      marginTop: 0,
+                    }}
+                    source={require("../assets/date.png")}
+                  />
+                  <Text
+                    style={{
+                      paddingTop: 5,
+                      fontSize: 16,
+                      justifyContent: "flex-start",
+                      marginRight: 3,
+                      marginBottom: 3,
+                    }}
+                  >
+                    {" "}
+                    {e.date}
+                  </Text>
+                  <Text
+                    style={{
+                      paddingTop: 5,
+                      fontSize: 12,
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    /5
+                  </Text>
+                </View>
+              </View>
             </View>
 
-            <Badge
-              onPress={() => {
-                props.navigation.navigate("EventDetailScreen", {
-                  screen: "EventDetailScreen", event: e,}
-                  
-              )}}
-              containerStyle={{
-                flex: 1,
-                justifyContent: "flex-end",
-                marginBottom: 10,
-              }}
-              value="Voir les détails"
-              badgeStyle={{
-                backgroundColor: "#476A70",
-                height: 25,
-                borderRadius: 20,
-              }}
-              textStyle={{
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            />
+            {/* //! ---------------------------------------------------- */}
+
+          
           </View>
-        </View>
-      </Card>
+        </Card>
+      </TouchableOpacity>
     );
   });
 
@@ -546,8 +613,6 @@ export default function Map(props) {
     mapRef.current.animateToRegion(region, 1000);
   };
 
-  //! ---------------------- Animate pin when slider moves ----------------------
-
   //! ---------------------- Component return ----------------------
 
   return (
@@ -555,7 +620,6 @@ export default function Map(props) {
       style={{
         flex: 1,
       }}
-      ref={mapRef}
     >
       {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -570,7 +634,7 @@ export default function Map(props) {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0055,
         }}
-        
+        ref={mapRef}
       >
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
@@ -631,7 +695,7 @@ export default function Map(props) {
           alignItems: "center",
           paddingTop: 10,
           paddingLeft: 6,
-          top: 30,
+          top: 0,
         }}
       >
         <Button
