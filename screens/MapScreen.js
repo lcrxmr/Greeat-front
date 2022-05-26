@@ -97,22 +97,14 @@ export default function Map(props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-<<<<<<< HEAD
       await fetch("http://172.17.188.2:3000/nearby-places", {
-=======
-      await fetch("http://172.16.190.131:3000/nearby-places", {
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-<<<<<<< HEAD
         "http://172.17.188.2:3000/nearby-places",
-=======
-        "http://172.16.190.131:3000/nearby-places",
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
         {
           method: "GET",
         }
@@ -122,11 +114,7 @@ export default function Map(props) {
 
       //? Events from back
 
-<<<<<<< HEAD
       var rawEvent = await fetch("http://172.17.188.2:3000/events", {
-=======
-      var rawEvent = await fetch("http://172.16.190.131:3000/events", {
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -263,13 +251,6 @@ export default function Map(props) {
                 justifyContent: "flex-start",
               }}
             >
-<<<<<<< HEAD
-              <View style={{
-                flex: 0.5,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}>
-=======
               <View
                 style={{
                   flex: 0.5,
@@ -277,7 +258,6 @@ export default function Map(props) {
                   justifyContent: "flex-start",
                 }}
               >
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
                 <Text
                   style={{
                     paddingTop: 10,
@@ -290,16 +270,12 @@ export default function Map(props) {
                 </Text>
               </View>
               <View
-<<<<<<< HEAD
-                style={{ flex: 0.5, justifyContent: "flex-end", alignItems: "flex-start", paddingBottom: 5 }}
-=======
                 style={{
                   flex: 0.5,
                   justifyContent: "flex-end",
                   alignItems: "flex-start",
                   paddingBottom: 5,
                 }}
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
@@ -407,10 +383,6 @@ export default function Map(props) {
             style={{
               width: 40,
               height: 50,
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
             }}
           />
         </Marker>
@@ -558,11 +530,7 @@ export default function Map(props) {
 
             {/* //! ---------------------------------------------------- */}
 
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
           </View>
         </Card>
       </TouchableOpacity>
@@ -666,11 +634,7 @@ export default function Map(props) {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0055,
         }}
-<<<<<<< HEAD
-
-=======
         ref={mapRef}
->>>>>>> 0d903122d2fb1612b82a5c8d2ab2374afe1942a0
       >
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
