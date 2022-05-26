@@ -417,7 +417,7 @@ export default function Map(props) {
               <Image
                 style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
                 source={require("../assets/location.png")}
-              />
+              /> 
               <Text
                 style={{
                   paddingTop: 10,
