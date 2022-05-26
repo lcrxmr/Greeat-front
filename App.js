@@ -520,9 +520,9 @@ function BottomNavigator() {
           {
             backgroundColor: "#ffffff",
             display: "flex",
-            height: 65,
-            paddingTop: 8,
-            paddingBottom: 3,
+            height: 72,
+            paddingTop: 5,
+            paddingBottom: 11 ,
           },
           null,
         ],
@@ -536,7 +536,11 @@ function BottomNavigator() {
         options={{
           headerTitle: () => <Logo />,
           headerRight:() => <Search />,
+          headerStyle: {
+            height: 110,
+          }
         }}
+        
       />
       <Tab.Screen name="Myevent" component={MyEvent} />
       <Tab.Screen name="Recipe" component={Recipe} />

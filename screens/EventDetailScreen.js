@@ -113,12 +113,13 @@ export default function EventDetailScreen({ route }) {
   console.log(dis);
   // console.log(restaurant.gallery[0])
   return (
-    <View style={{ flex: 1, justifyContent: "center", marginTop: 30 }}>
+    <View style={{ flex: 1, justifyContent: "center", marginTop: 0 }}> 
+    {/* // Margin was 30 */}
       {/* <View style={{ flex: 0.8 }}> */}
       <Image
         style={{
           marginLeft: 20,
-          marginTop: 40,
+          marginTop: 0,  // Margin was 40
           borderRadius: 15,
           height: 200,
           width: 350,
@@ -286,7 +287,7 @@ export default function EventDetailScreen({ route }) {
         </Text>
       </View>
 
-      <Badge
+      {/* <Badge
         containerStyle={{
           flex: 1,
           justifyContent: "flex-end",
@@ -305,7 +306,7 @@ export default function EventDetailScreen({ route }) {
         onPress={() => {
           navigation.goBack("Map", { screen: "Map" });
         }}
-      />
+      /> */}
     </View>
   );
 }
