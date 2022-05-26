@@ -6,7 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Image } from 'react-native'
-import { createStore, combineReducers } from 'redux';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 
@@ -18,7 +17,7 @@ const Stack = createStackNavigator();
 const Tab2 = createMaterialTopTabNavigator();
 
 import HomeScreen from './screens/HomeScreen'
-import MyEvent from './screens/MyEventScreen'
+import MyEvent from './screens/EventScreen'
 import Recipe from './screens/RecipeScreen'
 import Menu from './screens/MenuScreen'
 import Map from './screens/MapScreen'
@@ -27,10 +26,31 @@ import MyEventsPublic from './screens/MyEventsPublic'
 import MyRecipe from './screens/MyRecipe'
 import MyRecipes from './screens/MyRecipesScreen'
 import EditProfil from "./screens/editProfilScreen"
+import RecipeDetails from "./screens/RecipeDetailsScreen"
 import CreateRecipeScreen from "./screens/CreateRecipeScreen"
+import EditRecipeScreen from "./screens/EditRecipeScreen"
+import CreateEventScreen from "./screens/CreateEventScreen"
+import EditEventScreen from "./screens/EditEventScreen"
+import EventDetailsScreen from "./screens/EventDetailsScreen"
+import MyEventsScreen from "./screens/MyEventsScreen"
+import Event from "./screens/EventScreen"
+
+
+
+
+
+import eventCount from './reducers/eventCount';
+import recipeCount from './reducers/recipeCount';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+
+const store = createStore(combineReducers({ recipeCount, eventCount }));
+
 
 function BottomNavigator() {
+
   return (
+
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
@@ -72,19 +92,36 @@ function BottomNavigator() {
 export default function App() {
   return (
 
-    <NavigationContainer>
-      <Stack.Navigator >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="ProfileFromMenu" component={Profile} />
-        <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
-        <Stack.Screen name="MyRecipe" component={MyRecipe} />
-        <Stack.Screen name="editProfil" component={EditProfil} />
-        <Stack.Screen name="Create" component={CreateRecipeScreen} />
-        <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+    <Provider store={store}>
+
+      <NavigationContainer>
+        <Stack.Navigator >
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="ProfileFromMenu" component={Profile} />
+          <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
+          <Stack.Screen name="MyRecipe" component={MyRecipe} />
+          <Stack.Screen name="editProfil" component={EditProfil} />
+          <Stack.Screen name="CreateRecipe" component={CreateRecipeScreen} />
+          <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
+          <Stack.Screen name="EditRecipe" component={EditRecipeScreen} />
+
+          <Stack.Screen name="MyEvents" component={MyEventsScreen} />
+
+          <Stack.Screen name="CreateEvent" component={CreateEventScreen} />
+          <Stack.Screen name="EditEvent" component={EditEventScreen} />
+          <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
+          <Stack.Screen name="Event" component={Event} />
 
 
-      </Stack.Navigator>
-    </NavigationContainer>
+
+
+          <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+
 
   );
 }

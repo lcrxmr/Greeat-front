@@ -7,7 +7,7 @@ import { Image } from 'react-native'
 import { createStore, combineReducers } from 'redux';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeScreen from './HomeScreen'
-import MyEventScreen from './MyEventScreen'
+import MyEventScreen from './EventScreen'
 
 
 

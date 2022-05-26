@@ -9,7 +9,7 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
@@ -26,15 +26,13 @@ import { renderNode } from "react-native-elements/dist/helpers";
 const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
 
 export default function Map() {
-
-
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState({ lat: 0, long: 0 });
   const [listPins, setListPins] = useState([]);
   const [events, setEvents] = useState([]);
   const [mapSwitch, setMapSwitch] = useState(false);
   const [carousel, setCarousel] = useState([]);
-  const [carouselRestaurant, setCarouselRestaurant] = useState([])
-  const [carouselEvent, setCarouselEvent] = useState([])
+  const [carouselRestaurant, setCarouselRestaurant] = useState([]);
+  const [carouselEvent, setCarouselEvent] = useState([]);
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
@@ -56,8 +54,7 @@ export default function Map() {
           });
         });
 
-        console.log("______________ location", location,);
-
+        console.log("______________ location", location);
       }
     })();
     // Cleanup function
@@ -70,14 +67,11 @@ export default function Map() {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-      await fetch(
-        "http://192.168.1.173:3000/nearby-places",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: `lat=${location.lat}&long=${location.long}`,
-        }
-      );
+      await fetch("http://192.168.1.173:3000/nearby-places", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `lat=${location.lat}&long=${location.long}`,
+      });
 
       var rawResponse = await fetch(
         "http://192.168.1.173:3000/nearby-places",
@@ -97,10 +91,7 @@ export default function Map() {
     setCarousel(carouselRestaurant);
   }, [location]);
 
-  console.log(listPins[0])
-
-
-  // console.log("------List of places fetched from back: ", listPins, "------");
+  console.log("------List of places fetched from back: ", listPins, "------");
   // console.log('___________events from back', events)
 
   //! Second solution to display pins of nearby places around us on the map
@@ -128,12 +119,14 @@ export default function Map() {
   var eventsAroundMe = events.map((event, i) => {
     // console.log("------Nearby place marker: ", Pin, "------");
     // event.latitude && event.longitude missing from DB
-    if (mapSwitch == true) {
+    console.log("------ event coord: ", event, "------");
+
+    if (mapSwitch) {
       return (
         <Marker
           coordinate={{
-            latitude: location.lat,
-            longitude: location.long,
+            latitude: JSON.parse(event.lat),
+            longitude: JSON.parse(event.long),
           }}
           title={event.name}
           description={event.date}
@@ -144,15 +137,20 @@ export default function Map() {
     }
   });
 
-
   //! ---------------------- Icons filter array ----------------------
   var filterIcons = [];
   for (let i = 0; i < 10; i++) {
     filterIcons.push(
-      <View style={{ alignItems: "center", paddingLeft: 10, marginTop: 10, marginLeft: 6, marginRight: 6 }}>
-        <View
-          style={styles.filter}
-        >
+      <View
+        style={{
+          alignItems: "center",
+          paddingLeft: 10,
+          marginTop: 10,
+          marginLeft: 6,
+          marginRight: 6,
+        }}
+      >
+        <View style={styles.filter}>
           <Image
             source={require("../assets/fastfood.png")}
             style={{
@@ -175,20 +173,14 @@ export default function Map() {
           French
         </Text>
       </View>
-    )
-
+    );
   }
-
 
   //! ---------------------- Cards array ----------------------
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     carouselRestaurant.push(
-
-      <Card
-        borderRadius={15}
-        containerStyle={styles.card}
-      >
+      <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
             <Image
@@ -207,7 +199,7 @@ export default function Map() {
             >
               Le restaurant la Vergeverte
             </Text>
-            <View style={{ flexDirection: "row", alignItems: "center", }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
                 source={require("../assets/location.png")}
@@ -220,7 +212,9 @@ export default function Map() {
                   marginRight: 3,
                   marginBottom: 3,
                 }}
-              > 4
+              >
+                {" "}
+                4
               </Text>
               <Text
                 style={{
@@ -231,8 +225,6 @@ export default function Map() {
               >
                 Km away
               </Text>
-
-
             </View>
 
             <Badge
@@ -255,17 +247,12 @@ export default function Map() {
           </View>
         </View>
       </Card>
-
-    )
+    );
   }
 
   for (let i = 0; i < 5; i++) {
     carouselEvent.push(
-
-      <Card
-        borderRadius={15}
-        containerStyle={styles.card}
-      >
+      <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 0.8 }}>
             <Image
@@ -284,7 +271,7 @@ export default function Map() {
             >
               Event la Vergeverte
             </Text>
-            <View style={{ flexDirection: "row", alignItems: "center", }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
                 source={require("../assets/location.png")}
@@ -297,7 +284,9 @@ export default function Map() {
                   marginRight: 3,
                   marginBottom: 3,
                 }}
-              > 4
+              >
+                {" "}
+                4
               </Text>
               <Text
                 style={{
@@ -308,8 +297,6 @@ export default function Map() {
               >
                 Km away
               </Text>
-
-
             </View>
 
             <Badge
@@ -332,11 +319,8 @@ export default function Map() {
           </View>
         </View>
       </Card>
-
-    )
+    );
   }
-
-
 
   return (
     <View
@@ -375,8 +359,6 @@ export default function Map() {
           longitudeDelta: 0.00421,
         }}
       >
-
-
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
           title="Hi"
@@ -390,37 +372,25 @@ export default function Map() {
       </MapView>
       {/* </KeyboardAvoidingView> */}
 
-      <View style={{
-        flex: 1,
-        position: "absolute",
+      <View
+        style={{
+          flex: 1,
+          position: "absolute",
+          width: width,
+          zIndex: 2,
+        }}
+      >
 
-        width: width,
-        zIndex: 2
-      }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <Button
-            title="Restaurants"
-            onPress={() => {
-              setMapSwitch(false);
-              setCarousel(carouselRestaurant);
-            }}
-          ></Button>
-          <Button
-            title="Events"
-            onPress={() => {
-              setMapSwitch(true);
-              setCarousel(carouselEvent);
-            }}
-          ></Button>
-        </View>
 
         <GooglePlacesAutocomplete
           //autocomplete input
-          style={{
-            // flex: 1,
-            // zIndex: 2,
-            // position: "absolute",
-          }}
+          style={
+            {
+              // flex: 1,
+              // zIndex: 2,
+              // position: "absolute",
+            }
+          }
           minLength={1}
           placeholder="Search"
           query={{
@@ -434,7 +404,41 @@ export default function Map() {
             useOnPlatform: "web",
           }} // this in only required for use on the web. See https://git.io/JflFv more for details.
         />
+      </View>
 
+      <View style={{ position: "absolute", flexDirection: "row", alignItems: "center", padding: 10, top: 30, }}>
+        <Button
+          containerStyle={{
+            shadowColor: "black",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 20,
+          }}
+          buttonStyle={{ margin: 10, width: 170, backgroundColor: "white", borderRadius: 25, }}
+          titleStyle={{ color: 'grey' }}
+          title="Restaurants"
+          onPress={() => {
+            setMapSwitch(false);
+            setCarousel(carouselRestaurant);
+          }}
+        ></Button>
+        <Button
+          containerStyle={{
+            shadowColor: "black",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 20,
+          }}
+          buttonStyle={{ margin: 10, width: 170, backgroundColor: "white", borderRadius: 25, }}
+          titleStyle={{ color: 'grey' }}
+          title="Events"
+          onPress={() => {
+            setMapSwitch(true);
+            setCarousel(carouselEvent);
+          }}
+        ></Button>
       </View>
 
       {/* Filter list slider */}
@@ -450,16 +454,10 @@ export default function Map() {
       </View>
 
       {/* //! Restaurants cards slider */}
-      <CardSlider
-        style={styles.cardSlider}
-      >
-        {carousel}
-
-      </CardSlider>
+      <CardSlider style={styles.cardSlider}>{carousel}</CardSlider>
     </View>
   );
 }
-
 
 //! ---------------------- STYLES ----------------------
 
@@ -478,7 +476,7 @@ const styles = StyleSheet.create({
   filterContainer: {
     flex: 1,
     position: "absolute",
-    top: 50,
+    top: 90,
   },
   horizontalFilterScroll: {
     width: Dimensions.get("window").width,
@@ -504,7 +502,7 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     marginRight: -0.5,
     marginBottom: 20,
-    shadowColor: '#171717',
+    shadowColor: "#171717",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
@@ -513,7 +511,7 @@ const styles = StyleSheet.create({
     border: "none",
   },
   cardSlider: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-  }
+  },
 });
