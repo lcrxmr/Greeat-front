@@ -6,6 +6,7 @@ import { createStore, combineReducers } from "redux";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import Svg, { Path } from "react-native-svg";
 import {
   View,
   StyleSheet,
@@ -20,7 +21,6 @@ import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { getDistance, getPreciseDistance } from "geolib";
-
 
 export default function EventDetailScreen({ route }) {
   const [listPins, setListPins] = useState([]);
@@ -81,11 +81,7 @@ export default function EventDetailScreen({ route }) {
     })();
   }, [location]);
 
-
-
   // ------- Function LOGO ---------
-
-  
 
   var onPressJoin = () => {
     setJoinButtonBgColor(!joinButtonBgColor);
@@ -113,15 +109,16 @@ export default function EventDetailScreen({ route }) {
   console.log(dis);
   // console.log(restaurant.gallery[0])
   return (
-    <View style={{ flex: 1, justifyContent: "center", marginTop: 30 }}>
+    <View style={{ flex: 1, justifyContent: "center", marginTop: 0 }}>
       {/* <View style={{ flex: 0.8 }}> */}
       <Image
         style={{
           marginLeft: 20,
-          marginTop: 40,
+          marginTop: 0,
           borderRadius: 15,
           height: 200,
           width: 350,
+          marginBottom: 10,
         }}
         source={{ uri: event.image }}
       />
@@ -132,7 +129,7 @@ export default function EventDetailScreen({ route }) {
           flexDirection: "raw",
           marginLeft: 3,
           marginRight: -0.5,
-          marginBottom: 20,
+          marginBottom: 0,
           shadowColor: "#171717",
           shadowOffset: { width: 0, height: 10 },
           shadowOpacity: 0.2,
@@ -142,16 +139,18 @@ export default function EventDetailScreen({ route }) {
           border: "none",
         }}
       >
-        <Text
-          style={{
-            paddingTop: 10,
-            fontWeight: "bold",
-            fontSize: 16,
-            justifyContent: "flex-start",
-          }}
-        >
-          {event.name}
-        </Text>
+        <View style={{ alignItems: "center" }}>
+          <Text
+            style={{
+              paddingTop: 0,
+              fontWeight: "bold",
+              fontSize: 16,
+              justifyContent: "flex-start",
+            }}
+          >
+            {event.name}
+          </Text>
+        </View>
         <View
           style={{
             flexDirection: "row",
@@ -159,6 +158,10 @@ export default function EventDetailScreen({ route }) {
             justifyContent: "flex-start",
           }}
         >
+          <Image
+            style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
+            source={require("../assets/location.png")}
+          />
           <Text
             style={{
               paddingTop: 10,
@@ -176,6 +179,7 @@ export default function EventDetailScreen({ route }) {
               paddingTop: 10,
               fontSize: 12,
               justifyContent: "flex-start",
+              opacity: 0.4,
             }}
           >
             Km away
@@ -186,7 +190,7 @@ export default function EventDetailScreen({ route }) {
               marginLeft: 150,
               justifyContent: "flex-start",
             }}
-            value="Burgers"
+            value="Afterwork"
             badgeStyle={{
               backgroundColor: "#476A70",
               height: 25,
@@ -203,21 +207,32 @@ export default function EventDetailScreen({ route }) {
             style={{
               paddingTop: 10,
               fontSize: 12,
-              justifyContent: "flex-start",
-            }}
-          >
-            creator: {event.creator}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
               justifyContent: "center",
             }}
           >
             Date: {event.date}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 12,
+              justifyContent: "flex-start",
+              opacity: 0.4,
+            }}
+          >
+            Created by: {event.creator}
+          </Text>
+          <Text
+            style={{
+              paddingTop: 10,
+              fontWeight: "400",
+              fontSize: 14,
+              justifyContent: "flex-start",
+            }}
+          >
+            John Doe
           </Text>
         </View>
       </Card>
@@ -230,53 +245,74 @@ export default function EventDetailScreen({ route }) {
             shadowRadius: 10,
             elevation: 15,
             borderRadius: 25,
+            marginBottom: 10,
           }}
           buttonStyle={{
-            marginTop: 40,
-            margin: 10,
+            marginTop: 20,
+            marginBottom: 10,
             width: 170,
             shadowRadius: 10,
             backgroundColor: buttonColor,
             borderRadius: 25,
+            justifyContent:'space-around'
           }}
           titleStyle={{ color: "white" }}
           title={join}
+          iconRight={true}
+          icon={
+            <Svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={16.079}
+              height={11.529}
+              viewBox="0 0 16.079 11.529"
+            >
+              <Path
+                id="Path_220"
+                data-name="Path 220"
+                d="M9,13.765a.824.824,0,0,0,.824.824H22.267l-3.535,3.535A.824.824,0,1,0,19.9,19.289l4.942-4.942a.815.815,0,0,0,.24-.578v0a.8.8,0,0,0-.064-.315.815.815,0,0,0-.178-.267L19.9,8.242A.824.824,0,1,0,18.73,9.407l3.537,3.535H9.824A.824.824,0,0,0,9,13.765Z"
+                transform="translate(-9 -8.001)"
+                fill="#bcea64"
+              />
+            </Svg>
+          }
           onPress={() => {
             onPressJoin();
           }}
         ></Button>
       </View>
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "flex-start", marginLeft: 20 }}>
         <Text
           style={{
-            paddingTop: 10,
             marginTop: 20,
             fontSize: 12,
             justifyContent: "center",
+            fontWeight: "600",
           }}
         >
           Participants: {userJoin}
           {/* {event.participants[0]} */}
         </Text>
       </View>
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "flex-start", marginLeft: 20 }}>
         <Text
           style={{
             paddingTop: 10,
             fontSize: 12,
             marginTop: 20,
+            fontWeight: "600",
             justifyContent: "center",
           }}
         >
-          description: {event.description}
+          Description: {event.description}
         </Text>
         <Text
           style={{
-            paddingTop: 10,
+            paddingTop: 0,
             fontSize: 12,
             marginTop: 20,
             justifyContent: "center",
             width: 350,
+            marginBottom: 100,
           }}
         >
           This a restaurant description, just to show how cool it can be to read
@@ -286,7 +322,7 @@ export default function EventDetailScreen({ route }) {
         </Text>
       </View>
 
-      <Badge
+      {/* <Badge
         containerStyle={{
           flex: 1,
           justifyContent: "flex-end",
@@ -305,7 +341,7 @@ export default function EventDetailScreen({ route }) {
         onPress={() => {
           navigation.goBack("Map", { screen: "Map" });
         }}
-      />
+      /> */}
     </View>
   );
 }
