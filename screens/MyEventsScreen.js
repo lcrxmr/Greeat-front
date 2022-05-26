@@ -1,23 +1,30 @@
+import Create from "../components/create";
+import Delete from "../components/delete";
+import Edit from "../components/edit";
 import React, { useState, useEffect } from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStore, combineReducers } from 'redux';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Card, Image, Button, FAB } from 'react-native-elements'
-import { connect } from 'react-redux';
-
-
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStore, combineReducers } from "redux";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Card, Image, Button, FAB } from "react-native-elements";
+import { connect } from "react-redux";
+import { getDistance, getPreciseDistance } from "geolib";
 
 const handleDelete = (value) => {
-
-  console.log(value)
+  console.log(value);
 
   const body = {
     eventID: value,
-
   };
 
   fetch('http://172.16.190.132:3000/delete-event?eventID=' + value, { method: 'DELETE' })
@@ -26,109 +33,257 @@ const handleDelete = (value) => {
 }
 
 function myEvents(props) {
-
-
-
   const [myEventList, setMyEventList] = useState([]);
   const [eventCount, setEventCount] = useState(0);
 
-
   useEffect(() => {
-
     fetch("http://172.16.190.131:3000/events")
-      .then(response => response.json())
-      .then(data => setMyEventList(data))
+      .then((response) => response.json())
+      .then((data) => setMyEventList(data));
 
-
-    console.log('EventCount' + props.eventCount)
-
-  }, [props.eventCount])
-
+    console.log("EventCount" + props.eventCount);
+  }, [props.eventCount]);
 
   let eventList = myEventList.map((event, i) => {
+    //? to calculate distance from our location to the event
+    //TODO Reducer to put in place to receive location from user
+    // var dis = (
+    //   getDistance(
+    //     { latitude: location.lat, longitude: location.long },
+    //     { latitude: event.lat, longitude: event.long }
+    //   ) / 1000
+    // ).toFixed(1);
+
+    // Convert UTC date to a dd/mm/yy date
+    var d = new Date(event.date);
+    var n = d.toLocaleDateString();
 
     return (
-      <View style={{ border: 'solid', padding: 10, flexDirection: 'row', margin: 20, justifyContent: "space-between" }}
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          props.navigation.navigate("EventDetail", {
+            screen: "EventDetailScreen",
+            event: event,
+          });
+        }}
       >
-        <Image
-          style={{ width: 100, height: 100, }}
-          source={require('../assets/favicon.png')}
-          onPress={() => {
+        <Card borderRadius={15} containerStyle={styles.card}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 0.8 }}>
+              <Image
+                style={{ borderRadius: 10, height: 120, width: 120 }}
+                source={require("../assets/photo4.jpg")}
+              />
+            </View>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+              }}
+            >
+              <View
+                style={{
+                  flex: 0.5,
+                  alignItems: "flex-start",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  {event.name}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 0.5,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-start",
+                  paddingBottom: 5,
+                }}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image
+                    style={{
+                      height: 18,
+                      width: 15,
+                      marginRight: 3,
+                      marginTop: 5,
+                    }}
+                    source={require("../assets/location.png")}
+                  />
+                  <Text
+                    style={{
+                      paddingTop: 10,
+                      fontSize: 16,
+                      justifyContent: "flex-start",
+                      marginRight: 3,
+                      marginBottom: 3,
+                    }}
+                  >
+                    {" "}
+                    1.4
+                  </Text>
+                  <Text
+                    style={{
+                      paddingTop: 10,
+                      fontSize: 12,
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    Km away
+                  </Text>
+                </View>
 
-            props.navigation.navigate("EventDetail", { screen: "EventDetailScreen", event: event })
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: -2,
+                  }}
+                >
+                  <Image
+                    style={{
+                      height: 17,
+                      width: 17,
+                      marginRight: 3,
+                      marginTop: 0,
+                    }}
+                    source={require("../assets/date.png")}
+                  />
+                  <Text
+                    style={{
+                      paddingTop: 5,
+                      fontSize: 16,
+                      justifyContent: "flex-start",
+                      marginRight: 3,
+                      marginBottom: 3,
+                    }}
+                  >
+                    {" "}
+                    {n}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 0.3,
+                flexDirection: "row",
+                marginRight: -5,
+              }}
+            >
+              <Edit
+                props={props}
+                onPress={() => {
+                  props.navigation.navigate("EditEvent", {
+                    screen: "EditEventScreen",
+                    event: event,
+                  });
+                }}
+                style={{
+                  margin: 5,
+                }}
+              />
 
+              <Delete
+                props={props}
+                onPress={() => {
+                  handleDelete(event._id);
+                  props.deleteOneEvent();
+                }}
+                style={{
+                  margin: 5,
+                }}
+              />
+            </View>
+          </View>
+        </Card>
+      </TouchableOpacity>
+    );
 
-          }} />
-        <Text style={{ width: '30%', fontWeight: "bold", alignSelf: 'center', marginBottom: 20 }}>{event.name}</Text>
-
-        <Button title="Edit"
-
-          onPress={() => {
-            props.navigation.navigate("EditEvent", { screen: "EditEventScreen", event: event })
-          }}
-          titleStyle={{ fontSize: 5 }} containerStyle={{
-            justifyContent: 'center', //Centered horizontally
-            alignItems: 'center', //Centered vertically
-            flex: 1,
-            width: 40,
-            height: 30
-
-          }} />
-        <Button title="Supprimer"
-
-
-          onPress={() => {
-            handleDelete(event._id);
-            props.deleteOneEvent();
-
-          }
-
-          }
-          titleStyle={{ fontSize: 5 }} containerStyle={{
-            justifyContent: 'center', //Centered horizontally
-            alignItems: 'center', //Centered vertically
-            flex: 1,
-            width: 40,
-            height: 30
-
-          }} />
-      </View>
-
-    )
-  })
-
-
-
+    //! --------------------------------------------
+  });
 
   return (
-
-    <ScrollView style={{ flex: 1 }}>
-      {eventList}
-
-      <FAB title="Create" color='blue' onPress={() => {
-
-        props.navigation.navigate("CreateEvent", { screen: "CreateEventScreen" })
-
-
-      }}
-      />
-
-    </ScrollView>
-
-  )
+    <View style={{ flex: 1, }}>
+      <ScrollView showsVerticalScrollIndicator={false}>{eventList}</ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          right: 10,
+          bottom: 0,
+        }}
+      >
+        <Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 5, height: 10 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 35,
+          }}
+          buttonStyle={{
+            margin: 10,
+            width: 52,
+            height: 52,
+            shadowRadius: 10,
+            backgroundColor: "white",
+            borderRadius: 30,
+          }}
+          icon={<Create props={props} />}
+          onPress={() => {
+            props.navigation.navigate("CreateEvent", {
+              screen: "CreateEventScreen",
+            });
+          }}
+        ></Button>
+      </View>
+    </View>
+  );
 }
 
+//! ---------------------- STYLES ----------------------
+
+const styles = StyleSheet.create({
+  cardSlider: {
+    flex: 1,
+    bottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    width: Dimensions.get("window").width,
+  },
+  card: {
+    marginLeft: 10,
+    marginBottom: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 15,
+    width: Dimensions.get("window").width * 0.95,
+    border: "none",
+  },
+});
+
 function mapStateToProps(state) {
-  return { eventCount: state.eventCount }
+  return { eventCount: state.eventCount };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     deleteOneEvent: function () {
-      dispatch({ type: 'delete' })
-    }
-
-
-  }
+      dispatch({ type: "delete" });
+    },
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(myEvents);
