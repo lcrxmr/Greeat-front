@@ -27,7 +27,7 @@ const handleDelete = (value) => {
     eventID: value,
   };
 
-  fetch('http://172.17.188.2:3000/delete-event?eventID=' + value, { method: 'DELETE' })
+  fetch('http://172.16.190.131:3000/delete-event?eventID=' + value, { method: 'DELETE' })
 
 
 }
@@ -37,7 +37,7 @@ function myEvents(props) {
   const [eventCount, setEventCount] = useState(0);
 
   useEffect(() => {
-    fetch("http://172.17.188.2:3000/events")
+    fetch("http://172.16.190.131:3000/events")
       .then((response) => response.json())
       .then((data) => setMyEventList(data));
 
