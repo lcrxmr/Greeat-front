@@ -1,16 +1,50 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Button, Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { connect } from 'react-redux';
 
-//import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker'
 
-export default function CreateEvent(props) {
-  const [text, setText] = useState("");
-  const [adress, setAdress] = useState("");
+
+
+const handleCreate = (name, date, location, desc) => {
+
+  console.log(date)
+
+  const body = {
+    name: name,
+    date: date,
+    location: location,
+    description: desc,
+
+
+  };
+
+  console.log(body)
+
+  /*  const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
+
+
+  fetch('http://172.17.188.13:3000/create-event', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body)
+  });
+
+
+}
+
+function CreateEvent(props) {
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
   const [event, setEvent] = useState("");
   const [desc, setDesc] = useState("");
 
   const [date, setDate] = useState(new Date(1598051730000));
+  const [time, setTime] = useState(new Date(1598051730000));
+
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -38,64 +72,55 @@ export default function CreateEvent(props) {
     <View>
       <TextInput
         style={styles.input}
-        onChangeText={setText}
-        value={text}
-        placeholder="Give a name to your event"
+        defaultValue=''
+        placeholder="Event's name"
+        onChangeText={setName}
+        value={name}
+      //placeholder="Give a name to your event"
       />
 
       <TextInput
         style={styles.input}
-        onChangeText={setAdress}
-        value={adress}
+        onChangeText={setLocation}
+        value={location}
         placeholder="Adress of the event"
       />
 
       <TextInput
         style={styles.input}
+        onFocus={showDatepicker}
         onChangeText={setDate}
-        value={date}
-        placeholder="Time and date"
+        value={date.toLocaleDateString()}
+        placeholder="Date"
+        keyboardType="numeric"
+      />
+      <TextInput
+        style={styles.input}
+        onFocus={showTimepicker}
+        onChangeText={setTime}
+        value={date.toLocaleTimeString()}
+        placeholder="Time"
         keyboardType="numeric"
       />
 
-      <View>
-        <View>
-          <Button onPress={showDatepicker} title="Show date picker!" />
-        </View>
-        <View>
-          <Button onPress={showTimepicker} title="Show time picker!" />
-        </View>
-        <Text>selected: {date.toLocaleString()}</Text>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            onChange={onChange}
-          />
-        )}
-      </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
 
-      {/* <Button title="Open" onPress={() => setOpen(true)} />
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      /> */}
+
+
 
       <TextInput
         style={styles.input}
         onChangeText={setEvent}
         value={event}
-        placeholder="Event Cathegory"
+        placeholder="Event Category"
       />
 
       <TextInput
@@ -106,7 +131,7 @@ export default function CreateEvent(props) {
       />
 
       <Button
-        title="Creat even"
+        title="Create event"
         titleStyle={{ fontSize: 8 }}
         containerStyle={{
           justifyContent: "center", //Centered horizontally
@@ -116,8 +141,10 @@ export default function CreateEvent(props) {
           height: 20,
         }}
         onPress={() => {
-          props.navigation.navigate("MyEvent", { screen: "MyEventScreen" });
-          console.log("");
+
+          handleCreate(name, date, location, desc)
+          props.navigation.navigate("MyEvents", { screen: "MyEventsScreen" });
+
         }}
       />
 
@@ -132,8 +159,8 @@ export default function CreateEvent(props) {
           height: 20,
         }}
         onPress={() => {
-          props.navigation.navigate("MyEvent", { screen: "MyEventScreen" });
-          console.log("");
+          /* props.navigation.navigate("MyEvent", { screen: "MyEventScreen" });
+          console.log(""); */
         }}
       />
     </View>
@@ -154,3 +181,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addOneEvent: function () {
+      dispatch({ type: 'add' })
+    }
+  }
+}
+export default connect(null, mapDispatchToProps)(CreateEvent);
