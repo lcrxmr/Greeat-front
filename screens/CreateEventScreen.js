@@ -7,7 +7,7 @@ import Svg, { Defs, LinearGradient, Stop, Path } from "react-native-svg";
 
 import DatePicker from "react-native-date-picker";
 
-const handleCreate = (name, date, location, desc) => {
+const handleCreate = (name, date, location, desc) => { 
   console.log(date);
 
   const body = {
