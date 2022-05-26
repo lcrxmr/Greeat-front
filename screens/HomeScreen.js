@@ -13,10 +13,10 @@ import {createStore, combineReducers} from 'redux';
 export default function Home(props) {
     return (
 
-     <View>
-       <Text>home Page</Text>
+     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+       <Text>/!\ EN CONSTRUCTION /!\</Text>
        <Button
-      title="Go"
+      title="Map->"
       type="solid"
       buttonStyle={{ backgroundColor: "#009788" }}
       onPress={() => {  props.navigation.navigate('BottomNavigator', { screen: 'Map' }) }}
