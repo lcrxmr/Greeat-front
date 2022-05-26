@@ -7,7 +7,7 @@ import ProfilePic from "../components/profilepic";
 import Svg, { G, Path } from "react-native-svg";
 
 export default function Profile() {
-  const [greeat, setGreeat] = useState(0);
+  const [greeat, setGreeat] = useState(247);
   const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] =
     useState("#A8DD62");
   const [greeatClick, setGreeatClick] = useState(false);
@@ -68,7 +68,7 @@ export default function Profile() {
         >
           <View style={{ borderRadius: 20 }}>
             <Image
-              source={require("../assets/photo1.jpg")}
+              source={require("../assets/profile.png")}
               style={{
                 width: "100%",
                 height: 340,
@@ -139,11 +139,12 @@ export default function Profile() {
           buttonStyle={{
             margin: 10,
             width: 170,
+            height: 50,
             shadowRadius: 10,
             backgroundColor: switchEventsButtonBgColor,
             backgroundColor: greatButtonBgColor,
             borderRadius: 25,
-            marginTop: 50,
+            marginTop: 30,
           }}
           iconRight={true}
           icon={

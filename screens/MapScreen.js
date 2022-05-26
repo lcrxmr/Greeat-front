@@ -123,7 +123,7 @@ export default function Map(props) {
     })();
 
     // console.log('*********** Restaurant Carousel',carouselRestaurant.length, '*********')
-  }, [location]);
+  }, [location, listPins.length]);
 
   // console.log("------List of places fetched from back: ", listPins, "------");
   // console.log("------List of places fetched from back: ", listPins, "------");
@@ -268,7 +268,12 @@ export default function Map(props) {
                 </Text>
               </View>
               <View
-                style={{ flex: 0.5, justifyContent: "flex-end", alignItems: "flex-start", paddingBottom: 5 }}
+                style={{
+                  flex: 0.5,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-start",
+                  paddingBottom: 5,
+                }}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
@@ -386,6 +391,11 @@ export default function Map(props) {
   //! ---------------------- Event carousel ----------------------
 
   var eventList = events.map((e, i) => {
+
+    // Convert UTC date to a dd/mm/yy date
+    var d = new Date(e.date);
+    var date = d.toLocaleDateString();
+
     var dis = (
       getDistance(
         { latitude: location.lat, longitude: location.long },
@@ -410,9 +420,6 @@ export default function Map(props) {
                 source={{ uri: e.image }}
               />
             </View>
-
-            {/* //! ---------------------------------------------------- */}
-
             <View
               style={{
                 flex: 1,
@@ -506,23 +513,11 @@ export default function Map(props) {
                     }}
                   >
                     {" "}
-                    {e.date}
-                  </Text>
-                  <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 12,
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    /5
+                    {date}
                   </Text>
                 </View>
               </View>
             </View>
-
-            {/* //! ---------------------------------------------------- */}
-
           </View>
         </Card>
       </TouchableOpacity>
@@ -604,6 +599,7 @@ export default function Map(props) {
   var onPressRelocate = () => {
     mapRef.current.animateToRegion(region, 1000);
   };
+
 
   //! ---------------------- Component return ----------------------
 

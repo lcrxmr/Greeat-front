@@ -44,6 +44,7 @@ import CreateRecipeScreen from "./screens/CreateRecipeScreen"
 import EditRecipeScreen from "./screens/EditRecipeScreen"
 import CreateEventScreen from "./screens/CreateEventScreen"
 import EditEventScreen from "./screens/EditEventScreen"
+import EventDetailScreen from "./screens/EventDetailScreen"
 import MyEventsScreen from "./screens/MyEventsScreen"
 import Event from "./screens/EventScreen"
 
@@ -57,9 +58,6 @@ import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import ForgetPassword from "./screens/ForgetPasswordScreen";
 // import MapScreen from "./screens/MapScreen";
-
-
-import EventDetailScreen from './screens/EventDetailScreen'
 import RestaurantListScreen from './screens/RestaurantListScreen'
 
 const store = createStore(combineReducers({ token, eventCount, recipeCount }));
@@ -587,7 +585,7 @@ export default function App() {
           <Stack.Screen name="RecipeDetails" component={RecipeDetailsScreen} />
           <Stack.Screen name="EditRecipe" component={EditRecipeScreen} />
           <Stack.Screen name="MyEvents" component={MyEventsScreen} />
-          <Stack.Screen name="CreateEvent" component={CreateEventScreen} />
+          <Stack.Screen name="CreateEvent" component={CreateEventScreen} headerTransparent={true} />
           <Stack.Screen name="EditEvent" component={EditEventScreen} />
           <Stack.Screen name="EventDetail" component={EventDetailScreen} />
           <Stack.Screen name="Event" component={Event} />
