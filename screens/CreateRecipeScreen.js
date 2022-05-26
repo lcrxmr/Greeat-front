@@ -1,20 +1,42 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { View, ScrollView, TextInput, StyleSheet, Button, Text, TouchableHighlight } from 'react-native';
-import { useEffect } from "react/cjs/react.production.min";
 import { connect } from 'react-redux';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import SelectDropdown from 'react-native-select-dropdown'
 
 
 
-const handleCreate = (name, ingredientList, desc) => {
+const handleCreate = (name, ingredientName, ingredientQty, ingredientUnit, desc) => {
+
+  console.log('length' + ingredientName.length)
+  var ingredientList = []
+
+  var description = '';
+
+  for (let i = 0; i < desc.length; i++) {
+    let c = i + 1
+    description = description + 'Step ' + c + '\n' + desc[i] + '\n';
+
+  }
+
+
+  for (let i = 0; i < ingredientName.length; i++) {
+
+
+
+    ingredientList.push({ name: ingredientName[i], qty: ingredientQty[i], unit: ingredientUnit[i] })
+
+
+  }
+
 
   console.log(ingredientList)
+
 
   const body = {
     name: name,
     ingredients: ingredientList,
-    description: desc,
+    description: description,
 
   };
 
@@ -22,7 +44,7 @@ const handleCreate = (name, ingredientList, desc) => {
   const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&');
 
 
-  fetch('http://172.17.188.13:3000/create-recipe', {
+  fetch('http://172.17.188.2:3000/create-recipe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -38,20 +60,75 @@ const handleCreate = (name, ingredientList, desc) => {
 function CreateRecipe(props) {
 
   const [name, setName] = useState("");
-  const [ingredientName, setIngredientName] = useState('')
-  const [ingredientQty, setIngredientQty] = useState(0)
-  const [ingredientUnit, setIngredientUnit] = useState('mg')
+  const [ingredientName, setIngredientName] = useState([])
+  const [ingredientQty, setIngredientQty] = useState([])
+  const [ingredientUnit, setIngredientUnit] = useState([])
 
   const [ingredientList, setIngredientList] = useState([])
+
+
   const [desc, setDesc] = useState("");
+  const [steps, setSteps] = useState([]);
 
-  const [ingredientCount, setIngredientCount] = useState(0);
 
-  const handleChange = (text) => {
+  const [ingredientCount, setIngredientCount] = useState([]);
+  const [stepCount, setStepCount] = useState(1);
+  const [stepText, setStepText] = useState([]);
 
-    console.log(text.text)
+
+
+
+  console.log(stepText)
+
+
+
+
+
+  /*   useEffect(() => {
+      setState(temp_state)
+    }, [temp_state]) */
+
+  /* const handleNameChange = (text, index) => {
+
+
+    let temp_state = [...state];
+
+    console.log(temp_state)
+
+    let temp_element = { ...temp_state[index] };
+
+
+    temp_element.name = text;
+
+    temp_state[index] = temp_element;
+
+    return temp_state
+  } */
+
+
+
+  const addStep = () => {
+
+    setStepCount(stepCount + 1)
+
+    var step = <View>
+
+      <Text style={styles.inputText}>  Step {stepCount} </Text>
+
+      <TextInput
+        style={[styles.input, { marginHorizontal: 10 }]}
+        onChangeText={text => setStepText([...stepText, text])}
+        placeholder={"Description"}
+      ></TextInput>
+
+    </View>
+
+
+    return step
+
 
   }
+
   const addIngredient = () => {
 
     setIngredientCount(ingredientCount + 1)
@@ -63,8 +140,7 @@ function CreateRecipe(props) {
       <View key={ingredientCount} style={{ flex: 3 }}>
         <TextInput
           style={styles.input}
-          onChangeText={handleChange}
-          value={ingredientName}
+          onChangeText={text => setIngredientName([...ingredientName, text])}
           placeholder={"Ingredients"}
         >
         </TextInput>
@@ -73,13 +149,12 @@ function CreateRecipe(props) {
       <View style={{ flex: 1 }}>
         <TextInput
           style={[styles.input, { fontSize: 12 }]}
-          onChangeText={setIngredientQty}
-          value={ingredientQty}
+          onChangeText={text => setIngredientQty([...ingredientQty, text])}
           keyboardType='numeric'
           placeholder={"Quantity"}
         >
         </TextInput>
-      </View>
+      </View >
 
       <View style={{ flex: 1 }}>
         <SelectDropdown
@@ -96,19 +171,17 @@ function CreateRecipe(props) {
           buttonTextStyle={{ fontSize: 14, color: '#8A8C90', }}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index)
-            setIngredientUnit(selectedItem)
+            setIngredientUnit([...ingredientUnit, selectedItem])
           }} />
 
       </View>
 
-    </View>
+    </View >
 
     return ingredient
 
 
   }
-
-
 
   var ingredientListView = ingredientList.map((ingredient, i) => {
 
@@ -164,51 +237,6 @@ function CreateRecipe(props) {
 
         {ingredientList}
 
-        <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignItems: 'center' }}>
-
-          <View style={{ flex: 3 }}>
-            <TextInput
-              style={styles.input}
-              onChangeText={setIngredientName}
-              value={ingredientName}
-              placeholder={"Ingredients"}
-            >
-            </TextInput>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <TextInput
-              style={[styles.input, { fontSize: 12 }]}
-              onChangeText={setIngredientQty}
-              value={ingredientQty}
-              keyboardType='numeric'
-              placeholder={"Quantity"}
-            >
-            </TextInput>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <SelectDropdown
-              data={['mg', 'g', 'mL', 'L']}
-              defaultValue='mg'
-              buttonStyle={{
-                width: '100%', marginTop: 10,
-                height: 40,
-                borderRadius: 20,
-                padding: 5,
-                backgroundColor: '#00000012',
-                borderColor: 'white',
-              }}
-              buttonTextStyle={{ fontSize: 14, color: '#8A8C90', }}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index)
-                setIngredientUnit(selectedItem)
-              }} />
-
-          </View>
-
-        </View>
-
         <View style={{ flexDirection: 'row', alignItems: 'center', margin: 20, borderStyle: 'dashed', borderWidth: 1, borderColor: '#C5CBD3', borderRadius: 20 }}>
 
 
@@ -216,7 +244,10 @@ function CreateRecipe(props) {
           <TouchableHighlight
             onPress={() => {
 
+              //setAllIngredient([...allIngredient, { name: '', qty: 0, unit: '' }])
+
               setIngredientList([...ingredientList, addIngredient()])
+
 
             }} >
             <Text style={{ fontSize: 30 }}> + </Text>
@@ -229,33 +260,23 @@ function CreateRecipe(props) {
         <Text style={styles.fieldName}>  Description </Text>
 
 
-        <View>
+        {steps}
 
-          <Text style={styles.inputText}>  Step 1 </Text>
-
-          <TextInput
-            style={[styles.input, { marginHorizontal: 10 }]}
-            onChangeText={setDesc}
-            value={desc}
-            placeholder={"Description"}
-          ></TextInput>
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', margin: 20, borderStyle: 'dashed', borderWidth: 1, borderColor: '#C5CBD3', borderRadius: 20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', margin: 20, borderStyle: 'dashed', borderWidth: 1, borderColor: '#C5CBD3', borderRadius: 20 }}>
 
 
-            <Text style={{ flex: 4, margin: 5 }}> Add a step
-            </Text>
-            <TouchableHighlight
-              onPress={() => {
-                setIngredientList([...ingredientList, { name: ingredientName, qty: ingredientQty, unit: ingredientUnit }])
+          <Text style={{ flex: 4, margin: 5 }}> Add a step
+          </Text>
+          <TouchableHighlight
+            onPress={() => {
+              setSteps([...steps, addStep()])
 
-              }} >
-              <Text style={{ fontSize: 30 }}> + </Text>
-            </TouchableHighlight>
-
-          </View>
+            }} >
+            <Text style={{ fontSize: 30 }}> + </Text>
+          </TouchableHighlight>
 
         </View>
+
 
       </ScrollView >
 
@@ -281,8 +302,9 @@ function CreateRecipe(props) {
           style={{ marginBottom: 10 }}
           onPress={() => {
 
-            handleCreate(name, ingredientList, desc);
+            handleCreate(name, ingredientName, ingredientQty, ingredientUnit, stepText);
             props.addOneRecipe();
+
 
             props.navigation.navigate("Recipe", { screen: "RecipeScreen" })
           }} >
@@ -299,7 +321,7 @@ function CreateRecipe(props) {
         </TouchableHighlight>
 
       </View>
-    </View>
+    </View >
 
   )
 

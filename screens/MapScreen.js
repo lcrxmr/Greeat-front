@@ -251,13 +251,11 @@ export default function Map(props) {
                 justifyContent: "flex-start",
               }}
             >
-              <View
-                style={{
-                  flex: 0.5,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                }}
-              >
+              <View style={{
+                flex: 0.5,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+              }}>
                 <Text
                   style={{
                     paddingTop: 10,
@@ -270,12 +268,7 @@ export default function Map(props) {
                 </Text>
               </View>
               <View
-                style={{
-                  flex: 0.5,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-start",
-                  paddingBottom: 5,
-                }}
+                style={{ flex: 0.5, justifyContent: "flex-end", alignItems: "flex-start", paddingBottom: 5 }}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
@@ -403,7 +396,7 @@ export default function Map(props) {
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
-          props.navigation.navigate("EventDetailScreen", {
+          props.navigation.navigate("EventDetail", {
             screen: "EventDetailScreen",
             event: e,
           });
@@ -529,7 +522,6 @@ export default function Map(props) {
             </View>
 
             {/* //! ---------------------------------------------------- */}
-
 
           </View>
         </Card>

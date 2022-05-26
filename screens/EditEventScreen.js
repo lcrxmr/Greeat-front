@@ -38,7 +38,7 @@ const handleEdit = (name, date, location, desc, event) => {
       body: formBody
     }); */
 
-    fetch('http://172.17.188.13:3000/edit-event', {
+    fetch('http://172.17.188.2:3000/edit-event', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ export default function CreateEvent(props) {
                 onPress={() => {
 
                     handleEdit(name, date, location, desc, Event)
-                    props.navigation.navigate("Event", { screen: "EventScreen" });
+                    props.navigation.navigate("Event", { screen: "MyEventsScreen" });
 
                 }}
             />

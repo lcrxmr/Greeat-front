@@ -25,7 +25,7 @@ const handleCreate = (name, date, location, desc) => {
   /*  const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
 
 
-  fetch('http://172.17.188.13:3000/create-event', {
+  fetch('http://172.17.188.2:3000/create-event', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ function CreateEvent(props) {
         onPress={() => {
 
           handleCreate(name, date, location, desc)
-          props.navigation.navigate("MyEvents", { screen: "MyEventsScreen" });
+          props.navigation.navigate("Event", { screen: "EventScreen" });
 
         }}
       />

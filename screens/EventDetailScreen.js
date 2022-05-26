@@ -59,7 +59,7 @@ export default function EventDetailScreen({ route }) {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
-      await fetch("http://172.16.190.142:3000/nearby-places", {
+      await fetch("http://172.17.188.2:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
@@ -85,7 +85,7 @@ export default function EventDetailScreen({ route }) {
 
   // ------- Function LOGO ---------
 
-  
+
 
   var onPressJoin = () => {
     setJoinButtonBgColor(!joinButtonBgColor);
@@ -113,8 +113,8 @@ export default function EventDetailScreen({ route }) {
   console.log(dis);
   // console.log(restaurant.gallery[0])
   return (
-    <View style={{ flex: 1, justifyContent: "center", marginTop: 0 }}> 
-    {/* // Margin was 30 */}
+    <View style={{ flex: 1, justifyContent: "center", marginTop: 0 }}>
+      {/* // Margin was 30 */}
       {/* <View style={{ flex: 0.8 }}> */}
       <Image
         style={{
