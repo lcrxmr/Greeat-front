@@ -135,19 +135,19 @@ export default function Map(props) {
 
   useEffect(() => {
     animation.addListener(({ value }) => {
-      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= listPins.length) {
-        index = listPins.length - 1;
+      let indexPin = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+      if (indexPin >= listPins.length) {
+        indexPin = listPins.length - 1;
       }
-      if (index <= 0) {
-        index = 0;
+      if (indexPin <= 0) {
+        indexPin = 0;
       }
 
       clearTimeout(regionTimeout);
       const regionTimeout = setTimeout(() => {
-        if (mapIndex !== index) {
-          mapIndex = index;
-          const { coordinate } = listPins[index];
+        if (mapIndex !== indexPin) {
+          mapIndex = indexPin;
+          const { coordinate } = listPins[indexPin];
           mapRef.current.animateToRegion(
             {
               ...coordinate,
@@ -161,11 +161,11 @@ export default function Map(props) {
     });
   }, []);
 
-  const interpolations = listPins.map((marker, index) => {
+  const interpolations = listPins.map((marker, i) => {
     const inputRange = [
-      (index - 1) * CARD_WIDTH,
-      index * CARD_WIDTH,
-      (index + 1) * CARD_WIDTH,
+      (i - 1) * CARD_WIDTH,
+      i * CARD_WIDTH,
+      (i + 1) * CARD_WIDTH,
     ];
 
     const scale = animation.interpolate({
@@ -550,6 +550,7 @@ export default function Map(props) {
       style={{
         flex: 1,
       }}
+      ref={mapRef}
     >
       {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -564,7 +565,7 @@ export default function Map(props) {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0055,
         }}
-        ref={mapRef}
+        
       >
         <Marker
           coordinate={{ latitude: location.lat, longitude: location.long }}
@@ -594,7 +595,7 @@ export default function Map(props) {
           zIndex: 2,
         }}
       >
-        <GooglePlacesAutocomplete
+        {/* <GooglePlacesAutocomplete
           //autocomplete input
           style={
             {
@@ -615,7 +616,7 @@ export default function Map(props) {
             url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api",
             useOnPlatform: "web",
           }} // this in only required for use on the web. See https://git.io/JflFv more for details.
-        />
+        /> */}
       </View>
 
       <View

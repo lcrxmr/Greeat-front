@@ -533,9 +533,6 @@ function BottomNavigator() {
       <Tab.Screen
         name="Map"
         component={Map}
-        screensOptions={{
-          tabBarVisible: false  
-        }}
         options={{
           headerTitle: () => <Logo />,
           headerRight:() => <Search />,
@@ -552,7 +549,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator >
           <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
           <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
@@ -570,7 +567,7 @@ export default function App() {
           <Stack.Screen name="MyRecipe" component={MyRecipe} />
           <Stack.Screen name="editProfil" component={EditProfil} />
           <Stack.Screen name="Create" component={Create} />
-          <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+          <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
