@@ -27,7 +27,7 @@ const handleDelete = (value) => {
     eventID: value,
   };
 
-  fetch("http://172.16.190.131:3000/delete-event?eventID=" + value, {
+  fetch("http://172.17.188.2:3000/delete-event?eventID=" + value, {
     method: "DELETE",
   });
 };
@@ -37,7 +37,7 @@ function myEvents(props) {
   const [eventCount, setEventCount] = useState(0);
 
   useEffect(() => {
-    fetch("http://172.16.190.131:3000/events")
+    fetch("http://172.17.188.2:3000/events")
       .then((response) => response.json())
       .then((data) => setMyEventList(data));
 
@@ -73,7 +73,7 @@ function myEvents(props) {
             <View style={{ flex: 0.8 }}>
               <Image
                 style={{ borderRadius: 10, height: 120, width: 120 }}
-                source={require("../assets/photo4.jpg")}
+                source={{ uri: event.image }}
               />
             </View>
             <View

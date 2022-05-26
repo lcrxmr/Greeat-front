@@ -33,7 +33,7 @@ function SignIn(props) {
   console.log(email), console.log(password);
 
   var handleSubmitSignIn = async () => {
-    const data = await fetch("http://172.16.190.131:3000/sign-in", {
+    const data = await fetch("http://172.17.188.2:3000/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `email=${email}&password=${password}`,
@@ -188,6 +188,7 @@ function SignIn(props) {
           padding: 10,
           opacity: 0.22,
           backgroundColor: "#C5CBD3",
+          padding: 10
         }}
         name="EMAIL"
         placeholder="email"
@@ -213,6 +214,7 @@ function SignIn(props) {
           opacity: 0.22,
           fontColor: "#8A8C90",
           backgroundColor: "#C5CBD3",
+          padding: 10
         }}
         // setValue={setPassword}
         secureTextEntry={true}
@@ -222,13 +224,16 @@ function SignIn(props) {
       <Text
         style={{
           marginTop: 5,
-          marginLeft: 100,
+          marginLeft: 190,
           fontWeight: "100",
           fontSize: 12,
         }}
         onPress={() => props.navigation.navigate("ForgetPassword")}
       >
         Forgot password?{" "}
+      </Text>
+      <Text style={{ color: 'red', marginTop: 20 }}>
+        {tabErrorsSignin}
       </Text>
 
       <Button
@@ -247,8 +252,6 @@ function SignIn(props) {
           props.navigation.navigate('BottomNavigator')
         }}
       />
-
-      {tabErrorsSignin}
       <View
         style={{
           marginBottom: 0,
@@ -259,7 +262,7 @@ function SignIn(props) {
         <Text>Don't have an account ? </Text>
         <Text
           style={{ fontWeight: "400", fontSize: 20 }}
-          onPress={() => props.navigation.navigate("SignUp")}
+          onPress={() => props.navigation.navigate("SignUp", { screen: "SignUp" })}
           color="#ff2222"
         >
           Sign Up
