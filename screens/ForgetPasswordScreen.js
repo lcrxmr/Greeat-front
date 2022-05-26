@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, TextInput, Text } from "react-native";
 import { connect } from "react-redux";
 
-export default function ForgetPassword(props) {
+export default function forgetPassword(props) {
   const [email, setEmail] = useState("");
 
   return (

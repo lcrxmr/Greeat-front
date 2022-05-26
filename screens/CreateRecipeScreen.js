@@ -22,7 +22,7 @@ const handleCreate = (name, ingredientList, desc) => {
   const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&');
 
 
-  fetch('http://172.17.188.13:3000/create-recipe', {
+  fetch('http://172.16.190.131:3000/create-recipe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

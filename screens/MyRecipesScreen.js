@@ -15,7 +15,7 @@ const handleDelete = (value) => {
 
     console.log(value)
 
-    fetch('http://172.17.188.13:3000/delete-recipe?recipeID=' + value, { method: 'DELETE' })
+    fetch('http://172.16.190.131:3000/delete-recipe?recipeID=' + value, { method: 'DELETE' })
 
 }
 
@@ -30,7 +30,7 @@ function Recipe(props) {
 
     useEffect(() => {
 
-        fetch("http://172.17.188.13:3000/recipes")
+        fetch("http://172.16.190.131:3000/recipes")
             .then(response => response.json())
             .then(data => setMyRecipeList(data))
 

@@ -20,12 +20,12 @@ const handleDelete = (value) => {
 
   };
 
-  fetch('http://172.17.188.13:3000/delete-event?eventID=' + value, { method: 'DELETE' })
+  fetch('http://172.16.190.131:3000/delete-event?eventID=' + value, { method: 'DELETE' })
 
 
 }
 
-function Event(props) {
+function myEvents(props) {
 
 
 
@@ -35,7 +35,7 @@ function Event(props) {
 
   useEffect(() => {
 
-    fetch("http://172.17.188.13:3000/events")
+    fetch("http://172.16.190.131:3000/events")
       .then(response => response.json())
       .then(data => setMyEventList(data))
 
@@ -55,7 +55,7 @@ function Event(props) {
           source={require('../assets/favicon.png')}
           onPress={() => {
 
-            props.navigation.navigate("EventDetails", { screen: "EventDetailsScreen", event: event })
+            props.navigation.navigate("EventDetail", { screen: "EventDetailScreen", event: event })
 
 
           }} />
@@ -131,4 +131,4 @@ function mapDispatchToProps(dispatch) {
 
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Event);
+export default connect(mapStateToProps, mapDispatchToProps)(myEvents);

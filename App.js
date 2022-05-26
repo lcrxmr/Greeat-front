@@ -1,4 +1,4 @@
-import Logo from './components/logo';
+import {Logo} from './components/logo';
 import Search from './components/search';
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -33,22 +33,17 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Tab2 = createMaterialTopTabNavigator();
 
-import HomeScreen from './screens/HomeScreen'
 import MyEvent from './screens/EventScreen'
 import Recipe from './screens/RecipeScreen'
 import Menu from './screens/MenuScreen'
 import Map from './screens/MapScreen'
 import Profile from './screens/Profile'
-import MyEventsPublic from './screens/MyEventsPublic'
-import MyRecipe from './screens/MyRecipe'
-import MyRecipes from './screens/MyRecipesScreen'
-import EditProfil from "./screens/editProfilScreen"
-import RecipeDetails from "./screens/RecipeDetailsScreen"
+import EditProfileScreen from "./screens/EditProfileScreen"
+import RecipeDetailsScreen from "./screens/RecipeDetailsScreen"
 import CreateRecipeScreen from "./screens/CreateRecipeScreen"
 import EditRecipeScreen from "./screens/EditRecipeScreen"
 import CreateEventScreen from "./screens/CreateEventScreen"
 import EditEventScreen from "./screens/EditEventScreen"
-import EventDetailsScreen from "./screens/EventDetailsScreen"
 import MyEventsScreen from "./screens/MyEventsScreen"
 import Event from "./screens/EventScreen"
 
@@ -587,26 +582,16 @@ export default function App() {
             name="RestaurantDetailScreen"
             component={RestaurantDetailScreen}
           />
-          <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
-          <Stack.Screen name="MyRecipe" component={MyRecipe} />
-          <Stack.Screen name="editProfil" component={EditProfil} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen name="CreateRecipe" component={CreateRecipeScreen} />
-          <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
+          <Stack.Screen name="RecipeDetails" component={RecipeDetailsScreen} />
           <Stack.Screen name="EditRecipe" component={EditRecipeScreen} />
-
           <Stack.Screen name="MyEvents" component={MyEventsScreen} />
-
           <Stack.Screen name="CreateEvent" component={CreateEventScreen} />
           <Stack.Screen name="EditEvent" component={EditEventScreen} />
-          <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
+          <Stack.Screen name="EventDetail" component={EventDetailScreen} />
           <Stack.Screen name="Event" component={Event} />
-
-
-
-
-
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ headerShown: false }} />
-
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
