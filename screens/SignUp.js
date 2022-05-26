@@ -110,7 +110,7 @@ const SignUp = (props) => {
         onChangeText={(val) => setEmail(val)}
       />
       <TextInput
-      placeholderTextColor={"#476A70"}
+        placeholderTextColor={"#476A70"}
         style={{
           marginTop: 10,
           borderWidth: 0,

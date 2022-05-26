@@ -1,4 +1,4 @@
-import Logo from './components/logo';
+import {Logo} from './components/logo';
 import Search from './components/search';
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -33,37 +33,52 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Tab2 = createMaterialTopTabNavigator();
 
-import HomeScreen from "./screens/HomeScreen";
-import MyEvent from "./screens/MyEventScreen";
-import Recipe from "./screens/RecipeScreen";
-import Menu from "./screens/MenuScreen";
-import Map from "./screens/MapScreen";
-import Profile from "./screens/Profile";
-import MyEventsPublic from "./screens/MyEventsPublic";
-import MyRecipe from "./screens/MyRecipe";
-import EditProfil from "./screens/editProfilScreen";
-import Create from "./screens/CreateEventScreen";
+import HomeScreen from './screens/HomeScreen'
+import MyEvent from './screens/EventScreen'
+import Recipe from './screens/RecipeScreen'
+import Menu from './screens/MenuScreen'
+import Map from './screens/MapScreen'
+import Profile from './screens/Profile'
+import MyEventsPublic from './screens/MyEventsPublic'
+import MyRecipe from './screens/MyRecipe'
+import MyRecipes from './screens/MyRecipesScreen'
+import EditProfil from "./screens/editProfilScreen"
+import RecipeDetails from "./screens/RecipeDetailsScreen"
+import CreateRecipeScreen from "./screens/CreateRecipeScreen"
+import EditRecipeScreen from "./screens/EditRecipeScreen"
+import CreateEventScreen from "./screens/CreateEventScreen"
+import EditEventScreen from "./screens/EditEventScreen"
+import EventDetailScreen from "./screens/EventDetailScreen"
+import MyEventsScreen from "./screens/MyEventsScreen"
+import Event from "./screens/EventScreen"
+
+import eventCount from './reducers/eventCount';
+import recipeCount from './reducers/recipeCount';
+
+
+
 import RestaurantDetailScreen from "./screens/RestaurantDetailScreen";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import ForgetPassword from "./screens/ForgetPasswordScreen";
 // import MapScreen from "./screens/MapScreen";
+import RestaurantListScreen from './screens/RestaurantListScreen'
 
 const store = createStore(combineReducers({ token }));
 
-import EventDetailScreen from './screens/EventDetailScreen'
-import RestaurantListScreen from './screens/RestaurantListScreen'
 
 
 function BottomNavigator() {
+
   return (
+
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, focused }) => {
           if (route.name == "Map") {
-            
+
             if (focused) {
-              
+
               return (
                 <Svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -522,12 +537,12 @@ function BottomNavigator() {
             display: "flex",
             height: 72,
             paddingTop: 5,
-            paddingBottom: 11 ,
+            paddingBottom: 11,
           },
           null,
         ],
         focused: true,
-        showIcon: true,      
+        showIcon: true,
       })}
     >
       <Tab.Screen
@@ -535,27 +550,30 @@ function BottomNavigator() {
         component={Map}
         options={{
           headerTitle: () => <Logo />,
-          headerRight:() => <Search />,
+          headerRight: () => <Search />,
           headerStyle: {
             height: 110,
           }
         }}
-        
+
       />
       <Tab.Screen name="Myevent" component={MyEvent} />
       <Tab.Screen name="Recipe" component={Recipe} />
       <Tab.Screen name="Menu" component={Menu} />
-    </Tab.Navigator>
+    </Tab.Navigator >
   );
 }
 
 export default function App() {
   return (
+
     <Provider store={store}>
+
       <NavigationContainer>
         <Stack.Navigator >
-          <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
-          <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
+
+          <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+          <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
           <Stack.Screen
             name="ProfileFromMenu"
@@ -566,14 +584,32 @@ export default function App() {
             name="RestaurantDetailScreen"
             component={RestaurantDetailScreen}
           />
-          <Stack.Screen name="EventDetailScreen" component={EventDetailScreen} />
           <Stack.Screen name="MyEventsPublic" component={MyEventsPublic} />
           <Stack.Screen name="MyRecipe" component={MyRecipe} />
           <Stack.Screen name="editProfil" component={EditProfil} />
-          <Stack.Screen name="Create" component={Create} />
-          <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{headerShown: false}} />
+          <Stack.Screen name="CreateRecipe" component={CreateRecipeScreen} />
+          <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
+          <Stack.Screen name="EditRecipe" component={EditRecipeScreen} />
+
+          <Stack.Screen name="MyEvents" component={MyEventsScreen} />
+
+          <Stack.Screen name="CreateEvent" component={CreateEventScreen} />
+          <Stack.Screen name="EditEvent" component={EditEventScreen} />
+          <Stack.Screen name="EventDetails" component={EventDetailScreen} />
+          <Stack.Screen name="Event" component={Event} />
+
+
+
+
+
+          <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ headerShown: false }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+
+
   );
 }
+
+
