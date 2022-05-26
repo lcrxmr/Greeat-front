@@ -399,7 +399,7 @@ export default function Map(props) {
           <View style={{ flex: 0.8 }}>
             <Image
               style={{ borderRadius: 10, height: 120, width: 120 }}
-              source={{ uri: events[i].image }}
+              source={{ uri: e.image }}
             />
           </View>
           <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -411,7 +411,7 @@ export default function Map(props) {
                 justifyContent: "flex-start",
               }}
             >
-              {events[i].name}
+              {e.name}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
