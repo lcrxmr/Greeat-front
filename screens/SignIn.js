@@ -243,8 +243,8 @@ function SignIn(props) {
         titleStyle={{ color: "white" }}
         title="Sign In"
         onPress={() => {
-          handleSubmitSignIn();
-          // props.navigation.navigate('BottomNavigator')
+          // handleSubmitSignIn();
+          props.navigation.navigate('BottomNavigator')
         }}
       />
 

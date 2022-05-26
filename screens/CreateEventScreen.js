@@ -89,7 +89,7 @@ function CreateEvent(props) {
       <TextInput
         style={styles.input}
         onFocus={showDatepicker}
-        onChangeText={setDate}
+        onChangeText={text => setDate(new Date(text))}
         value={date.toLocaleDateString()}
         placeholder="Date"
         keyboardType="numeric"
@@ -98,7 +98,7 @@ function CreateEvent(props) {
         style={styles.input}
         onFocus={showTimepicker}
         onChangeText={setTime}
-        value={date.toLocaleTimeString()}
+        value={time}
         placeholder="Time"
         keyboardType="numeric"
       />
