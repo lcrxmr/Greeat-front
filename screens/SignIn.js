@@ -80,8 +80,8 @@ function SignIn(props) {
         <Svg
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
-          width={300}
-          height={150}
+          width={200}
+          height={100}
           viewBox="10 -6 131.3 80.2"
         >
           <Defs>
@@ -248,8 +248,8 @@ function SignIn(props) {
         titleStyle={{ color: "white" }}
         title="Sign In"
         onPress={() => {
-          // handleSubmitSignIn();
-          props.navigation.navigate('BottomNavigator')
+          handleSubmitSignIn();
+          // props.navigation.navigate('BottomNavigator')
         }}
       />
       <View
