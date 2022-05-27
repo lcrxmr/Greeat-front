@@ -16,7 +16,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStore, combineReducers } from "redux";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Card, Image, Button, FAB } from "react-native-elements";
+import { Card, Image, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { getDistance, getPreciseDistance } from "geolib";
 
@@ -27,7 +27,7 @@ const handleDelete = (value) => {
     eventID: value,
   };
 
-  fetch('http://172.16.190.132:3000/delete-event?eventID=' + value, { method: 'DELETE' })
+  fetch('http://192.168.1.28:3000/delete-event?eventID=' + value, { method: 'DELETE' })
 
 
 }
@@ -37,7 +37,7 @@ function myEvents(props) {
   const [eventCount, setEventCount] = useState(0);
 
   useEffect(() => {
-    fetch("http://172.16.190.132:3000/events")
+    fetch("http://192.168.1.28:3000/events")
       .then((response) => response.json())
       .then((data) => setMyEventList(data));
 
@@ -264,7 +264,8 @@ const styles = StyleSheet.create({
   },
   card: {
     marginLeft: 10,
-    marginBottom: 5,
+    marginBottom: 10,
+    marginTop: 10,
     shadowColor: "#171717",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,

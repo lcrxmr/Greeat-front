@@ -59,7 +59,7 @@ export default function EventDetailScreen({ route }) {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
-      await fetch("http://172.16.190.132:3000/nearby-places", {
+      await fetch("http://192.168.1.28:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
@@ -98,6 +98,8 @@ export default function EventDetailScreen({ route }) {
 
   //   var date = event.date.getDate()
   //   console.log(date)
+  var d = new Date(event.date);
+  var n = d.toLocaleDateString();
 
   var dis = (
     getDistance(
@@ -107,9 +109,62 @@ export default function EventDetailScreen({ route }) {
   ).toFixed(1);
 
   console.log(dis);
+
+    var profile = [
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+      {image: '../assets/profilepic1.jpg'},
+  
+    ]
+
+  var filterIcons = [];
+  for (let i = 0; i < profile.length; i++) {
+    filterIcons.push(
+      <View
+        style={{
+          alignItems: "center",
+          paddingLeft: 10,
+          marginTop: 10,
+          marginLeft: 6,
+          marginRight: 6,
+        }}
+      >
+        <View style={styles.filter}>
+          <Image
+            source={{uri: profile[i].image}}
+            style={{
+              backgroundColor: "white",
+              color: "grey",
+              height: 50,
+              width: 50,
+              padding: 5,
+              borderRadius:100
+            }}
+          />
+        </View>
+        <Text
+          style={{
+            paddingTop: 5,
+            fontWeight: "bold",
+            fontSize: 10,
+            justifyContent: "flex-start",
+          }}
+        >
+        </Text>
+      </View>
+    );
+  }
+
+
+
   // console.log(restaurant.gallery[0])
   return (
-    <View style={{ flex: 1, justifyContent: "center", marginTop: 0 }}>
+    <ScrollView >
       {/* <View style={{ flex: 0.8 }}> */}
       <Image
         style={{
@@ -123,26 +178,16 @@ export default function EventDetailScreen({ route }) {
         source={{ uri: event.image }}
       />
       {/* </View> */}
-      <Card
-        borderRadius={15}
-        style={{
-          flexDirection: "raw",
-          marginLeft: 3,
-          marginRight: -0.5,
-          marginBottom: 0,
-          shadowColor: "#171717",
-          shadowOffset: { width: 0, height: 10 },
-          shadowOpacity: 0.2,
-          shadowRadius: 3,
-          elevation: 15,
-          width: Dimensions.get("window").width * 0.89,
-          border: "none",
-        }}
-      >
-        <View style={{ alignItems: "center" }}>
+      <Card borderRadius={15} containerStyle={styles.card}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
           <Text
             style={{
-              paddingTop: 0,
+              paddingTop: 10,
               fontWeight: "bold",
               fontSize: 16,
               justifyContent: "flex-start",
@@ -151,89 +196,130 @@ export default function EventDetailScreen({ route }) {
             {event.name}
           </Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Image
-            style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
-            source={require("../assets/location.png")}
-          />
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginRight: 3,
-              marginBottom: 3,
-            }}
-          >
-            {" "}
-            {dis}
-          </Text>
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
-              justifyContent: "flex-start",
-              opacity: 0.4,
-            }}
-          >
-            Km away
-          </Text>
-          <Badge
-            containerStyle={{
-              marginTop: 10,
-              marginLeft: 150,
-              justifyContent: "flex-start",
-            }}
-            value="Afterwork"
-            badgeStyle={{
-              backgroundColor: "#476A70",
-              height: 25,
-              borderRadius: 20,
-            }}
-            textStyle={{
-              marginLeft: 5,
-              marginRight: 5,
-            }}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
-              justifyContent: "center",
-            }}
-          >
-            Date: {event.date}
-          </Text>
-        </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text
+          <View style={{ flex: 0.8, paddingTop:5 }}>
+            <View
+              style={{
+                justifyContent: "flex-end",
+                alignItems: "flex-start",
+                paddingBottom: 5,
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Image
+                  style={{
+                    height: 18,
+                    width: 15,
+                    marginRight: 3,
+                    marginTop: 5,
+                  }}
+                  source={require("../assets/location.png")}
+                />
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    fontSize: 16,
+                    justifyContent: "flex-start",
+                    marginRight: 3,
+                    marginBottom: 3,
+                  }}
+                >
+                  {" "}
+                  {dis}
+                </Text>
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    fontSize: 12,
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  Km away
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: -2,
+                }}
+              >
+                <Image
+                  style={{
+                    height: 17,
+                    width: 17,
+                    marginRight: 3,
+                    marginTop: 0,
+                  }}
+                  source={require("../assets/date.png")}
+                />
+                <Text
+                  style={{
+                    paddingTop: 5,
+                    fontSize: 16,
+                    justifyContent: "flex-start",
+                    marginRight: 3,
+                    marginBottom: 3,
+                    
+                  }}
+                >
+                  {" "}
+                  {n}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    fontSize: 12,
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  Created by: 
+                </Text>
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    fontSize: 16,
+                    justifyContent: "flex-start",
+                    marginLeft: 5,
+                    marginBottom: 3,
+                  }}
+                >
+                  John Doe
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
             style={{
-              paddingTop: 10,
-              fontSize: 12,
-              justifyContent: "flex-start",
-              opacity: 0.4,
+              flex: 0.3,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              marginRight: 5,
+              paddingTop: 0
             }}
           >
-            Created by: {event.creator}
-          </Text>
-          <Text
-            style={{
-              paddingTop: 10,
-              fontWeight: "400",
-              fontSize: 14,
-              justifyContent: "flex-start",
-            }}
-          >
-            John Doe
-          </Text>
+            <Badge
+              containerStyle={{
+                justifyContent: "flex-end",
+                marginBottom: 50,
+                color: "#476A70",
+              }}
+              value="Evénement"
+              badgeStyle={{
+                backgroundColor: "#476A70",
+                height: 25,
+                borderRadius: 20,
+              }}
+              textStyle={{
+                marginLeft: 10,
+                marginRight: 10,
+              }}
+            />
+          </View>
         </View>
       </Card>
       <View style={{ alignItems: "center" }}>
@@ -254,7 +340,7 @@ export default function EventDetailScreen({ route }) {
             shadowRadius: 10,
             backgroundColor: buttonColor,
             borderRadius: 25,
-            justifyContent: 'space-around'
+            justifyContent: "space-around",
           }}
           titleStyle={{ color: "white" }}
           title={join}
@@ -280,19 +366,46 @@ export default function EventDetailScreen({ route }) {
           }}
         ></Button>
       </View>
-      <View style={{ alignItems: "flex-start", marginLeft: 20 }}>
+      <View>
+      <View style={{flexDirection:'row', alignItems: "flex-start", marginLeft: 20 }}>
         <Text
           style={{
             marginTop: 20,
             fontSize: 12,
             justifyContent: "center",
-            fontWeight: "600",
+            fontWeight: "500",
+          fontSize: 12,
+          opacity: 0.3,
           }}
         >
-          Participants: {userJoin}
+          Participants: 
           {/* {event.participants[0]} */}
         </Text>
+        <Text
+        style={{
+          marginTop: 20,
+          marginLeft: 10,
+          fontSize: 12,
+          justifyContent: "center",
+          fontWeight: "800",
+        fontSize: 12,
+          }}
+        > {userJoin}</Text>
       </View>
+      <View style={styles.filterContainer}>
+        <ScrollView
+          contentContainerStyle={styles.horizontalFilterScrollContent}
+          style={styles.horizontalFilterScroll}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
+          {filterIcons}
+        </ScrollView>
+      </View>
+      </View>
+      
+      
+
       <View style={{ alignItems: "flex-start", marginLeft: 20 }}>
         <Text
           style={{
@@ -312,7 +425,6 @@ export default function EventDetailScreen({ route }) {
             marginTop: 20,
             justifyContent: "center",
             width: 350,
-            marginBottom: 100,
           }}
         >
           This a restaurant description, just to show how cool it can be to read
@@ -321,27 +433,54 @@ export default function EventDetailScreen({ route }) {
           good fit for you!
         </Text>
       </View>
-
-      {/* <Badge
-        containerStyle={{
-          flex: 1,
-          justifyContent: "flex-end",
-          marginBottom: 50,
-        }}
-        value="Retour à la map"
-        badgeStyle={{
-          backgroundColor: "#476A70",
-          height: 25,
-          borderRadius: 20,
-        }}
-        textStyle={{
-          marginLeft: 10,
-          marginRight: 10,
-        }}
-        onPress={() => {
-          navigation.goBack("Map", { screen: "Map" });
-        }}
-      /> */}
-    </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  cardSlider: {
+    flex: 1,
+    bottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    width: Dimensions.get("window").width,
+  },
+  card: {
+    marginLeft: 10,
+    marginBottom: 10,
+    marginTop: 10,
+    shadowColor: "#171717",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 15,
+    width: Dimensions.get("window").width * 0.95,
+    border: "none",
+  },
+  filter: {
+    backgroundColor: "white",
+    marginTop:20,
+    borderRadius: 25,
+    shadowColor: "black",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 20,
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  filterContainer: {
+    flex: 1,
+    height: 100,
+    marginTop: 10,
+  },
+  horizontalFilterScroll: {
+    width: Dimensions.get("window").width,
+  },
+  horizontalFilterScrollContent: {
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});
