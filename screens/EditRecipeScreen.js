@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { View, ScrollView, TextInput, StyleSheet, Button, Text, TouchableHighlight } from 'react-native';
+import { View, ScrollView, TextInput, StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import SelectDropdown from 'react-native-select-dropdown'
+import { Card, Badge, Button } from "react-native-elements";
 
 
 
@@ -362,7 +363,7 @@ export default function CreateRecipe(props) {
             </ScrollView >
 
             <View style={{
-                flexDirection: 'row', justifyContent: 'space-around', backgroundColor: 'white', padding: 20
+                flexDirection: 'row', justifyContent: 'space-around', backgroundColor: 'white', padding: 20, bottom: 10
             }}>
                 <TouchableHighlight
 
@@ -378,28 +379,41 @@ export default function CreateRecipe(props) {
                         padding: 10
                     }}> Cancel </Text>
                 </TouchableHighlight>
+<Button
+          containerStyle={{
+            shadowColor: "grey",
+            shadowOffset: { width: 0, height: 10 },
+            shadowOpacity: 0,
+            shadowRadius: 10,
+            elevation: 15,
+            borderRadius: 25,
+            width: "auto",
+          }}
+          buttonStyle={{
+            shadowRadius: 10,
+            backgroundColor: '#476A70',
+            borderRadius: 25,
+            paddingTop: 8,
+            paddingBottom: 8,
+          }}
+          titleStyle={{
+            marginLeft: 20,
+            marginRight: 20,
+            color: "white",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 14
+          }}
+          title={'Update'}
+          onPress={() => {
 
-                <TouchableHighlight
-                    style={{ marginBottom: 10 }}
-                    onPress={() => {
+            handleCreate(name, ingredientName, ingredientQty, ingredientUnit, stepText);
+            props.addOneRecipe();
+            
+            
+            props.navigation.navigate("Recipe", { screen: "RecipeScreen" })
+            }} 
+        ></Button>
 
-                        handleCreate(name, ingredientName, ingredientQty, ingredientUnit, stepText);
-                        props.addOneRecipe();
-
-
-                        props.navigation.navigate("Recipe", { screen: "RecipeScreen" })
-                    }} >
-                    <Text style={{
-                        alignItems: 'center',
-                        backgroundColor: '#476A70',
-                        fontFamily: 'Poppins_400Regular',
-                        fontSize: 15,
-                        color: 'white',
-                        marginLeft: 10,
-                        borderRadius: 20,
-                        padding: 10
-                    }}> Create Recipe </Text>
-                </TouchableHighlight>
 
             </View>
         </View >
