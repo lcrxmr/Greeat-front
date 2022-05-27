@@ -529,7 +529,7 @@ function BottomNavigator() {
         tabBarInactiveTintColor: "#AEB1B5",
         tabBarStyle: [
           {
-            backgroundColor: "#ffffff",
+            backgroundColor: "#FDFDFD",
             display: "flex",
             height: 72,
             paddingTop: 5,
@@ -549,6 +549,7 @@ function BottomNavigator() {
           headerRight: () => <Search />,
           headerStyle: {
             height: 110,
+            backgroundColor: "#FDFDFD",
           }
         }}
 

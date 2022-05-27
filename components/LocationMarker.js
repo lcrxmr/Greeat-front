@@ -6,8 +6,8 @@ const LocationMarker = (props) => (
     id="Component_19_7"
     data-name="Component 19 \u2013 7"
     xmlns="http://www.w3.org/2000/svg"
-    width={17.319}
-    height={20.469}
+    width={20}
+    height={23}
     viewBox="0 0 17.319 20.469"
     {...props}
   >

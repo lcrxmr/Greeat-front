@@ -182,7 +182,7 @@ function Recipe(props) {
   });
 
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1,  backgroundColor: "#FDFDFD" }}>
       <ScrollView showsVerticalScrollIndicator={false}>{recipeList}</ScrollView>
       <View
         style={{

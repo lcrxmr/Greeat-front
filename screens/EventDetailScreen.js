@@ -1,3 +1,5 @@
+import ButtonArrow from "../components/button-arrow";
+import Calendar from "../components/calendar";
 import { StatusBar } from "expo-status-bar";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -21,6 +23,8 @@ import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { getDistance, getPreciseDistance } from "geolib";
+import LocationMarker from "../components/LocationMarker";
+import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 export default function EventDetailScreen({ route }) {
   const [listPins, setListPins] = useState([]);
@@ -32,6 +36,11 @@ export default function EventDetailScreen({ route }) {
   const [userJoin, setUserJoin] = useState(173);
   // la route on press de map screen passe le param restaurant grace a {route}
   var event = route.params.event;
+
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+  });
+
   useEffect(() => {
     // let mounted = true;
     // Get our location
@@ -106,242 +115,412 @@ export default function EventDetailScreen({ route }) {
     ) / 1000
   ).toFixed(1);
 
-  console.log(dis);
+  // console.log(dis);
   // console.log(restaurant.gallery[0])
-  return (
-    <View style={{ flex: 1, justifyContent: "center", marginTop: 0 }}>
-      {/* <View style={{ flex: 0.8 }}> */}
-      <Image
+
+  // Convert UTC date to a dd/mm/yy date
+  var d = new Date(event.date);
+  var date = d.toLocaleDateString();
+
+
+  //? Loop to display images in participants slider
+
+  var profile = [
+    require('../assets/profile1.jpg'),
+    require('../assets/profile9.jpg'),
+    require('../assets/profile3.jpg'),
+    require('../assets/profile4.jpg'),
+    require('../assets/profile5.jpg'),
+    require('../assets/profile6.jpg'),
+    require('../assets/profile7.jpg'),
+    require('../assets/profile8.jpg'),
+    require('../assets/profile2.jpg'),
+    require('../assets/profile10.jpg'),
+  ]
+var filterIcons = [];
+for (let i = 0; i < profile.length; i++) {
+  console.log(profile[i])
+  filterIcons.push(
+    <View
+      style={{
+        alignItems: "center",
+        paddingLeft: 10,
+        marginTop: 10,
+        marginLeft: 6,
+        marginRight: 6,
+      }}
+    >
+      <View style={styles.filter}>
+        <Image
+          source={profile[i]}
+          style={{
+            backgroundColor: "white",
+            color: "grey",
+            height: 50,
+            width: 50,
+            padding: 5,
+            borderRadius:100
+          }}
+        />
+      </View>
+      <Text
         style={{
-          marginLeft: 20,
-          marginTop: 0,
-          borderRadius: 15,
-          height: 200,
-          width: 350,
-          marginBottom: 10,
-        }}
-        source={{ uri: event.image }}
-      />
-      {/* </View> */}
-      <Card
-        borderRadius={15}
-        style={{
-          flexDirection: "raw",
-          marginLeft: 3,
-          marginRight: -0.5,
-          marginBottom: 0,
-          shadowColor: "#171717",
-          shadowOffset: { width: 0, height: 10 },
-          shadowOpacity: 0.2,
-          shadowRadius: 3,
-          elevation: 15,
-          width: Dimensions.get("window").width * 0.89,
-          border: "none",
+          paddingTop: 5,
+          fontWeight: "bold",
+          fontSize: 10,
+          justifyContent: "flex-start",
         }}
       >
-        <View style={{ alignItems: "center" }}>
+      </Text>
+    </View>
+  );
+}
+
+
+  return (
+    <ScrollView style={{ backgroundColor: "#FDFDFD" }}>
+      {/* //! -------------------- Header image -------------------- */}
+
+      <View style={{ alignItems: "center", marginTop: 20 }}>
+        <Image
+          style={{
+            borderRadius: 10,
+            height: 220,
+            width: Dimensions.get("window").width * 0.95,
+          }}
+          source={{ uri: event.image }}
+        />
+      </View>
+
+      {/* //! -------------------- Card -------------------- */}
+
+      <Card borderRadius={15} containerStyle={styles.card}>
+        <View style={{ alignItems: "flex-start", paddingLeft: 10 }}>
           <Text
             style={{
               paddingTop: 0,
               fontWeight: "bold",
-              fontSize: 16,
+              fontSize: 24,
               justifyContent: "flex-start",
+              fontFamily: "Poppins_400Regular",
             }}
           >
             {event.name}
           </Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Image
-            style={{ height: 18, width: 15, marginRight: 3, marginTop: 5 }}
-            source={require("../assets/location.png")}
-          />
-          <Text
+
+        <Text style={{ paddingLeft: 10, fontWeight: "100", color: "#C5CBD3" }}>
+          ____________________________________________________
+        </Text>
+
+        {/* //? -------------------- Km away & badge -------------------- */}
+
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View
             style={{
-              paddingTop: 10,
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginRight: 3,
-              marginBottom: 3,
+              flex: 0.5,
+              alignItems: "flex-start",
+              justifyContent: "center",
+              paddingTop: 15,
+              paddingLeft: 15,
             }}
           >
-            {" "}
-            {dis}
-          </Text>
-          <Text
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: -2,
+              }}
+            >
+              <LocationMarker />
+              <Text
+                style={{
+                  paddingTop: 10,
+                  fontSize: 16,
+                  justifyContent: "flex-start",
+                  marginRight: 3,
+                  marginBottom: 3,
+                  fontFamily: "Poppins_400Regular",
+                }}
+              >
+                {" "}
+                {dis}
+              </Text>
+              <Text
+                style={{
+                  paddingTop: 8,
+                  color: "#AEB1B5",
+                  fontSize: 12,
+                  justifyContent: "flex-start",
+                  fontFamily: "Poppins_400Regular",
+                }}
+              >
+                Km away
+              </Text>
+            </View>
+          </View>
+          <View
             style={{
-              paddingTop: 10,
-              fontSize: 12,
-              justifyContent: "flex-start",
-              opacity: 0.4,
-            }}
-          >
-            Km away
-          </Text>
-          <Badge
-            containerStyle={{
-              marginTop: 10,
-              marginLeft: 150,
-              justifyContent: "flex-start",
-            }}
-            value="Afterwork"
-            badgeStyle={{
-              backgroundColor: "#476A70",
-              height: 25,
-              borderRadius: 20,
-            }}
-            textStyle={{
-              marginLeft: 5,
-              marginRight: 5,
-            }}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
+              paddingTop: 12,
+              flex: 0.5,
+              marginLeft: 20,
+              alignItems: "center",
               justifyContent: "center",
             }}
           >
-            Date: {event.date}
-          </Text>
+            <Badge
+              value="French cuisine"
+              badgeStyle={{
+                backgroundColor: "#476A70",
+                height: 28,
+                borderRadius: 20,
+              }}
+              textStyle={{
+                marginLeft: 10,
+                marginRight: 10,
+                fontSize: 14,
+              }}
+            />
+          </View>
         </View>
+
+        {/* //? -------------------- Date -------------------- */}
+
+        <View
+          style={{
+            flex: 0.5,
+            alignItems: "flex-start",
+            justifyContent: "center",
+            paddingLeft: 15,
+            marginTop: -4,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: -2,
+            }}
+          >
+            <Calendar />
+            <Text
+              style={{
+                paddingTop: 10,
+                fontSize: 16,
+                justifyContent: "flex-start",
+                marginRight: 3,
+                marginBottom: 3,
+                fontFamily: "Poppins_400Regular",
+              }}
+            >
+              {" "}
+              {date}
+            </Text>
+          </View>
+        </View>
+
+        {/* //? -------------------- Created by -------------------- */}
+
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text
             style={{
-              paddingTop: 10,
+              paddingTop: 2,
               fontSize: 12,
               justifyContent: "flex-start",
               opacity: 0.4,
+              fontFamily: "Poppins_400Regular",
+              paddingLeft: 15,
             }}
           >
             Created by: {event.creator}
           </Text>
           <Text
             style={{
-              paddingTop: 10,
+              paddingTop: 0,
               fontWeight: "400",
-              fontSize: 14,
+              fontSize: 16,
               justifyContent: "flex-start",
+              fontFamily: "Poppins_400Regular",
             }}
           >
             John Doe
           </Text>
         </View>
       </Card>
+
+      {/* //! -------------------- Button -------------------- */}
+
       <View style={{ alignItems: "center" }}>
         <Button
           containerStyle={{
             shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
+            shadowOffset: { width: 0, height: 10 },
+            shadowOpacity: 0,
             shadowRadius: 10,
             elevation: 15,
             borderRadius: 25,
-            marginBottom: 10,
+            width: "auto",
           }}
           buttonStyle={{
-            marginTop: 20,
-            marginBottom: 10,
-            width: 170,
+            marginTop: 25,
             shadowRadius: 10,
             backgroundColor: buttonColor,
             borderRadius: 25,
-            justifyContent: 'space-around'
+            paddingTop: 12,
+            paddingBottom: 12,
           }}
-          titleStyle={{ color: "white" }}
+          titleStyle={{
+            marginLeft: 32,
+            marginRight: 8,
+            color: "white",
+            fontFamily: "Poppins_400Regular",
+          }}
           title={join}
           iconRight={true}
           icon={
-            <Svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={16.079}
-              height={11.529}
-              viewBox="0 0 16.079 11.529"
-            >
-              <Path
-                id="Path_220"
-                data-name="Path 220"
-                d="M9,13.765a.824.824,0,0,0,.824.824H22.267l-3.535,3.535A.824.824,0,1,0,19.9,19.289l4.942-4.942a.815.815,0,0,0,.24-.578v0a.8.8,0,0,0-.064-.315.815.815,0,0,0-.178-.267L19.9,8.242A.824.824,0,1,0,18.73,9.407l3.537,3.535H9.824A.824.824,0,0,0,9,13.765Z"
-                transform="translate(-9 -8.001)"
-                fill="#bcea64"
-              />
-            </Svg>
+            <ButtonArrow
+              style={{
+                marginRight: 32,
+                
+              }}
+            />
           }
           onPress={() => {
             onPressJoin();
           }}
         ></Button>
       </View>
-      <View style={{ alignItems: "flex-start", marginLeft: 20 }}>
+
+      {/* //! -------------------- Participants -------------------- */}
+
+      <View style={{ flexDirection: "row", alignItems: "flex-end", marginTop: 5, }}>
         <Text
           style={{
-            marginTop: 20,
+            marginTop: 30,
+            color: "#8A8C90",
+            marginLeft: 15,
             fontSize: 12,
-            justifyContent: "center",
-            fontWeight: "600",
+            fontFamily: "Poppins_400Regular",
           }}
         >
-          Participants: {userJoin}
-          {/* {event.participants[0]} */}
+          {" "}
+          Participants{"    "}
+        </Text>
+        <Text
+          style={{
+            fontWeight: "400",
+            fontSize: 16,
+            justifyContent: "flex-start",
+            fontFamily: "Poppins_400Regular",
+          }}
+        >
+          {userJoin}
         </Text>
       </View>
-      <View style={{ alignItems: "flex-start", marginLeft: 20 }}>
-        <Text
-          style={{
-            paddingTop: 10,
-            fontSize: 12,
-            marginTop: 20,
-            fontWeight: "600",
-            justifyContent: "center",
-          }}
+      <View style={styles.filterContainer}>
+        <ScrollView
+          contentContainerStyle={styles.horizontalFilterScrollContent}
+          style={styles.horizontalFilterScroll}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
         >
-          Description: {event.description}
-        </Text>
-        <Text
-          style={{
-            paddingTop: 0,
-            fontSize: 12,
-            marginTop: 20,
-            justifyContent: "center",
-            width: 350,
-            marginBottom: 100,
-          }}
-        >
-          This a restaurant description, just to show how cool it can be to read
-          a description on this page. Imagine that you could be reading all
-          about the restaurant that you just clicked on, and decide if it's a
-          good fit for you!
-        </Text>
+          {filterIcons}
+        </ScrollView>
       </View>
 
-      {/* <Badge
-        containerStyle={{
-          flex: 1,
-          justifyContent: "flex-end",
-          marginBottom: 50,
+      {/* //! -------------------- Description -------------------- */}
+
+      <Text
+        style={{
+          alignItems: "flex-start",
+          marginTop: 15,
+          color: "#8A8C90",
+          marginLeft: 15,
+          fontSize: 12,
+          fontFamily: "Poppins_400Regular",
         }}
-        value="Retour à la map"
-        badgeStyle={{
-          backgroundColor: "#476A70",
-          height: 25,
-          borderRadius: 20,
+      >
+        {" "}
+        Description{" "}
+      </Text>
+      <View
+        style={{
+          marginTop: 10,
         }}
-        textStyle={{
-          marginLeft: 10,
-          marginRight: 10,
-        }}
-        onPress={() => {
-          navigation.goBack("Map", { screen: "Map" });
-        }}
-      /> */}
-    </View>
+      >
+        <View
+          style={{
+            flex: 0.5,
+            alignItems: "flex-start",
+            marginLeft: 10,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              justifyContent: "flex-start",
+              marginLeft: 8,
+              marginBottom: 3,
+              marginRight: 10,
+              color: "#011936",
+              lineHeight: 24,
+              fontFamily: "Poppins_400Regular",
+              paddingBottom: 20,
+            }}
+          >
+            This is an event description, just to show how cool it can be to
+            read a description on this page. Imagine that you could be reading
+            all about the restaurant that you just clicked on, and decide if
+            it's a good fit for you!
+
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
+
+//! ---------------------- STYLES ----------------------
+
+const styles = StyleSheet.create({
+  card: {
+    marginLeft: 18,
+    marginBottom: 10,
+    marginTop: 25,
+    shadowColor: "#171717",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 15,
+    width: Dimensions.get("window").width * 0.9,
+    borderWidth: 0,
+    
+  },
+  filter: {
+    backgroundColor: "white",
+    marginTop:15,
+    borderRadius: 25,
+    shadowColor: "black",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 20,
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+  },
+  filterContainer: {
+    flex: 1,
+    height: 120,
+    alignItems: "flex-start",
+  },
+  horizontalFilterScroll: {
+    width: Dimensions.get("window").width,
+  },
+  horizontalFilterScrollContent: {
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  },
+});
