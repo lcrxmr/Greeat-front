@@ -156,7 +156,7 @@ function BottomNavigator() {
                 </Svg>
               );
             }
-          } else if (route.name == "Myevent") {
+          } else if (route.name == "Events") {
             if (focused) {
               return (
                 <Svg
@@ -288,7 +288,7 @@ function BottomNavigator() {
                 </Svg>
               );
             }
-          } else if (route.name == "Recipe") {
+          } else if (route.name == "Recipes") {
             if (focused) {
               return (
                 <Svg
@@ -554,8 +554,8 @@ function BottomNavigator() {
         }}
 
       />
-      <Tab.Screen name="Myevent" component={MyEvent} />
-      <Tab.Screen name="Recipe" component={Recipe} />
+      <Tab.Screen name="Events" component={MyEvent} />
+      <Tab.Screen name="Recipes" component={Recipe} />
       <Tab.Screen name="Menu" component={Menu} />
     </Tab.Navigator >
   );
