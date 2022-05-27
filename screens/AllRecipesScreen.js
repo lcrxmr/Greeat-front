@@ -24,7 +24,7 @@ const Tab = createMaterialTopTabNavigator();
 const handleDelete = (value) => {
   console.log(value);
 
-  fetch("http://192.168.1.28:3000/delete-recipe?recipeID=" + value, {
+  fetch("http://172.16.190.132:3000/delete-recipe?recipeID=" + value, {
     method: "DELETE",
   });
 };
@@ -34,7 +34,7 @@ function Recipe(props) {
   //const [recipeCount, setRecipeCount] = useState(0);
 
   useEffect(() => {
-    fetch("http://192.168.1.28:3000/recipes")
+    fetch("http://172.16.190.132:3000/recipes")
       .then((response) => response.json())
       .then((data) => setMyRecipeList(data));
 
@@ -174,7 +174,7 @@ function Recipe(props) {
                 </View>
               </View>
             </View>
-           
+
           </View>
         </Card>
       </TouchableOpacity>
@@ -182,7 +182,7 @@ function Recipe(props) {
   });
 
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1,  backgroundColor: "#FDFDFD" }}>
       <ScrollView showsVerticalScrollIndicator={false}>{recipeList}</ScrollView>
       <View
         style={{

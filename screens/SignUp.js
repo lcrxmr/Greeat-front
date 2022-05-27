@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, Text, Dimensions, Image } from "react-native";
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
-import Logo from "../components/logo";
+import {Logo} from "../components/logo";
 
 // import SubmitButton from "../components/SubmitButton";
 
@@ -17,7 +17,7 @@ const SignUp = (props) => {
   const [listErrorsSignup, setErrorsSignup] = useState([]);
 
   var handleSubmitSignUp = async () => {
-    const data = await fetch("http://192.168.1.28:3000/sign-up", {
+    const data = await fetch("http://172.16.190.132:3000/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `username=${name}&email=${email}&password=${password}`,
