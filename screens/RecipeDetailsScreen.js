@@ -1,4 +1,4 @@
-import Clock  from "../components/clock";
+import Clock from "../components/clock";
 import React from "react";
 import {
   Dimensions,
@@ -11,15 +11,13 @@ import {
 import { Card } from "react-native-elements";
 import GoldStar from "../components/GoldStar";
 import GreyStar from "../components/GreyStar";
-import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
-
+import { useFonts, Poppins_400Regular, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 
 export default function RecipeDetails({ route }) {
-
-    let [fontsLoaded] = useFonts({
-        Poppins_400Regular
-      });
-    
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+  });
 
   var recipe = route.params.recipe;
 
@@ -41,8 +39,48 @@ export default function RecipeDetails({ route }) {
 
   //! -------------------- Map ingredients --------------------
 
+
+  var fullSteps = [];
+    var Steps = [];
+    fullSteps = recipe.description.split("\n");
+    console.log(fullSteps);
+
+    for (let i = 0; i < fullSteps.length; i++) {
+      if (i % 2 != 0) {
+        Steps.push(fullSteps[i]);
+      }
+    }
+
+    var stepsView = Steps.map((item, i) => {
+      return (
+        <View 
+        style={{
+          marginLeft: 25
+        }}
+        >
+          <Text
+          style={{
+            color: "#011936",
+            lineHeight: 24,
+            fontFamily: "Poppins_600SemiBold",
+          }}
+          > • Step {i+1} </Text>
+          <Text 
+          style={{
+            color: "#011936",
+            lineHeight: 24,
+            fontFamily: "Poppins_400Regular",
+            marginBottom: 10
+          }}
+          > {item} </Text>
+        </View>
+      );
+    });
+
   let ingredientList = recipe.ingredients.map((item, i) => {
     var qty = item.qty + " " + item.unit;
+
+    
 
     return (
       <View style={{ flexDirection: "row", height: "auto" }}>
@@ -60,7 +98,7 @@ export default function RecipeDetails({ route }) {
               marginLeft: 25,
               marginBottom: 3,
               color: "#011936",
-              fontFamily: "Poppins_400Regular"
+              fontFamily: "Poppins_400Regular",
             }}
           >
             {" "}
@@ -218,7 +256,7 @@ export default function RecipeDetails({ route }) {
             <Text
               style={{
                 fontSize: 16,
-            
+
                 marginRight: 3,
                 fontFamily: "Poppins_400Regular",
                 color: "#AEB1B5",
@@ -231,7 +269,7 @@ export default function RecipeDetails({ route }) {
               style={{
                 paddingTop: 0,
                 fontSize: 15,
-               
+
                 fontFamily: "Poppins_400Regular",
               }}
             >
@@ -287,24 +325,13 @@ export default function RecipeDetails({ route }) {
       >
         <View
           style={{
-            flex: 0.5,
+            flex: 1,
             alignItems: "flex-start",
             marginLeft: 10,
           }}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginLeft: 25,
-              marginBottom: 3,
-              color: "#011936",
-              lineHeight: 24,
-              fontFamily: "Poppins_400Regular",
-            }}
-          >
-            {recipe.description}
-          </Text>
+           {stepsView}
+          
         </View>
       </View>
     </ScrollView>

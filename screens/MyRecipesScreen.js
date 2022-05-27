@@ -24,7 +24,7 @@ const Tab = createMaterialTopTabNavigator();
 const handleDelete = (value) => {
     console.log(value);
 
-    fetch("http://172.17.188.2:3000/delete-recipe?recipeID=" + value, {
+    fetch("http://172.16.190.131:3000/delete-recipe?recipeID=" + value, {
         method: "DELETE",
     });
 };
@@ -34,7 +34,7 @@ function Recipe(props) {
     //const [recipeCount, setRecipeCount] = useState(0);
 
     useEffect(() => {
-        fetch("http://172.17.188.2:3000/recipes")
+        fetch("http://172.16.190.131:3000/recipes")
             .then((response) => response.json())
             .then((data) => setMyRecipeList(data));
 
@@ -248,45 +248,6 @@ function Recipe(props) {
             </View>
         </View>
     );
-  });
-
-  return (
-    <View style={{ flex: 1,  backgroundColor: "#FDFDFD" }}>
-      <ScrollView showsVerticalScrollIndicator={false}>{recipeList}</ScrollView>
-      <View
-        style={{
-          position: "absolute",
-          right: 10,
-          bottom: 0,
-        }}
-      >
-        <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 35,
-          }}
-          buttonStyle={{
-            margin: 10,
-            width: 52,
-            height: 52,
-            shadowRadius: 10,
-            backgroundColor: "white",
-            borderRadius: 30,
-          }}
-          icon={<Create props={props} />}
-          onPress={() => {
-            props.navigation.navigate("CreateRecipe", {
-              screen: "CreateRecipeScreen",
-            });
-          }}
-        ></Button>
-      </View>
-    </View>
-  );
 }
 
 //! ---------------------- STYLES ----------------------

@@ -71,7 +71,7 @@ export default function EventDetails({ route }, props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
-      await fetch("http://172.17.188.2:3000/nearby-places", {
+      await fetch("http://172.16.190.131:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
