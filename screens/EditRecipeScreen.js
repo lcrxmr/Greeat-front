@@ -7,18 +7,40 @@ import { Card, Badge, Button } from "react-native-elements";
 
 
 
-const handleEdit = (name, ingredientList, desc, recipe) => {
+const handleEdit = (recipe, name, ingredientName, ingredientQty, ingredientUnit, desc) => {
 
+    console.log('length' + ingredientName.length)
+    var ingredientList = []
+  
+    var description = '';
+  
+    for (let i = 0; i < desc.length; i++) {
+      let c = i + 1
+      description = description + 'Step ' + c + '\n' + desc[i] + '\n';
+  
+    }
+  
+  
+    for (let i = 0; i < ingredientName.length; i++) {
+  
+  
+  
+      ingredientList.push({ name: ingredientName[i], qty: ingredientQty[i], unit: ingredientUnit[i] })
+  
+  
+    }
+  
+  
     console.log(ingredientList)
-
     const body = {
         _id: recipe._id,
         name: name,
         ingredients: ingredientList,
-        description: desc,
+        description: description,
 
     };
 
+    console.log(body)
 
     /* const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
     /* 
@@ -44,7 +66,7 @@ const handleEdit = (name, ingredientList, desc, recipe) => {
 
 }
 
-export default function CreateRecipe(props) {
+function EditRecipe(props) {
 
 
     var recipe = props.route.params.recipe;
@@ -406,12 +428,12 @@ export default function CreateRecipe(props) {
           title={'Update'}
           onPress={() => {
 
-            handleCreate(name, ingredientName, ingredientQty, ingredientUnit, stepText);
+            handleEdit(recipe, name, ingredientName, ingredientQty, ingredientUnit, stepText);
             props.addOneRecipe();
-            
-            
-            props.navigation.navigate("Recipe", { screen: "RecipeScreen" })
-            }} 
+
+
+            props.navigation.navigate("Recipes", { screen: "RecipeScreen" })
+        }} 
         ></Button>
 
 
@@ -455,3 +477,11 @@ const styles = StyleSheet.create({
 
 });
 
+function mapDispatchToProps(dispatch) {
+    return {
+      addOneRecipe: function () {
+        dispatch({ type: 'add' })
+      }
+    }
+  }
+  export default connect(null, mapDispatchToProps)(EditRecipe);
