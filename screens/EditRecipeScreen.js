@@ -55,7 +55,7 @@ const handleEdit = (recipe, name, ingredientName, ingredientQty, ingredientUnit,
       body: formBody
     }); */
 
-    fetch('http://172.16.190.132:3000/edit-recipe', {
+    fetch('http://192.168.164.78:3000/edit-recipe', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
