@@ -3,7 +3,6 @@ import { Card, Badge, Button } from "react-native-elements";
 import { Image } from "react-native";
 import React, { useState } from "react";
 import Carousel from "simple-carousel-react-native";
-import ProfilePic from "../components/profilepic";
 import Svg, { G, Path } from "react-native-svg";
 
 export default function Profile() {

@@ -1,14 +1,8 @@
 import ButtonArrow from "../components/button-arrow";
 import Calendar from "../components/calendar";
-import { StatusBar } from "expo-status-bar";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { createStore, combineReducers } from "redux";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
-import Svg, { Path } from "react-native-svg";
 import {
   View,
   StyleSheet,
@@ -19,9 +13,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
-import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
-import { MaterialIcons } from "@expo/vector-icons";
 import { getDistance, getPreciseDistance } from "geolib";
 import LocationMarker from "../components/LocationMarker";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
@@ -64,29 +56,21 @@ export default function EventDetailScreen({ route }) {
     // return () => (mounted = false);
   }, []);
 
+
   useEffect(() => {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
+<<<<<<< HEAD
       await fetch("http://192.168.164.78:3000/nearby-places", {
+=======
+      await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
+>>>>>>> dev
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
-      //   var rawResponse = await fetch(
-      //     "http://172.16.190.142:3000/nearby-places",
-      //     {
-      //       method: "GET",
-      //     }
-      //   );
-      //   places = await rawResponse.json();
-      //   setListPins(places);
-      //   // console.log('*********** places:',places, '*********')
-      //   // Events from back
-      //   var rawEvent = await fetch("http://172.16.190.142:3000/events", {
-      //     method: "GET",
-      //   });
     })();
   }, [location]);
 
@@ -115,8 +99,6 @@ export default function EventDetailScreen({ route }) {
     ) / 1000
   ).toFixed(1);
 
-  // console.log(dis);
-  // console.log(restaurant.gallery[0])
 
   // Convert UTC date to a dd/mm/yy date
   var d = new Date(event.date);
@@ -124,6 +106,7 @@ export default function EventDetailScreen({ route }) {
 
 
   //? Loop to display images in participants slider
+  //TODO to replace with participants data
 
   var profile = [
     require('../assets/profile1.jpg'),

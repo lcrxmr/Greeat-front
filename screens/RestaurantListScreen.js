@@ -1,34 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStore, combineReducers } from 'redux';
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
-import {
-  View,
-  StyleSheet,
-  LogBox,
-  Image,
-  Dimensions,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
-import CardSlider from "react-native-cards-slider";
-import { Card, Badge, Button } from "react-native-elements";
-import { MaterialIcons } from "@expo/vector-icons";
-import Svg, { G, Path } from "react-native-svg";
-import { getDistance, getPreciseDistance } from 'geolib';
-
-
-
+import { View, Image, Text, ScrollView } from "react-native";
+import { Badge } from "react-native-elements";
+import { getDistance } from "geolib";
 
 export default function EventDetails(props) {
   const [listPins, setListPins] = useState([]);
   const [location, setLocation] = useState({ lat: 0, long: 0 });
-
 
   useEffect(() => {
     // let mounted = true;
@@ -57,7 +35,11 @@ export default function EventDetails(props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
+<<<<<<< HEAD
       await fetch("http://192.168.164.78:3000/nearby-places", {
+=======
+      await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
+>>>>>>> dev
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
@@ -77,22 +59,22 @@ export default function EventDetails(props) {
         method: "GET",
       });
     })();
-
   }, [location]);
 
-
-
   var restaurants = listPins.map((restaurant, i) => {
+    var dis = (
+      getDistance(
+        { latitude: location.lat, longitude: location.long },
+        {
+          latitude: restaurant.coordinate.latitude,
+          longitude: restaurant.coordinate.longitude,
+        }
+      ) / 1000
+    ).toFixed(1);
 
-    var dis = (getDistance(
-      { latitude: location.lat, longitude: location.long },
-      { latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude },
-    ) / 1000).toFixed(1);
-
-    console.log(dis)
+    console.log(dis);
     // console.log(restaurant.gallery[0])
     return (
-
       <View style={{ flexDirection: "row" }}>
         <View style={{ flex: 0.8 }}>
           <Image
@@ -154,20 +136,21 @@ export default function EventDetails(props) {
               marginLeft: 10,
               marginRight: 10,
             }}
-            onPress={() => { props.navigation.navigate('EventDetailsScreen', { screen: 'EventDetailsScreen' }) }}
+            onPress={() => {
+              props.navigation.navigate("EventDetailsScreen", {
+                screen: "EventDetailsScreen",
+              });
+            }}
           />
         </View>
       </View>
-
     );
   });
 
   return (
-    <ScrollView style={{ flex: 1 }} >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         {restaurants}
-
       </View>
     </ScrollView>
   );

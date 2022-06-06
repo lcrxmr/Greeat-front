@@ -11,7 +11,7 @@ import Svg, {
 } from "react-native-svg";
 import React from "react";
 export function Logo({}) {
-  return <Svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={131.3} height={80.2} viewBox="21 -6 131.3 80.2">
+  return <Svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={200} height={100} viewBox="21 -6 131.3 80.2">
       <Defs>
         <LinearGradient id="linear-gradient" y1={1} x2={1} gradientUnits="objectBoundingBox">
           <Stop offset={0} stopColor="#bcea64" />

@@ -1,8 +1,6 @@
-import Delete from "../components/delete";
-import Edit from "../components/edit";
 import Create from "../components/create";
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
+
 import {
   StyleSheet,
   Text,
@@ -11,10 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStore, combineReducers } from "redux";
+
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Card, Image, Button, FAB } from "react-native-elements";
 import { connect } from "react-redux";
@@ -24,17 +19,24 @@ const Tab = createMaterialTopTabNavigator();
 const handleDelete = (value) => {
   console.log(value);
 
+<<<<<<< HEAD
   fetch("http://192.168.164.78:3000/delete-recipe?recipeID=" + value, {
+=======
+  fetch("https://damp-mountain-22575.herokuapp.com/delete-recipe?recipeID=" + value, {
+>>>>>>> dev
     method: "DELETE",
   });
 };
 
 function Recipe(props) {
   const [myRecipeList, setMyRecipeList] = useState([]);
-  //const [recipeCount, setRecipeCount] = useState(0);
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch("http://192.168.164.78:3000/recipes")
+=======
+    fetch("https://damp-mountain-22575.herokuapp.com/recipes")
+>>>>>>> dev
       .then((response) => response.json())
       .then((data) => setMyRecipeList(data));
 
