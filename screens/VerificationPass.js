@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ScrollView, TextInput,  } from "react-native";
-import { connect } from "react-redux";
 
 
 function verificationPass () {

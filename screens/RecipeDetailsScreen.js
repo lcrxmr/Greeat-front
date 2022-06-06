@@ -23,15 +23,11 @@ export default function RecipeDetails({ route }) {
 
   console.log("testID" + recipe);
   //const [recipe, setRecipe] = useState()
-
+  
   /* useEffect(() => {
-
-
-
         fetch('http://172.17.188.13:3000/recipe?recipeID=' + recipeID, {
             method: 'GET'
         }).then(response => response.json()).then(data => setRecipe(data))
-
 
     }, []) */
 

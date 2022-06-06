@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
 import {
   View,
   StyleSheet,
@@ -15,16 +14,8 @@ import {
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
-import { MaterialIcons } from "@expo/vector-icons";
-import Svg, {
-  G,
-  Path,
-  Circle,
-  Defs,
-  Stop,
-  LinearGradient,
-} from "react-native-svg";
-import { getDistance, getPreciseDistance } from "geolib";
+import { getDistance } from "geolib";
+import { Locator } from './../components/locator';
 
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
@@ -74,7 +65,8 @@ export default function Map(props) {
   // Load map + location on loading of the screen
   useEffect(() => {
     // let mounted = true;
-    // Get our location
+
+    //? Get our location
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status == "granted") {
@@ -97,14 +89,14 @@ export default function Map(props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-      await fetch("http://172.16.190.132:3000/nearby-places", {
+      await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "http://172.16.190.132:3000/nearby-places",
+        "https://damp-mountain-22575.herokuapp.com/nearby-places",
         {
           method: "GET",
         }
@@ -114,7 +106,7 @@ export default function Map(props) {
 
       //? Events from back
 
-      var rawEvent = await fetch("http://172.16.190.132:3000/events", {
+      var rawEvent = await fetch("https://damp-mountain-22575.herokuapp.com/events", {
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();
@@ -652,7 +644,9 @@ export default function Map(props) {
           zIndex: 2,
         }}
       >
-        {/* <GooglePlacesAutocomplete
+        {/* //! ---------------------- Search bar ---------------------- 
+        
+        <GooglePlacesAutocomplete
           //autocomplete input
           style={
             {
@@ -757,47 +751,7 @@ export default function Map(props) {
             borderRadius: 30,
           }}
           icon={
-            <Svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              width={23.18}
-              height={26.013}
-              viewBox="0 0 23.18 26.013"
-            >
-              <Defs>
-                <LinearGradient
-                  id="linear-gradient"
-                  y1={1}
-                  x2={1}
-                  gradientUnits="objectBoundingBox"
-                >
-                  <Stop offset={0} stopColor="#bcea64" />
-                  <Stop offset={1} stopColor="#80c35f" />
-                </LinearGradient>
-              </Defs>
-              <G
-                id="Group_47020"
-                data-name="Group 47020"
-                transform="translate(-351 -1389.923)"
-              >
-                <Circle
-                  id="Ellipse_34"
-                  data-name="Ellipse 34"
-                  cx={4.539}
-                  cy={4.539}
-                  r={4.539}
-                  transform="translate(365.103 1389.923)"
-                  fill="#011936"
-                />
-                <Path
-                  id="Path_2702"
-                  data-name="Path 2702"
-                  d="M17.82,6A10.034,10.034,0,0,0,8,16.213,12.539,12.539,0,0,0,9.1,20.932a24.226,24.226,0,0,0,4.653,6.71c1.762,1.891,3.544,3.372,4.062,3.372,1.1,0,6.87-5.861,8.638-9.934a12.314,12.314,0,0,0,1.185-4.867A10.034,10.034,0,0,0,17.82,6Zm1.118,15.2V19.929a1,1,0,0,0-2,0v1.255a5.708,5.708,0,0,1-4.582-4.694h1.257a1,1,0,0,0,0-2H12.382a5.711,5.711,0,0,1,4.556-4.526v1.088a1,1,0,0,0,2,0v-1.1a5.716,5.716,0,0,1,4.651,4.539H22.261a1,1,0,0,0,0,2h1.355A5.705,5.705,0,0,1,18.938,21.2Z"
-                  transform="translate(343.006 1384.922)"
-                  fill="url(#linear-gradient)"
-                />
-              </G>
-            </Svg>
+            <Locator     />
           }
           onPress={() => {
             onPressRelocate();
