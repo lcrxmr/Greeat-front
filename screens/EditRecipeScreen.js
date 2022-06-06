@@ -61,18 +61,6 @@ const handleEdit = (
       body: formBody
     }); */
 
-<<<<<<< HEAD
-    fetch('http://192.168.164.78:3000/edit-recipe', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body)
-    });
-
-
-}
-=======
   fetch("https://damp-mountain-22575.herokuapp.com/edit-recipe", {
     method: "PUT",
     headers: {
@@ -81,7 +69,6 @@ const handleEdit = (
     body: JSON.stringify(body),
   });
 };
->>>>>>> dev
 
 function EditRecipe(props) {
   var recipe = props.route.params.recipe;

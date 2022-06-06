@@ -21,13 +21,6 @@ function SignIn(props) {
   console.log(email), console.log(password);
 
   var handleSubmitSignIn = async () => {
-<<<<<<< HEAD
-    const data = await fetch("http://192.168.164.78:3000/sign-in", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `email=${email}&password=${password}`,
-    });
-=======
     const data = await fetch(
       "https://damp-mountain-22575.herokuapp.com/sign-in",
       {
@@ -36,7 +29,6 @@ function SignIn(props) {
         body: `email=${email}&password=${password}`,
       }
     );
->>>>>>> dev
 
     const body = await data.json();
     console.log("**********BODY", body);

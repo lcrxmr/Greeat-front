@@ -18,14 +18,8 @@ const handleCreate = (name, date, location, desc) => {
   // console.log(body);
   /*  const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
 
-<<<<<<< HEAD
-
-  fetch('http://192.168.164.78:3000/create-event', {
-    method: 'POST',
-=======
   fetch("https://damp-mountain-22575.herokuapp.com/create-event", {
     method: "POST",
->>>>>>> dev
     headers: {
       "Content-Type": "application/json",
     },

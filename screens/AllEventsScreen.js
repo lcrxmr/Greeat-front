@@ -18,29 +18,19 @@ const handleDelete = (value) => {
     eventID: value,
   };
 
-<<<<<<< HEAD
-  fetch("http://192.168.164.78:3000/delete-event?eventID=" + value, {
-    method: "DELETE",
-  });
-=======
   fetch(
     "https://damp-mountain-22575.herokuapp.com/delete-event?eventID=" + value,
     {
       method: "DELETE",
     }
   );
->>>>>>> dev
 };
 
 function myEvents(props) {
   const [myEventList, setMyEventList] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    fetch("http://192.168.164.78:3000/events")
-=======
     fetch("https://damp-mountain-22575.herokuapp.com/events")
->>>>>>> dev
       .then((response) => response.json())
       .then((data) => setMyEventList(data));
 

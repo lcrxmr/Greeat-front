@@ -13,13 +13,6 @@ const SignUp = (props) => {
   const [listErrorsSignup, setErrorsSignup] = useState([]);
 
   var handleSubmitSignUp = async () => {
-<<<<<<< HEAD
-    const data = await fetch("http://192.168.164.78:3000/sign-up", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `username=${name}&email=${email}&password=${password}`,
-    });
-=======
     const data = await fetch(
       "https://damp-mountain-22575.herokuapp.com/sign-up",
       {
@@ -28,7 +21,6 @@ const SignUp = (props) => {
         body: `username=${name}&email=${email}&password=${password}`,
       }
     );
->>>>>>> dev
     const body = await data.json();
     console.log("***********BODY", body);
 
