@@ -27,7 +27,7 @@ import { Marker } from "react-native-maps";
 // Import search autocomplete lib
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"; // npm install react-native-google-places-autocomplete (if issues with npm add --legacy-peer-deps)
 import { renderNode } from "react-native-elements/dist/helpers";
-const GOOGLE_PLACES_API_KEY = "AIzaSyAp9YjV01lOFf3PSsV5trlihOM4HvLc5ZA"; // never save your real api key in a snack!
+const GOOGLE_PLACES_API_KEY = "xxxxxx"; // never save your real api key in a snack!
 
 //! ---------------------- Main function ----------------------
 
