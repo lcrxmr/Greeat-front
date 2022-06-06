@@ -89,22 +89,14 @@ export default function Map(props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-<<<<<<< HEAD
-      await fetch("http://192.168.164.78:3000/nearby-places", {
-=======
       await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
->>>>>>> dev
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-<<<<<<< HEAD
-        "http://192.168.164.78:3000/nearby-places",
-=======
         "https://damp-mountain-22575.herokuapp.com/nearby-places",
->>>>>>> dev
         {
           method: "GET",
         }
@@ -114,11 +106,7 @@ export default function Map(props) {
 
       //? Events from back
 
-<<<<<<< HEAD
-      var rawEvent = await fetch("http://192.168.164.78:3000/events", {
-=======
       var rawEvent = await fetch("https://damp-mountain-22575.herokuapp.com/events", {
->>>>>>> dev
         method: "GET",
       });
       var eventFromBack = await rawEvent.json();

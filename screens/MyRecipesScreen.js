@@ -17,18 +17,6 @@ import { connect } from "react-redux";
 const Tab = createMaterialTopTabNavigator();
 
 const handleDelete = (value) => {
-<<<<<<< HEAD
-    console.log(value);
-
-    console.log(value)
-
-    fetch('http://192.168.164.78:3000/delete-recipe?recipeID=' + value, { method: 'DELETE' })
-
-}
-=======
-  console.log(value);
->>>>>>> dev
-
   console.log(value);
 
   fetch(
@@ -41,11 +29,7 @@ function Recipe(props) {
   const [myRecipeList, setMyRecipeList] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    fetch("http://192.168.164.78:3000/recipes")
-=======
     fetch("https://damp-mountain-22575.herokuapp.com/recipes")
->>>>>>> dev
       .then((response) => response.json())
       .then((data) => setMyRecipeList(data));
 
