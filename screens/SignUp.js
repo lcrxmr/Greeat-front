@@ -28,9 +28,11 @@ const SignUp = (props) => {
       props.addToken(body.token);
       props.navigation.navigate("BottomNavigator", { screen: "Map" });
       console.log("***********BODY", body.token);
+      await AsyncStorage.setItem("token", props.token);
     } else {
       setErrorsSignup(body.error);
     }
+
   };
 
   var tabErrorsSignup = listErrorsSignup.map((error, i) => {

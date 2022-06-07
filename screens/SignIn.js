@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   TextInput,
@@ -10,6 +10,7 @@ import {
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
 import { LogoSignin } from "./../components/logo-signin";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function SignIn(props) {
   const [email, setEmail] = useState("");
@@ -18,7 +19,26 @@ function SignIn(props) {
 
   const [errorsSignin, setErrorsSignin] = useState([]);
 
-  console.log(email), console.log(password);
+  // console.log(email), console.log(password);
+
+
+  // install reducer and connect to store
+useEffect(() => {
+    AsyncStorage.getItem("token").then((token) => {
+      if (token) {
+        props.navigation.navigate("BottomNavigator", { screen: "Map" });
+      }
+      console.log("Token:",token)
+    }
+    
+    ).catch(
+        console.log("No token")
+    )
+  }
+  , []);
+
+  
+
 
   var handleSubmitSignIn = async () => {
     const data = await fetch(
@@ -40,6 +60,10 @@ function SignIn(props) {
     } else {
       setErrorsSignin(body.error);
     }
+    
+    await AsyncStorage.setItem("token", props.token);
+     
+
   };
 
   console.log("-----Error", errorsSignin);
@@ -177,6 +201,13 @@ function SignIn(props) {
   );
 }
 
+
+function mapStateToProps(state) {
+  return {
+    token: state.token
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     addToken: function (token) {
@@ -184,4 +215,4 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
