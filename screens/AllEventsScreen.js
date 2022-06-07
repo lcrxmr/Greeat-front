@@ -1,8 +1,5 @@
 import Create from "../components/create";
-import Delete from "../components/delete";
-import Edit from "../components/edit";
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -11,14 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStore, combineReducers } from "redux";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Card, Image, Button, FAB } from "react-native-elements";
 import { connect } from "react-redux";
-import { getDistance, getPreciseDistance } from "geolib";
 
 const handleDelete = (value) => {
   console.log(value);
@@ -27,14 +18,16 @@ const handleDelete = (value) => {
     eventID: value,
   };
 
-  fetch("https://damp-mountain-22575.herokuapp.com/delete-event?eventID=" + value, {
-    method: "DELETE",
-  });
+  fetch(
+    "https://damp-mountain-22575.herokuapp.com/delete-event?eventID=" + value,
+    {
+      method: "DELETE",
+    }
+  );
 };
 
 function myEvents(props) {
   const [myEventList, setMyEventList] = useState([]);
-  const [eventCount, setEventCount] = useState(0);
 
   useEffect(() => {
     fetch("https://damp-mountain-22575.herokuapp.com/events")
@@ -45,8 +38,9 @@ function myEvents(props) {
   }, [props.eventCount]);
 
   let eventList = myEventList.map((event, i) => {
-    //? to calculate distance from our location to the event
     //TODO Reducer to put in place to receive location from user
+
+    //? to calculate distance from our location to the event
     // var dis = (
     //   getDistance(
     //     { latitude: location.lat, longitude: location.long },
@@ -183,7 +177,7 @@ function myEvents(props) {
   });
 
   return (
-    <View style={{ flex: 1, }}>
+    <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>{eventList}</ScrollView>
       <View
         style={{

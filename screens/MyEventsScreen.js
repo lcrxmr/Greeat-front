@@ -2,7 +2,6 @@ import Create from "../components/create";
 import Delete from "../components/delete";
 import Edit from "../components/edit";
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -11,14 +10,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStore, combineReducers } from "redux";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Card, Image, Button } from "react-native-elements";
 import { connect } from "react-redux";
-import { getDistance, getPreciseDistance } from "geolib";
 
 const handleDelete = (value) => {
   console.log(value);
@@ -210,7 +203,7 @@ function myEvents(props) {
       </TouchableOpacity>
     );
 
-    //! --------------------------------------------
+    //! -------------------------------- MAIN RETURN --------------------------------
   });
 
   return (

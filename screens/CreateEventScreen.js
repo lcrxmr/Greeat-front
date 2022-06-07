@@ -5,8 +5,6 @@ import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import Svg, { Defs, LinearGradient, Stop, Path } from "react-native-svg";
 
-import DatePicker from "react-native-date-picker";
-
 const handleCreate = (name, date, location, desc) => {
   console.log(date);
 
@@ -17,13 +15,11 @@ const handleCreate = (name, date, location, desc) => {
     description: desc,
   };
 
-  console.log(body);
-
+  // console.log(body);
   /*  const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
 
-
-  fetch('https://damp-mountain-22575.herokuapp.com/create-event', {
-    method: 'POST',
+  fetch("https://damp-mountain-22575.herokuapp.com/create-event", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -65,7 +61,17 @@ function CreateEvent(props) {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3, marginLeft: 10 }}> Images </Text>
+      <Text
+        style={{
+          fontWeight: "500",
+          fontSize: 12,
+          opacity: 0.3,
+          marginLeft: 10,
+        }}
+      >
+        {" "}
+        Images{" "}
+      </Text>
       <View
         style={{
           alignItems: "center",
@@ -118,7 +124,7 @@ function CreateEvent(props) {
       </View>
 
       <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3 }}>
+        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
           Events Name
         </Text>
       </View>
@@ -129,13 +135,12 @@ function CreateEvent(props) {
           placeholder="Event's name"
           onChangeText={setName}
           value={name}
-        //placeholder="Give a name to your event"
+          //placeholder="Give a name to your event"
         />
       </View>
 
-
       <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3 }}>
+        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
           Adress of the event
         </Text>
       </View>
@@ -148,9 +153,8 @@ function CreateEvent(props) {
         />
       </View>
 
-
       <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3 }}>
+        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
           Date
         </Text>
       </View>
@@ -165,9 +169,8 @@ function CreateEvent(props) {
         />
       </View>
 
-
       <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3 }}>
+        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
           Time
         </Text>
       </View>
@@ -192,7 +195,7 @@ function CreateEvent(props) {
       </View>
 
       <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3 }}>
+        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
           Event Category
         </Text>
       </View>
@@ -206,7 +209,7 @@ function CreateEvent(props) {
       </View>
 
       <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: '500', fontSize: 12, opacity: 0.3 }}>
+        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
           Description
         </Text>
       </View>
@@ -219,7 +222,15 @@ function CreateEvent(props) {
         />
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: "center", marginRight: 15, marginTop: 10 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          marginRight: 15,
+          marginTop: 10,
+        }}
+      >
         <Button
           title="Cancel"
           titleStyle={{ fontSize: 18, color: "#476A70" }}
@@ -255,7 +266,6 @@ function CreateEvent(props) {
           }}
         />
       </View>
-
     </ScrollView>
   );
 }

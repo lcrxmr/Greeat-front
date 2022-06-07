@@ -1,42 +1,26 @@
-import { StatusBar } from "expo-status-bar";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { createStore, combineReducers } from "redux";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
 import {
   View,
   Image,
   Text,
   ScrollView,
   Dimensions,
-  KeyboardAvoidingView,
   StyleSheet,
 } from "react-native";
-import CardSlider from "react-native-cards-slider";
-import { Card, Badge, Button } from "react-native-elements";
-import { MaterialIcons } from "@expo/vector-icons";
-import Svg, { G, Path } from "react-native-svg";
-import { getDistance, getPreciseDistance } from "geolib";
-import FavoriCon from "../components/FavoriCon";
-import RestaurantDescription from "../components/RestaurantDescription";
-import BackArrow from "../components/BackArrow";
+import { Card, Badge } from "react-native-elements";
+import { getDistance } from "geolib";
 import GoldStar from "../components/GoldStar";
 import GreyStar from "../components/GreyStar";
 import LocationMarker from "../components/LocationMarker";
 import ArrowRestaurantDetailsMap from "../components/ArrowRestaurantDetailsMap";
-import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
-
+import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 export default function EventDetails({ route }, props) {
-
-
   let [fontsLoaded] = useFonts({
-    Poppins_400Regular
+    Poppins_400Regular,
   });
-
 
   const [listPins, setListPins] = useState([]);
   const [location, setLocation] = useState({ lat: 0, long: 0 });
@@ -191,7 +175,7 @@ export default function EventDetails({ route }, props) {
                   justifyContent: "flex-start",
                   marginRight: 3,
                   marginBottom: 3,
-                  fontFamily: "Poppins_400Regular"
+                  fontFamily: "Poppins_400Regular",
                 }}
               >
                 {" "}
@@ -203,7 +187,7 @@ export default function EventDetails({ route }, props) {
                   color: "#AEB1B5",
                   fontSize: 12,
                   justifyContent: "flex-start",
-                  fontFamily: "Poppins_400Regular"
+                  fontFamily: "Poppins_400Regular",
                 }}
               >
                 Km away
@@ -244,7 +228,7 @@ export default function EventDetails({ route }, props) {
           color: "#8A8C90",
           marginLeft: 15,
           fontSize: 12,
-          fontFamily: "Poppins_400Regular"
+          fontFamily: "Poppins_400Regular",
         }}
       >
         {" "}
@@ -264,7 +248,14 @@ export default function EventDetails({ route }, props) {
             top: 30,
           }}
         >
-          <Text style={{ flex: 0.5, lineHeight: 22, marginLeft: 40, fontFamily: "Poppins_400Regular" }}>
+          <Text
+            style={{
+              flex: 0.5,
+              lineHeight: 22,
+              marginLeft: 40,
+              fontFamily: "Poppins_400Regular",
+            }}
+          >
             3 Rue de la Vergouille, 69003, Lyon. France
           </Text>
 
@@ -291,7 +282,7 @@ export default function EventDetails({ route }, props) {
             color: "#8A8C90",
             marginLeft: 15,
             fontSize: 12,
-            fontFamily: "Poppins_400Regular"
+            fontFamily: "Poppins_400Regular",
           }}
         >
           {" "}
@@ -318,7 +309,7 @@ export default function EventDetails({ route }, props) {
                 marginRight: 10,
                 color: "#011936",
                 lineHeight: 24,
-                fontFamily: "Poppins_400Regular"
+                fontFamily: "Poppins_400Regular",
               }}
             >
               Neque porto quisquam est qui dolore ipsum quia donor sit met,
