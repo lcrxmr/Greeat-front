@@ -30,7 +30,6 @@ useEffect(() => {
       }
       console.log("Token:",token)
     }
-    
     ).catch(
         console.log("No token")
     )

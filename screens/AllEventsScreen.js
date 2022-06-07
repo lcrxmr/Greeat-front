@@ -48,7 +48,7 @@ function myEvents(props) {
     //   ) / 1000
     // ).toFixed(1);
 
-    // Convert UTC date to a dd/mm/yy date
+    //? Convert UTC date to a dd/mm/yy date
     var d = new Date(event.date);
     var date = d.toLocaleDateString();
 
@@ -71,11 +71,7 @@ function myEvents(props) {
               />
             </View>
             <View
-              style={{
-                flex: 1.2,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}
+              style={styles.cardRightsideView}
             >
               <View
                 style={{
@@ -85,82 +81,41 @@ function myEvents(props) {
                 }}
               >
                 <Text
-                  style={{
-                    paddingTop: 10,
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    justifyContent: "flex-start",
-                  }}
+                  style={styles.cardText}
                 >
                   {event.name}
                 </Text>
               </View>
               <View
-                style={{
-                  flex: 0.5,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-start",
-                  paddingBottom: 5,
-                }}
+                style={styles.viewInsideCard}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
-                    style={{
-                      height: 18,
-                      width: 15,
-                      marginRight: 3,
-                      marginTop: 5,
-                    }}
+                    style={styles.locationIcon}
                     source={require("../assets/location.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 10,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.kmNumberText}
                   >
                     {" "}
                     1.4
                   </Text>
                   <Text
-                    style={{
-                      paddingTop: 10,
-                      fontSize: 12,
-                      justifyContent: "flex-start",
-                    }}
+                    style={styles.kmText}
                   >
                     Km away
                   </Text>
                 </View>
 
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: -2,
-                  }}
+                  style={styles.dateView}
                 >
                   <Image
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginRight: 3,
-                      marginTop: 0,
-                    }}
+                    style={styles.cardIcon}
                     source={require("../assets/date.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.dateText}
                   >
                     {" "}
                     {date}
@@ -173,7 +128,7 @@ function myEvents(props) {
       </TouchableOpacity>
     );
 
-    //! --------------------------------------------
+    //! ----------------------------------- MAIN RETURN -----------------------------------
   });
 
   return (
@@ -187,22 +142,8 @@ function myEvents(props) {
         }}
       >
         <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 35,
-          }}
-          buttonStyle={{
-            margin: 10,
-            width: 52,
-            height: 52,
-            shadowRadius: 10,
-            backgroundColor: "white",
-            borderRadius: 30,
-          }}
+          containerStyle={styles.buttonContainerStyle}
+          buttonStyle={styles.buttonStyle}
           icon={<Create props={props} />}
           onPress={() => {
             props.navigation.navigate("CreateEvent", {
@@ -218,13 +159,6 @@ function myEvents(props) {
 //! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
-  cardSlider: {
-    flex: 1,
-    bottom: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    width: Dimensions.get("window").width,
-  },
   card: {
     marginLeft: 10,
     marginBottom: 5,
@@ -236,6 +170,76 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.95,
     border: "none",
   },
+  cardText: {
+    paddingTop: 10,
+    fontWeight: "bold",
+    fontSize: 16,
+    justifyContent: "flex-start",
+  },
+  viewInsideCard: {
+    flex: 0.5,
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+    paddingBottom: 5,
+  },
+  locationIcon: {
+    height: 18,
+    width: 15,
+    marginRight: 3,
+    marginTop: 5,
+  },
+  kmNumberText: {
+    paddingTop: 10,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  kmText: {
+    paddingTop: 10,
+    fontSize: 12,
+    justifyContent: "flex-start",
+  },
+  buttonContainerStyle: {
+    shadowColor: "grey",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 15,
+    borderRadius: 35,
+  },
+  buttonStyle: {
+    margin: 10,
+    width: 52,
+    height: 52,
+    shadowRadius: 10,
+    backgroundColor: "white",
+    borderRadius: 30,
+  },
+  cardIcon: {
+    height: 17,
+    width: 17,
+    marginRight: 3,
+    marginTop: 0,
+  },
+  dateText: {
+    paddingTop: 5,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  dateView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  cardRightsideView: {
+    flex: 1.2,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  }
 });
 
 function mapStateToProps(state) {
