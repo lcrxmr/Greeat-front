@@ -26,7 +26,7 @@ const handleDelete = (value) => {
 
     console.log(value)
 
-    fetch('http://172.16.190.132:3000/delete-recipe?recipeID=' + value, { method: 'DELETE' })
+    fetch('https://damp-mountain-22575.herokuapp.com/delete-recipe?recipeID=' + value, { method: 'DELETE' })
 
 }
 
@@ -37,7 +37,7 @@ function Recipe(props) {
     //const [recipeCount, setRecipeCount] = useState(0);
 
   useEffect(() => {
-    fetch("http://172.16.190.132:3000/recipes")
+    fetch("https://damp-mountain-22575.herokuapp.com/recipes")
       .then((response) => response.json())
       .then((data) => setMyRecipeList(data));
 

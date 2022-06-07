@@ -55,7 +55,7 @@ const handleEdit = (recipe, name, ingredientName, ingredientQty, ingredientUnit,
       body: formBody
     }); */
 
-    fetch('http://172.16.190.132:3000/edit-recipe', {
+    fetch('https://damp-mountain-22575.herokuapp.com/edit-recipe', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

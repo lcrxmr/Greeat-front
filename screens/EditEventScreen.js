@@ -34,7 +34,7 @@ const handleEdit = (name, date, location, desc, event) => {
       body: formBody
     }); */
 
-  fetch('http://172.16.190.132:3000/edit-event', {
+  fetch('https://damp-mountain-22575.herokuapp.com/edit-event', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

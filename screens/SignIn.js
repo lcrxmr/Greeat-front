@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   ScrollView,
   TextInput,
@@ -29,23 +31,44 @@ function SignIn(props) {
   // const [userExists, setUserExists] = useState(false);
 
   const [errorsSignin, setErrorsSignin] = useState([]);
+  const [user, setUser] = useState("")
+  const [userExist, setUserExist] = useState(false)
+  // console.log(email), console.log(password);
 
-  console.log(email), console.log(password);
+  useEffect(() => {
+    
+var client = AsyncStorage.getItem("token")
+  
+    if (client) {
+      props.navigation.navigate("BottomNavigator", { screen: "Map" })
+      // 
+    }else{
+      console.log('------------ no token found')
+    }
+
+  }, []);
+
+
+
 
   var handleSubmitSignIn = async () => {
-    const data = await fetch("http://172.16.190.132:3000/sign-in", {
+    const data = await fetch("https://damp-mountain-22575.herokuapp.com/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `email=${email}&password=${password}`,
     });
 
     const body = await data.json();
-    console.log("**********BODY", body);
+    // console.log("**********BODY", body);
     if (body.result == true) {
+      
+      setUserExist(true)
       // on fait body.user.token car body a un object user
-      props.addToken(body.user.token);
-      // setUserExists(true);
+     
       props.navigation.navigate("BottomNavigator", { screen: "Map" });
+      // garder le user en storage local
+      AsyncStorage.setItem("token", body.user.token);
+      // console.log('******** PROPS TOKEN ***', props.token)
     } else {
       setErrorsSignin(body.error);
     }
@@ -272,11 +295,16 @@ function SignIn(props) {
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    token: state.token
+  };
+}
 function mapDispatchToProps(dispatch) {
   return {
     addToken: function (token) {
-      dispatch({ type: "addToken", token: token });
+      dispatch({ type: 'addToken', token: token });
     },
   };
 }
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

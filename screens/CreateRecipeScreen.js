@@ -44,7 +44,7 @@ const handleCreate = (name, ingredientName, ingredientQty, ingredientUnit, desc)
   const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&');
 
 
-  fetch('http://172.16.190.132:3000/create-recipe', {
+  fetch('https://damp-mountain-22575.herokuapp.com/create-recipe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
