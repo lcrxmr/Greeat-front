@@ -1,6 +1,5 @@
 import Create from "../components/create";
 import React, { useState, useEffect } from "react";
-
 import {
   StyleSheet,
   Text,
@@ -55,113 +54,55 @@ function Recipe(props) {
               />
             </View>
             <View
-              style={{
-                flex: 1.2,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}
+              style={styles.cardRightSideView}
             >
               <View
-                style={{
-                  flex: 0.5,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                }}
+                style={styles.recipeNameTextView}
               >
                 <Text
-                  style={{
-                    paddingTop: 10,
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    justifyContent: "flex-start",
-                  }}
+                  style={styles.recipeNameTextStyle}
                 >
                   {recipe.name}
                 </Text>
               </View>
               <View
-                style={{
-                  flex: 0.5,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-start",
-                  paddingBottom: 5,
-                }}
+                style={styles.textView}
               >
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: -2,
-                  }}
+                  style={styles.starView}
                 >
                   <Image
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginRight: 3,
-                      marginTop: 0,
-                    }}
+                    style={styles.starIcon}
                     source={require("../assets/star.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.starText}
                   >
                     {" "}
                     {recipe.review}
                   </Text>
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 12,
-                      justifyContent: "flex-start",
-                    }}
+                    style={styles.reviewText}
                   >
                     /5
                   </Text>
                 </View>
 
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: -2,
-                  }}
+                  style={styles.preparationView}
                 >
                   <Image
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginRight: 3,
-                      marginTop: 0,
-                    }}
+                    style={styles.preparationIcon}
                     source={require("../assets/preparation.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.preparationText}
                   >
                     {" "}
                     {recipe.prepTime}
                   </Text>
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 12,
-                      justifyContent: "flex-start",
-                    }}
+                    style={styles.minPrepText}
                   >
                     min of preparation
                   </Text>
@@ -186,22 +127,8 @@ function Recipe(props) {
         }}
       >
         <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 35,
-          }}
-          buttonStyle={{
-            margin: 10,
-            width: 52,
-            height: 52,
-            shadowRadius: 10,
-            backgroundColor: "white",
-            borderRadius: 30,
-          }}
+          containerStyle={styles.buttonContainerStyle}
+          buttonStyle={styles.buttonStyle}
           icon={<Create props={props} />}
           onPress={() => {
             props.navigation.navigate("CreateRecipe", {
@@ -217,13 +144,6 @@ function Recipe(props) {
 //! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
-  cardSlider: {
-    flex: 1,
-    bottom: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    width: Dimensions.get("window").width,
-  },
   card: {
     marginLeft: 10,
     marginBottom: 10,
@@ -236,6 +156,92 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.95,
     border: "none",
   },
+  cardRightSideView: {
+    flex: 1.2,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  recipeNameTextView: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  recipeNameTextStyle: {
+    paddingTop: 10,
+    fontWeight: "bold",
+    fontSize: 16,
+    justifyContent: "flex-start",
+  },
+  textView: {
+    flex: 0.5,
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+    paddingBottom: 5,
+  },
+  starView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  starIcon: {
+    height: 17,
+    width: 17,
+    marginRight: 3,
+    marginTop: 0,
+  },
+  starText: {
+    paddingTop: 5,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  reviewText: {
+    paddingTop: 5,
+    fontSize: 12,
+    justifyContent: "flex-start",
+  },
+  preparationView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  preparationIcon: {
+    height: 17,
+    width: 17,
+    marginRight: 3,
+    marginTop: 0,
+  },
+  preparationText: {
+    paddingTop: 5,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  minPrepText: {
+    paddingTop: 5,
+    fontSize: 12,
+    justifyContent: "flex-start",
+  },
+  buttonContainerStyle: {
+    shadowColor: "grey",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 15,
+    borderRadius: 35,
+  },
+  buttonStyle: {
+    margin: 10,
+    width: 52,
+    height: 52,
+    shadowRadius: 10,
+    backgroundColor: "white",
+    borderRadius: 30,
+  }
 });
 
 function mapStateToProps(state) {
