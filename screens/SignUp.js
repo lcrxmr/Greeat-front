@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, Dimensions, Image } from "react-native";
+import { View, TextInput, Text, Dimensions, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
 import { LogoSignin } from "./../components/logo-signin";
@@ -43,13 +43,7 @@ const SignUp = (props) => {
 
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        marginVertical: 100,
-        alignItems: "center",
-        marginTop: 150,
-      }}
+      style={styles.mainView}
     >
       <Image
         style={{ width: width, marginLeft: 0, marginTop: -270 }}
@@ -72,17 +66,7 @@ const SignUp = (props) => {
       </View>
 
       <TextInput
-        style={{
-          marginTop: 10,
-          borderWidth: 0,
-          height: 40,
-          borderRadius: 20,
-          width: 300,
-          padding: 10,
-          opacity: 0.22,
-          fontColor: "#8A8C90",
-          backgroundColor: "#C5CBD3",
-        }}
+        style={styles.nameInput}
         placeholderTextColor={"#476A70"}
         name="NAME"
         value={name}
@@ -92,17 +76,7 @@ const SignUp = (props) => {
         onChangeText={(val) => setName(val)}
       />
       <TextInput
-        style={{
-          marginTop: 10,
-          borderWidth: 0,
-          height: 40,
-          borderRadius: 20,
-          width: 300,
-          padding: 10,
-          opacity: 0.22,
-          fontColor: "#8A8C90",
-          backgroundColor: "#C5CBD3",
-        }}
+        style={styles.mailInput}
         placeholderTextColor={"#476A70"}
         name="EMAIL"
         value={email}
@@ -113,17 +87,7 @@ const SignUp = (props) => {
       />
       <TextInput
         placeholderTextColor={"#476A70"}
-        style={{
-          marginTop: 10,
-          borderWidth: 0,
-          height: 40,
-          borderRadius: 20,
-          width: 300,
-          padding: 10,
-          opacity: 0.22,
-          fontColor: "#8A8C90",
-          backgroundColor: "#C5CBD3",
-        }}
+        style={styles.passwordInput}
         name="PASSWORD"
         value={password}
         placeholder="password"
@@ -133,14 +97,7 @@ const SignUp = (props) => {
       />
 
       <Button
-        buttonStyle={{
-          marginTop: 60,
-          margin: 10,
-          width: 170,
-          shadowRadius: 10,
-          backgroundColor: "#476A70",
-          borderRadius: 25,
-        }}
+        buttonStyle={styles.button}
         titleStyle={{ color: "white" }}
         title="Sign Up"
         onPress={() => {
@@ -171,3 +128,56 @@ function mapDispatchToProps(dispatch) {
   };
 }
 export default connect(null, mapDispatchToProps)(SignUp);
+
+
+
+const styles = StyleSheet.create({
+  mainView: {
+    flex: 1,
+    justifyContent: "center",
+    marginVertical: 100,
+    alignItems: "center",
+    marginTop: 150,
+  },
+  nameInput: {
+    marginTop: 10,
+    borderWidth: 0,
+    height: 40,
+    borderRadius: 20,
+    width: 300,
+    padding: 10,
+    opacity: 0.22,
+    fontColor: "#8A8C90",
+    backgroundColor: "#C5CBD3",
+  },
+  mailInput: {
+    marginTop: 10,
+    borderWidth: 0,
+    height: 40,
+    borderRadius: 20,
+    width: 300,
+    padding: 10,
+    opacity: 0.22,
+    fontColor: "#8A8C90",
+    backgroundColor: "#C5CBD3",
+  },
+  passwordInput: {
+    marginTop: 10,
+    borderWidth: 0,
+    height: 40,
+    borderRadius: 20,
+    width: 300,
+    padding: 10,
+    opacity: 0.22,
+    fontColor: "#8A8C90",
+    backgroundColor: "#C5CBD3",
+  },
+  button: {
+    marginTop: 60,
+    margin: 10,
+    width: 170,
+    shadowRadius: 10,
+    backgroundColor: "#476A70",
+    borderRadius: 25,
+  },
+});

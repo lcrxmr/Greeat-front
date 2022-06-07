@@ -84,8 +84,9 @@ export default function EventDetails({ route }, props) {
         latitude: restaurant.coordinate.latitude,
         longitude: restaurant.coordinate.longitude,
       }
-    ) / 1000
-  ).toFixed(1);
+    ) / 1000 // on divise le résultat par 1000 pour convertir les mètres en kilomètres
+  ).toFixed(1); //toFixed(1) pour fixé le nombre à une seule décimale
+  
 
   console.log(dis);
   // console.log(restaurant.gallery[0])
@@ -95,11 +96,7 @@ export default function EventDetails({ route }, props) {
 
       <View style={{ alignItems: "center", marginTop: 20 }}>
         <Image
-          style={{
-            borderRadius: 10,
-            height: 220,
-            width: Dimensions.get("window").width * 0.95,
-          }}
+          style={styles.restaurantImage}
           source={{ uri: restaurant.gallery[0] }}
         />
       </View>
@@ -107,13 +104,7 @@ export default function EventDetails({ route }, props) {
       {/* //! -------------------- Reviews -------------------- */}
 
       <View
-        style={{
-          paddingTop: 20,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingBottom: 20,
-        }}
+        style={styles.starView}
       >
         <GoldStar />
         <GoldStar />
@@ -121,14 +112,7 @@ export default function EventDetails({ route }, props) {
         <GoldStar />
         <GreyStar />
         <Text
-          style={{
-            paddingTop: 5,
-            fontSize: 20,
-            justifyContent: "flex-start",
-            marginRight: 3,
-            marginBottom: 5,
-            marginLeft: 8,
-          }}
+          style={styles.rating}
         >
           {" "}
           {restaurant.rating}
@@ -150,70 +134,32 @@ export default function EventDetails({ route }, props) {
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View
-            style={{
-              flex: 0.5,
-              alignItems: "flex-start",
-              justifyContent: "center",
-              paddingBottom: 8,
-              paddingTop: 8,
-              paddingLeft: 15,
-            }}
+            style={styles.viewInsideCard}
           >
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: -2,
-              }}
+              style={styles.distanceView}
             >
               <LocationMarker />
               <Text
-                style={{
-                  paddingTop: 10,
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                  marginRight: 3,
-                  marginBottom: 3,
-                  fontFamily: "Poppins_400Regular",
-                }}
+                style={styles.distanceText}
               >
                 {" "}
                 {dis}
               </Text>
               <Text
-                style={{
-                  paddingTop: 8,
-                  color: "#AEB1B5",
-                  fontSize: 12,
-                  justifyContent: "flex-start",
-                  fontFamily: "Poppins_400Regular",
-                }}
+                style={styles.kmText}
               >
                 Km away
               </Text>
             </View>
           </View>
           <View
-            style={{
-              flex: 0.5,
-              marginLeft: 20,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={styles.badgeView}
           >
             <Badge
               value="French cuisine"
-              badgeStyle={{
-                backgroundColor: "#476A70",
-                height: 28,
-                borderRadius: 20,
-              }}
-              textStyle={{
-                marginLeft: 10,
-                marginRight: 10,
-                fontSize: 14,
-              }}
+              badgeStyle={styles.badge}
+              textStyle={styles.badgeText}
             />
           </View>
         </View>
@@ -222,14 +168,7 @@ export default function EventDetails({ route }, props) {
       {/* //! -------------------- Location -------------------- */}
 
       <Text
-        style={{
-          alignItems: "flex-start",
-          marginTop: 25,
-          color: "#8A8C90",
-          marginLeft: 15,
-          fontSize: 12,
-          fontFamily: "Poppins_400Regular",
-        }}
+        style={styles.locationText}
       >
         {" "}
         Location{" "}
@@ -241,31 +180,16 @@ export default function EventDetails({ route }, props) {
           style={{ width: Dimensions.get("window").width, height: 120 }}
         />
         <View
-          style={{
-            flexDirection: "row",
-            position: "absolute",
-            alignItems: "center",
-            top: 30,
-          }}
+          style={styles.addressView}
         >
           <Text
-            style={{
-              flex: 0.5,
-              lineHeight: 22,
-              marginLeft: 40,
-              fontFamily: "Poppins_400Regular",
-            }}
+            style={styles.addressText}
           >
             3 Rue de la Vergouille, 69003, Lyon. France
           </Text>
 
           <View
-            style={{
-              flex: 0.5,
-              alignItems: "flex-end",
-              marginRight: 50,
-              marginTop: 10,
-            }}
+            style={styles.viewMap}
           >
             <ArrowRestaurantDetailsMap />
           </View>
@@ -276,14 +200,7 @@ export default function EventDetails({ route }, props) {
         {/* //! -------------------- Description -------------------- */}
 
         <Text
-          style={{
-            alignItems: "flex-start",
-            marginTop: 25,
-            color: "#8A8C90",
-            marginLeft: 15,
-            fontSize: 12,
-            fontFamily: "Poppins_400Regular",
-          }}
+          style={styles.descriptionTitle}
         >
           {" "}
           Description{" "}
@@ -301,16 +218,7 @@ export default function EventDetails({ route }, props) {
             }}
           >
             <Text
-              style={{
-                fontSize: 16,
-                justifyContent: "flex-start",
-                marginLeft: 8,
-                marginBottom: 3,
-                marginRight: 10,
-                color: "#011936",
-                lineHeight: 24,
-                fontFamily: "Poppins_400Regular",
-              }}
+              style={styles.descriptionText}
             >
               Neque porto quisquam est qui dolore ipsum quia donor sit met,
               consecteur, adipsci velit sit met, consecteur, adipsci sit met,
@@ -338,4 +246,113 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.9,
     borderWidth: 0,
   },
+  starView: {
+    paddingTop: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 20,
+  },
+  restaurantImage: {
+    borderRadius: 10,
+    height: 220,
+    width: Dimensions.get("window").width * 0.95,
+  },
+  rating: {
+    paddingTop: 5,
+    fontSize: 20,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 5,
+    marginLeft: 8,
+  },
+  viewInsideCard: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingBottom: 8,
+    paddingTop: 8,
+    paddingLeft: 15,
+  },
+  distanceView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  distanceText: {
+    paddingTop: 10,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+    fontFamily: "Poppins_400Regular",
+  },
+  kmText: {
+    paddingTop: 8,
+    color: "#AEB1B5",
+    fontSize: 12,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+  badgeView: {
+    flex: 0.5,
+    marginLeft: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badge: {
+    backgroundColor: "#476A70",
+    height: 28,
+    borderRadius: 20,
+  },
+  badgeText: {
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 14,
+  },
+  locationText: {
+    alignItems: "flex-start",
+    marginTop: 25,
+    color: "#8A8C90",
+    marginLeft: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+  },
+  addressView:{
+    flexDirection: "row",
+    position: "absolute",
+    alignItems: "center",
+    top: 30,
+  },
+  addressText: {
+    flex: 0.5,
+    lineHeight: 22,
+    marginLeft: 40,
+    fontFamily: "Poppins_400Regular",
+  },
+  viewMap: {
+    flex: 0.5,
+    alignItems: "flex-end",
+    marginRight: 50,
+    marginTop: 10,
+  },
+  descriptionTitle: {
+    alignItems: "flex-start",
+    marginTop: 25,
+    color: "#8A8C90",
+    marginLeft: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+  },
+  descriptionText: {
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginLeft: 8,
+    marginBottom: 3,
+    marginRight: 10,
+    color: "#011936",
+    lineHeight: 24,
+    fontFamily: "Poppins_400Regular",
+  }
 });

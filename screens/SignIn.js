@@ -6,6 +6,7 @@ import {
   View,
   Image,
   Dimensions,
+  StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
@@ -130,17 +131,7 @@ useEffect(() => {
       </View>
 
       <TextInput
-        style={{
-          marginTop: 10,
-          borderWidth: 0,
-          height: 40,
-          borderRadius: 20,
-          width: 300,
-          padding: 10,
-          opacity: 0.22,
-          backgroundColor: "#C5CBD3",
-          padding: 10,
-        }}
+        style={styles.mailInput}
         name="EMAIL"
         placeholder="email"
         placeholderTextColor={"#476A70"}
@@ -155,18 +146,7 @@ useEffect(() => {
         placeholder="password"
         placeholderTextColor={"#476A70"}
         value={password}
-        style={{
-          marginTop: 10,
-          borderWidth: 0,
-          height: 40,
-          borderRadius: 20,
-          width: 300,
-          padding: 5,
-          opacity: 0.22,
-          fontColor: "#8A8C90",
-          backgroundColor: "#C5CBD3",
-          padding: 10,
-        }}
+        style={styles.passwordInput}
         // setValue={setPassword}
         secureTextEntry={true}
         autoComplteType="password"
@@ -186,14 +166,7 @@ useEffect(() => {
       <Text style={{ color: "red", marginTop: 20 }}>{tabErrorsSignin}</Text>
 
       <Button
-        buttonStyle={{
-          marginTop: 60,
-          margin: 10,
-          width: 170,
-          shadowRadius: 10,
-          backgroundColor: "#476A70",
-          borderRadius: 25,
-        }}
+        buttonStyle={styles.button}
         titleStyle={{ color: "white" }}
         title="Sign In"
         onPress={() => {
@@ -236,3 +209,38 @@ function mapDispatchToProps(dispatch) {
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+
+
+
+const styles = StyleSheet.create({
+  mailInput: {
+    marginTop: 10,
+    borderWidth: 0,
+    height: 40,
+    borderRadius: 20,
+    width: 300,
+    padding: 10,
+    opacity: 0.22,
+    fontColor: "#8A8C90",
+    backgroundColor: "#C5CBD3",
+  },
+  passwordInput: {
+    marginTop: 10,
+    borderWidth: 0,
+    height: 40,
+    borderRadius: 20,
+    width: 300,
+    padding: 10,
+    opacity: 0.22,
+    fontColor: "#8A8C90",
+    backgroundColor: "#C5CBD3",
+  },
+  button: {
+    marginTop: 60,
+    margin: 10,
+    width: 170,
+    shadowRadius: 10,
+    backgroundColor: "#476A70",
+    borderRadius: 25,
+  },
+});
