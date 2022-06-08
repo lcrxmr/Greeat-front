@@ -24,10 +24,13 @@ const handleCreate = (
 
   var description = "";
 
+  // create an array of steps from the recipe description 
+
   for (let i = 0; i < desc.length; i++) {
     let c = i + 1;
     description = description + "Step " + c + "\n" + desc[i] + "\n";
   }
+  // ----------------------------------------------------
 
   for (let i = 0; i < ingredientName.length; i++) {
     ingredientList.push({
@@ -75,26 +78,6 @@ function CreateRecipe(props) {
 
   console.log(stepText);
 
-  /*   useEffect(() => {
-      setState(temp_state)
-    }, [temp_state]) */
-
-  /* const handleNameChange = (text, index) => {
-
-
-    let temp_state = [...state];
-
-    console.log(temp_state)
-
-    let temp_element = { ...temp_state[index] };
-
-
-    temp_element.name = text;
-
-    temp_state[index] = temp_element;
-
-    return temp_state
-  } */
 
   const addStep = () => {
     setStepCount(stepCount + 1);
@@ -200,15 +183,9 @@ function CreateRecipe(props) {
         <Text style={styles.fieldName}> Images </Text>
 
         <View
-          style={{
-            alignItems: "center",
-            margin: 10,
-            padding: 30,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: "#C5CBD3",
-            borderRadius: 20,
-          }}
+          style={
+            styles.imageField
+          }
         >
           <TouchableHighlight
             onPress={() => {
@@ -240,20 +217,13 @@ function CreateRecipe(props) {
         {ingredientList}
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 20,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: "#C5CBD3",
-            borderRadius: 20,
-          }}
+          style={
+            styles.viewAdd
+          }
         >
           <Text style={{ flex: 4, margin: 5 }}> Add an ingredient </Text>
           <TouchableHighlight
             onPress={() => {
-              //setAllIngredient([...allIngredient, { name: '', qty: 0, unit: '' }])
 
               setIngredientList([...ingredientList, addIngredient()]);
             }}
@@ -267,15 +237,7 @@ function CreateRecipe(props) {
         {steps}
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 20,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: "#C5CBD3",
-            borderRadius: 20,
-          }}
+          style={styles.viewAdd}
         >
           <Text style={{ flex: 4, margin: 5 }}> Add a step</Text>
           <TouchableHighlight
@@ -296,16 +258,9 @@ function CreateRecipe(props) {
           padding: 20,
         }}
       >
-        <TouchableHighlight onPress={() => {}}>
+        <TouchableHighlight onPress={() => { }}>
           <Text
-            style={{
-              fontFamily: "Poppins_400Regular",
-              fontSize: 15,
-              color: "#011936",
-              marginLeft: 10,
-              borderRadius: 20,
-              padding: 10,
-            }}
+            style={styles.buttonCancel}
           >
             {" "}
             Cancel{" "}
@@ -328,16 +283,7 @@ function CreateRecipe(props) {
           }}
         >
           <Text
-            style={{
-              alignItems: "center",
-              backgroundColor: "#476A70",
-              fontFamily: "Poppins_400Regular",
-              fontSize: 15,
-              color: "white",
-              marginLeft: 10,
-              borderRadius: 20,
-              padding: 10,
-            }}
+            style={styles.buttonCreate}
           >
             {" "}
             Create Recipe{" "}
@@ -375,6 +321,42 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 10,
   },
+  buttonCreate: {
+    alignItems: "center",
+    backgroundColor: "#476A70",
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    color: "white",
+    marginLeft: 10,
+    borderRadius: 20,
+    padding: 10,
+  },
+  buttonCancel: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    color: "#011936",
+    marginLeft: 10,
+    borderRadius: 20,
+    padding: 10,
+  },
+  viewAdd: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 20,
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderColor: "#C5CBD3",
+    borderRadius: 20,
+  },
+  imageField: {
+    alignItems: "center",
+    margin: 10,
+    padding: 30,
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderColor: "#C5CBD3",
+    borderRadius: 20,
+  }
 });
 
 function mapDispatchToProps(dispatch) {
