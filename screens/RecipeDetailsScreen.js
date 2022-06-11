@@ -55,19 +55,10 @@ export default function RecipeDetails({ route }) {
         }}
         >
           <Text
-          style={{
-            color: "#011936",
-            lineHeight: 24,
-            fontFamily: "Poppins_600SemiBold",
-          }}
+          style={styles.textStep}
           > • Step {i+1} </Text>
           <Text 
-          style={{
-            color: "#011936",
-            lineHeight: 24,
-            fontFamily: "Poppins_400Regular",
-            marginBottom: 10
-          }}
+          style={styles.textItem}
           > {item} </Text>
         </View>
       );
@@ -88,14 +79,7 @@ export default function RecipeDetails({ route }) {
           }}
         >
           <Text
-            style={{
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginLeft: 25,
-              marginBottom: 3,
-              color: "#011936",
-              fontFamily: "Poppins_400Regular",
-            }}
+            style={styles.itemName}
           >
             {" "}
             • {item.name}
@@ -111,13 +95,7 @@ export default function RecipeDetails({ route }) {
           }}
         >
           <Text
-            style={{
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginLeft: 25,
-              fontFamily: "Poppins_400Regular",
-              color: "#486A6F",
-            }}
+            style={styles.qty}
           >
             {" "}
             {qty}
@@ -133,11 +111,7 @@ export default function RecipeDetails({ route }) {
 
       <View style={{ alignItems: "center", marginTop: 20 }}>
         <Image
-          style={{
-            borderRadius: 10,
-            height: 220,
-            width: Dimensions.get("window").width * 0.95,
-          }}
+          style={styles.image}
           source={require("../assets/photo2.jpg")}
         />
       </View>
@@ -145,13 +119,7 @@ export default function RecipeDetails({ route }) {
       {/* //! -------------------- Reviews -------------------- */}
 
       <View
-        style={{
-          paddingTop: 20,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingBottom: 20,
-        }}
+        style={styles.stars}
       >
         <GoldStar />
         <GoldStar />
@@ -159,27 +127,14 @@ export default function RecipeDetails({ route }) {
         <GoldStar />
         <GreyStar />
         <Text
-          style={{
-            paddingTop: 10,
-            fontSize: 20,
-            justifyContent: "flex-start",
-            marginRight: 3,
-            marginBottom: 5,
-            marginLeft: 8,
-            fontFamily: "Poppins_400Regular",
-          }}
+          style={styles.rating}
         >
           {" "}
           4,5
         </Text>
 
         <Text
-          style={{
-            paddingTop: 8,
-            fontSize: 12,
-            justifyContent: "flex-start",
-            fontFamily: "Poppins_400Regular",
-          }}
+          style={styles.onRating}
         >
           /5
         </Text>
@@ -190,53 +145,23 @@ export default function RecipeDetails({ route }) {
       <Card borderRadius={15} containerStyle={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View
-            style={{
-              flex: 0.5,
-              alignItems: "flex-start",
-              justifyContent: "center",
-              paddingBottom: 8,
-              paddingTop: 8,
-              paddingLeft: 15,
-            }}
+            style={styles.cardView1}
           >
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: -2,
-              }}
+              style={styles.cardView2}
             >
               <Clock
-                style={{
-                  height: 17,
-                  width: 17,
-                  marginRight: 3,
-                  marginTop: 0,
-                }}
+                style={styles.clock}
               />
 
               <Text
-                style={{
-                  paddingTop: 10,
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                  marginRight: 3,
-                  marginBottom: 3,
-                  fontFamily: "Poppins_400Regular",
-                }}
+                style={styles.recipeTime}
               >
                 {" "}
                 {recipe.prepTime}
               </Text>
               <Text
-                style={{
-                  paddingTop: 8,
-                  color: "#AEB1B5",
-                  fontSize: 12,
-                  justifyContent: "flex-start",
-                  fontFamily: "Poppins_400Regular",
-                }}
+                style={styles.recipeText}
               >
                 min to prepare
               </Text>
@@ -250,24 +175,12 @@ export default function RecipeDetails({ route }) {
             }}
           >
             <Text
-              style={{
-                fontSize: 16,
-
-                marginRight: 3,
-                fontFamily: "Poppins_400Regular",
-                color: "#AEB1B5",
-                fontSize: 12,
-              }}
+              style={styles.createdBy}
             >
               Created by:
             </Text>
             <Text
-              style={{
-                paddingTop: 0,
-                fontSize: 15,
-
-                fontFamily: "Poppins_400Regular",
-              }}
+              style={styles.creator}
             >
               Edgar Girerd
             </Text>
@@ -278,14 +191,7 @@ export default function RecipeDetails({ route }) {
       {/* //! -------------------- Ingredients -------------------- */}
 
       <Text
-        style={{
-          alignItems: "flex-start",
-          marginTop: 25,
-          color: "#8A8C90",
-          marginLeft: 15,
-          fontSize: 12,
-          fontFamily: "Poppins_400Regular",
-        }}
+        style={styles.ingredientList}
       >
         {" "}
         Ingredients list{" "}
@@ -302,14 +208,7 @@ export default function RecipeDetails({ route }) {
       {/* //! -------------------- Preparation -------------------- */}
 
       <Text
-        style={{
-          alignItems: "flex-start",
-          marginTop: 25,
-          color: "#8A8C90",
-          marginLeft: 15,
-          fontSize: 12,
-          fontFamily: "Poppins_400Regular",
-        }}
+        style={styles.preparation}
       >
         {" "}
         Preparation{" "}
@@ -349,4 +248,121 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.9,
     borderWidth: 0,
   },
+  textStep:{
+    color: "#011936",
+    lineHeight: 24,
+    fontFamily: "Poppins_600SemiBold",
+  },
+  textItem: {
+    color: "#011936",
+    lineHeight: 24,
+    fontFamily: "Poppins_400Regular",
+    marginBottom: 10
+  },
+  itemName:{
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginLeft: 25,
+    marginBottom: 3,
+    color: "#011936",
+    fontFamily: "Poppins_400Regular",
+  },
+  qty: {
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginLeft: 25,
+    fontFamily: "Poppins_400Regular",
+    color: "#486A6F",
+  },
+  image: {
+    borderRadius: 10,
+    height: 220,
+    width: Dimensions.get("window").width * 0.95,
+  },
+  stars: {
+    paddingTop: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 20,
+  },
+  rating: {
+    paddingTop: 10,
+    fontSize: 20,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 5,
+    marginLeft: 8,
+    fontFamily: "Poppins_400Regular",
+  },
+  onRating: {
+    paddingTop: 8,
+    fontSize: 12,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+  clock:{
+    height: 17,
+    width: 17,
+    marginRight: 3,
+    marginTop: 0,
+  },
+  cardView1: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingBottom: 8,
+    paddingTop: 8,
+    paddingLeft: 15,
+  },
+  cardView2: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  recipteTime: {
+    paddingTop: 10,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+    fontFamily: "Poppins_400Regular",
+  },
+  recipeText: {
+    paddingTop: 8,
+    color: "#AEB1B5",
+    fontSize: 12,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+  createdBy: {
+    fontSize: 16,
+    marginRight: 3,
+    fontFamily: "Poppins_400Regular",
+    color: "#AEB1B5",
+    fontSize: 12,
+  },
+  creator: {
+    paddingTop: 0,
+    fontSize: 15,
+    fontFamily: "Poppins_400Regular",
+  },
+  ingredientList: {
+    alignItems: "flex-start",
+    marginTop: 25,
+    color: "#8A8C90",
+    marginLeft: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+  },
+  preparation: {
+    alignItems: "flex-start",
+    marginTop: 25,
+    color: "#8A8C90",
+    marginLeft: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+  },
+
 });

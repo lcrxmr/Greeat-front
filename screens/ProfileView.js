@@ -26,32 +26,15 @@ export default function Profile() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
-          alignItems: "space-around",
-        }}
+        style={styles.view1}
       >
         <Text
-          style={{
-            marginLeft: 20,
-            marginBottom: 10,
-            fontWeight: "400",
-            fontSize: 20,
-            color: "#476A70",
-          }}
+          style={styles.username}
         >
           John Doe{" "}
         </Text>
         <Text
-          style={{
-            marginLeft: "auto",
-            marginRight: 20,
-            marginBottom: 10,
-            fontWeight: "400",
-            opacity: 0.4,
-          }}
+          style={styles.greeat}
         >
           Greeats: {greeat}
           {/* //voir le onPress plus bas pour la valeur de 'greeat'  */}
@@ -68,55 +51,34 @@ export default function Profile() {
           <View style={{ borderRadius: 20 }}>
             <Image
               source={require("../assets/profile.png")}
-              style={{
-                width: "100%",
-                height: 340,
-                borderRadius: 20,
-              }}
+              style={styles.images}
             />
           </View>
 
           <View>
             <Image
               source={require("../assets/photo2.jpg")}
-              style={{
-                width: "100%",
-                height: 340,
-                borderRadius: 20,
-              }}
+              style={styles.images}
             />
           </View>
 
           <View>
             <Image
               source={require("../assets/photo3.jpg")}
-              style={{
-                width: "100%",
-                height: 340,
-                borderRadius: 20,
-              }}
+              style={styles.images}
             />
           </View>
 
           <View>
             <Image
               source={require("../assets/photo4.jpg")}
-              style={{
-                width: "100%",
-                height: 340,
-                borderRadius: 20,
-              }}
+              style={styles.images}
             />
           </View>
         </Carousel>
 
         <Text
-          style={{
-            marginLeft: 20,
-            marginRight: 20,
-            marginBottom: 20,
-            marginTop: 40,
-          }}
+          style={styles.bio}
         >
           Un paragraphe est une section de texte en prose vouée au développement
           d'un point particulier souvent au moyen de plusieurs phrases, dans la
@@ -135,16 +97,7 @@ export default function Profile() {
           //   elevation: 15,
           //   borderRadius: 25,
           // }}
-          buttonStyle={{
-            margin: 10,
-            width: 170,
-            height: 50,
-            shadowRadius: 10,
-            backgroundColor: switchEventsButtonBgColor,
-            backgroundColor: greatButtonBgColor,
-            borderRadius: 25,
-            marginTop: 30,
-          }}
+          buttonStyle={styles.button}
           iconRight={true}
           icon={
             <Svg
@@ -185,3 +138,48 @@ export default function Profile() {
     </ScrollView>
   );
 }
+
+
+const styles = StyleSheet.create({
+ view1:{
+  flexDirection: "row",
+  marginTop: 10,
+  justifyContent: "center",
+  alignItems: "space-around",
+},
+username:{
+  marginLeft: 20,
+  marginBottom: 10,
+  fontWeight: "400",
+  fontSize: 20,
+  color: "#476A70",
+},
+greeat:{
+  marginLeft: "auto",
+  marginRight: 20,
+  marginBottom: 10,
+  fontWeight: "400",
+  opacity: 0.4,
+},
+images:{
+  width: "100%",
+  height: 340,
+  borderRadius: 20,
+},
+bio:{
+  marginLeft: 20,
+  marginRight: 20,
+  marginBottom: 20,
+  marginTop: 40,
+},
+button: {
+  margin: 10,
+  width: 170,
+  height: 50,
+  shadowRadius: 10,
+  backgroundColor: switchEventsButtonBgColor,
+  backgroundColor: greatButtonBgColor,
+  borderRadius: 25,
+  marginTop: 30,
+}
+});
