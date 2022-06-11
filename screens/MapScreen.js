@@ -15,7 +15,7 @@ import {
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
 import { getDistance } from "geolib";
-import { Locator } from './../components/locator';
+import { Locator } from "./../components/locator";
 
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
@@ -64,8 +64,6 @@ export default function Map(props) {
 
   // Load map + location on loading of the screen
   useEffect(() => {
-    // let mounted = true;
-
     //? Get our location
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -76,13 +74,9 @@ export default function Map(props) {
             long: location.coords.longitude,
           });
         });
-
         // console.log("______________ location", location);
       }
     })();
-
-    // Cleanup function
-    // return () => (mounted = false);
   }, []);
 
   useEffect(() => {
@@ -106,9 +100,12 @@ export default function Map(props) {
 
       //? Events from back
 
-      var rawEvent = await fetch("https://damp-mountain-22575.herokuapp.com/events", {
-        method: "GET",
-      });
+      var rawEvent = await fetch(
+        "https://damp-mountain-22575.herokuapp.com/events",
+        {
+          method: "GET",
+        }
+      );
       var eventFromBack = await rawEvent.json();
       setEvents(eventFromBack);
       setCarousel(restaurants);
@@ -123,64 +120,11 @@ export default function Map(props) {
   // console.log("------Nearby place marker: ", Pin, "------");
   // const [state, setState] = useState(initialMapState);
 
-  //! ---------------------- Animated pins ----------------------
-
-  useEffect(() => {
-    animation.addListener(({ value }) => {
-      let indexPin = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (indexPin >= listPins.length) {
-        indexPin = listPins.length - 1;
-      }
-      if (indexPin <= 0) {
-        indexPin = 0;
-      }
-
-      clearTimeout(regionTimeout);
-      const regionTimeout = setTimeout(() => {
-        if (mapIndex !== indexPin) {
-          mapIndex = indexPin;
-          const { coordinate } = listPins[indexPin];
-          mapRef.current.animateToRegion(
-            {
-              ...coordinate,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0055,
-            },
-            350
-          );
-        }
-      }, 10);
-    });
-  }, []);
-
-  const interpolations = listPins.map((marker, i) => {
-    const inputRange = [
-      (i - 1) * CARD_WIDTH,
-      i * CARD_WIDTH,
-      (i + 1) * CARD_WIDTH,
-    ];
-
-    const scale = animation.interpolate({
-      inputRange,
-      outputRange: [1, 1.5, 1],
-      extrapolate: "clamp",
-    });
-
-    return { scale };
-  });
-
   const mapRef = useRef(null);
 
   //! ---------------------- Restaurants pins ----------------------
 
   pinsAroundMe = listPins.map((Pin, i) => {
-    const scaleStyle = {
-      transform: [
-        {
-          scale: interpolations[i].scale,
-        },
-      ],
-    };
     if (mapSwitch == false) {
       return (
         <Marker
@@ -195,11 +139,7 @@ export default function Map(props) {
         >
           <Image
             source={require("../assets/pin.png")}
-            style={{
-              width: 40,
-              height: 50,
-              scaleStyle,
-            }}
+            style={styles.pin}
           />
         </Marker>
       );
@@ -229,104 +169,55 @@ export default function Map(props) {
         }}
       >
         <Card borderRadius={15} containerStyle={styles.card}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 0.8 }}>
+          <View style={styles.restaurantCardView}>
+            <View style={styles.restaurantCardImgView}>
               <Image
-                style={{ borderRadius: 10, height: 120, width: 120 }}
+                style={styles.cardImg}
                 source={{ uri: restaurant.gallery[0] }}
               />
             </View>
             <View
-              style={{
-                flex: 1,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}
+              style={styles.cardRightSideView}
             >
               <View
-                style={{
-                  flex: 0.5,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                }}
+                style={styles.titleView}
               >
                 <Text
-                  style={{
-                    paddingTop: 10,
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    justifyContent: "flex-start",
-                  }}
+                  style={styles.title}
                 >
                   {restaurant.placeName}
                 </Text>
               </View>
               <View
-                style={{
-                  flex: 0.5,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-start",
-                  paddingBottom: 5,
-                }}
+                style={styles.textView}
               >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={styles.locationIconView}>
                   <Image
-                    style={{
-                      height: 18,
-                      width: 15,
-                      marginRight: 3,
-                      marginTop: 5,
-                    }}
+                    style={styles.iconStyle}
                     source={require("../assets/location.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 10,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.locationText}
                   >
                     {" "}
                     {dis}
                   </Text>
                   <Text
-                    style={{
-                      paddingTop: 10,
-                      fontSize: 12,
-                      justifyContent: "flex-start",
-                    }}
+                    style={styles.kmAwayText}
                   >
                     Km away
                   </Text>
                 </View>
 
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: -2,
-                  }}
+                  style={styles.starIconView}
                 >
                   <Image
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginRight: 3,
-                      marginTop: 0,
-                    }}
+                    style={styles.starIconStyle}
                     source={require("../assets/star.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.reviewText}
                   >
                     {" "}
                     {restaurant.rating}
@@ -372,10 +263,7 @@ export default function Map(props) {
         >
           <Image
             source={require("../assets/pin.png")}
-            style={{
-              width: 40,
-              height: 50,
-            }}
+            style={styles.pin}
           />
         </Marker>
       );
@@ -406,104 +294,55 @@ export default function Map(props) {
         }}
       >
         <Card borderRadius={15} containerStyle={styles.card}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 0.8 }}>
+          <View style={styles.cardView}>
+            <View style={styles.cardImgView}>
               <Image
-                style={{ borderRadius: 10, height: 120, width: 120 }}
+                style={styles.cardImg}
                 source={{ uri: e.image }}
               />
             </View>
             <View
-              style={{
-                flex: 1,
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-              }}
+              style={styles.cardRightSideView}
             >
               <View
-                style={{
-                  flex: 0.5,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                }}
+                style={styles.titleView}
               >
                 <Text
-                  style={{
-                    paddingTop: 10,
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    justifyContent: "flex-start",
-                  }}
+                  style={styles.title}
                 >
                   {events[i].name}
                 </Text>
               </View>
               <View
-                style={{
-                  flex: 0.5,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-start",
-                  paddingBottom: 5,
-                }}
+                style={styles.textView}
               >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={styles.locationIconView}>
                   <Image
-                    style={{
-                      height: 18,
-                      width: 15,
-                      marginRight: 3,
-                      marginTop: 5,
-                    }}
+                    style={styles.iconStyle}
                     source={require("../assets/location.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 10,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.locationText}
                   >
                     {" "}
                     {dis}
                   </Text>
                   <Text
-                    style={{
-                      paddingTop: 10,
-                      fontSize: 12,
-                      justifyContent: "flex-start",
-                    }}
+                    style={styles.kmAway}
                   >
                     Km away
                   </Text>
                 </View>
 
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: -2,
-                  }}
+                  style={styles.starIconView}
                 >
                   <Image
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginRight: 3,
-                      marginTop: 0,
-                    }}
+                    style={styles.starIconStyle}
                     source={require("../assets/date.png")}
                   />
                   <Text
-                    style={{
-                      paddingTop: 5,
-                      fontSize: 16,
-                      justifyContent: "flex-start",
-                      marginRight: 3,
-                      marginBottom: 3,
-                    }}
+                    style={styles.reviewText}
                   >
                     {" "}
                     {date}
@@ -637,12 +476,7 @@ export default function Map(props) {
       {/* </KeyboardAvoidingView> */}
 
       <View
-        style={{
-          flex: 1,
-          position: "absolute",
-          width: width,
-          zIndex: 2,
-        }}
+        style={styles.searchBarView}
       >
         {/* //! ---------------------- Search bar ---------------------- 
         
@@ -670,25 +504,13 @@ export default function Map(props) {
         /> */}
       </View>
 
+      {/* //! ---------------------- Switch buttons Restaurants/Events ---------------------- */}
+
       <View
-        style={{
-          position: "absolute",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingTop: 10,
-          paddingLeft: 6,
-          top: 0,
-        }}
+        style={styles.switchButtonsMainView}
       >
         <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 25,
-          }}
+          containerStyle={styles.buttonContainerStyle}
           buttonStyle={{
             margin: 10,
             width: 170,
@@ -701,14 +523,7 @@ export default function Map(props) {
           onPress={() => onPressRestaurants()}
         ></Button>
         <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 25,
-          }}
+          containerStyle={styles.buttonContainerStyle}
           buttonStyle={{
             margin: 10,
             width: 170,
@@ -727,32 +542,12 @@ export default function Map(props) {
       {/* //! ---------------------- Locator pin button ---------------------- */}
 
       <View
-        style={{
-          position: "absolute",
-          right: 10,
-          bottom: 170,
-        }}
+        style={styles.locatorButtonView}
       >
         <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 5, height: 10 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 25,
-          }}
-          buttonStyle={{
-            margin: 10,
-            width: 52,
-            height: 52,
-            shadowRadius: 10,
-            backgroundColor: "white",
-            borderRadius: 30,
-          }}
-          icon={
-            <Locator     />
-          }
+          containerStyle={styles.locatorButtonContainer}
+          buttonStyle={styles.locatorButtonStyle}
+          icon={<Locator />}
           onPress={() => {
             onPressRelocate();
           }}
@@ -774,18 +569,6 @@ export default function Map(props) {
       {/* //? Restaurants cards slider */}
       <CardSlider
         style={styles.cardSlider}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: animation,
-                },
-              },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
       >
         {carousel}
       </CardSlider>
@@ -848,4 +631,115 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
+  cardView: { flexDirection: "row" },
+  cardImgView: { flex: 0.8 },
+  cardImg: { borderRadius: 10, height: 120, width: 120 },
+  cardRightSideView: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  titleStyle: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  title: {
+    paddingTop: 10,
+    fontWeight: "bold",
+    fontSize: 16,
+    justifyContent: "flex-start",
+  },
+  pin:{
+    width: 40,
+    height: 50,
+  },
+  textView: {
+    flex: 0.5,
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+    paddingBottom: 5,
+  },
+  locationIconView: { flexDirection: "row", alignItems: "center" },
+  iconStyle: {
+    height: 18,
+    width: 15,
+    marginRight: 3,
+    marginTop: 5,
+  },
+  locationText: {
+    paddingTop: 10,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  kmAwayText: {
+    paddingTop: 10,
+    fontSize: 12,
+    justifyContent: "flex-start",
+  },
+  starIconView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  starIconStyle: {
+    height: 17,
+    width: 17,
+    marginRight: 3,
+    marginTop: 0,
+  },
+  reviewText: {
+    paddingTop: 5,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  searchBarView: {
+    flex: 1,
+    position: "absolute",
+    width: Dimensions.get("window").width,
+    zIndex: 2,
+  },
+  switchButtonsMainView: {
+    position: "absolute",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 10,
+    paddingLeft: 6,
+    top: 0,
+  },
+  buttonContainerStyle: {
+    shadowColor: "grey",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 15,
+    borderRadius: 25,
+  },
+  locatorButtonContainer: {
+    shadowColor: "grey",
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 15,
+    borderRadius: 25,
+  },
+  locatorButtonStyle: {
+    margin: 10,
+    width: 52,
+    height: 52,
+    shadowRadius: 10,
+    backgroundColor: "white",
+    borderRadius: 30,
+  },
+  locatorButtonView: {
+    position: "absolute",
+    right: 10,
+    bottom: 170,
+  },
+
 });
