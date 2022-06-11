@@ -6,12 +6,10 @@ import * as Location from "expo-location";
 import {
   View,
   StyleSheet,
-  LogBox,
   Image,
   Dimensions,
   Text,
   ScrollView,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Card, Badge, Button } from "react-native-elements";
 import { getDistance, getPreciseDistance } from "geolib";
@@ -34,10 +32,7 @@ export default function EventDetailScreen({ route }) {
   });
 
   useEffect(() => {
-    // let mounted = true;
     // Get our location
-    // setMapSwitch(false)
-    // setCarousel(restaurants);
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status == "granted") {
@@ -51,16 +46,12 @@ export default function EventDetailScreen({ route }) {
         // console.log("______________ location", location);
       }
     })();
-
-    // Cleanup function
-    // return () => (mounted = false);
   }, []);
 
 
   useEffect(() => {
     (async () => {
       //? Fetch places from backend route /nearby-places
-      //setListPins([]);
       await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -102,7 +93,7 @@ export default function EventDetailScreen({ route }) {
 
 
   //? Loop to display images in participants slider
-  //TODO to replace with participants data
+  //TODO v2 to replace with participants data
 
   var profile = [
     require('../assets/profile1.jpg'),
@@ -121,52 +112,26 @@ for (let i = 0; i < profile.length; i++) {
   console.log(profile[i])
   filterIcons.push(
     <View
-      style={{
-        alignItems: "center",
-        paddingLeft: 10,
-        marginTop: 10,
-        marginLeft: 6,
-        marginRight: 6,
-      }}
+      style={styles.participantsSliderView}
     >
       <View style={styles.filter}>
         <Image
           source={profile[i]}
-          style={{
-            backgroundColor: "white",
-            color: "grey",
-            height: 50,
-            width: 50,
-            padding: 5,
-            borderRadius:100
-          }}
+          style={styles.participantsImg}
         />
       </View>
-      <Text
-        style={{
-          paddingTop: 5,
-          fontWeight: "bold",
-          fontSize: 10,
-          justifyContent: "flex-start",
-        }}
-      >
-      </Text>
     </View>
   );
 }
 
 
   return (
-    <ScrollView style={{ backgroundColor: "#FDFDFD" }}>
+    <ScrollView style={styles.scrollView}>
       {/* //! -------------------- Header image -------------------- */}
 
-      <View style={{ alignItems: "center", marginTop: 20 }}>
+      <View style={styles.headerImgView}>
         <Image
-          style={{
-            borderRadius: 10,
-            height: 220,
-            width: Dimensions.get("window").width * 0.95,
-          }}
+          style={styles.headerImg}
           source={{ uri: event.image }}
         />
       </View>
@@ -174,92 +139,48 @@ for (let i = 0; i < profile.length; i++) {
       {/* //! -------------------- Card -------------------- */}
 
       <Card borderRadius={15} containerStyle={styles.card}>
-        <View style={{ alignItems: "flex-start", paddingLeft: 10 }}>
+        <View style={styles.cardInsideView}>
           <Text
-            style={{
-              paddingTop: 0,
-              fontWeight: "bold",
-              fontSize: 24,
-              justifyContent: "flex-start",
-              fontFamily: "Poppins_400Regular",
-            }}
+            style={styles.eventName}
           >
             {event.name}
           </Text>
         </View>
 
-        <Text style={{ paddingLeft: 10, fontWeight: "100", color: "#C5CBD3" }}>
+        <Text style={styles.cardLine}>
           ____________________________________________________
         </Text>
 
         {/* //? -------------------- Km away & badge -------------------- */}
 
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <View style={styles.firstTextRowMainView}>
           <View
-            style={{
-              flex: 0.5,
-              alignItems: "flex-start",
-              justifyContent: "center",
-              paddingTop: 15,
-              paddingLeft: 15,
-            }}
+            style={styles.kmMainView}
           >
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: -2,
-              }}
+              style={styles.markerView}
             >
               <LocationMarker />
               <Text
-                style={{
-                  paddingTop: 10,
-                  fontSize: 16,
-                  justifyContent: "flex-start",
-                  marginRight: 3,
-                  marginBottom: 3,
-                  fontFamily: "Poppins_400Regular",
-                }}
+                style={styles.distanceText}
               >
                 {" "}
                 {dis}
               </Text>
               <Text
-                style={{
-                  paddingTop: 8,
-                  color: "#AEB1B5",
-                  fontSize: 12,
-                  justifyContent: "flex-start",
-                  fontFamily: "Poppins_400Regular",
-                }}
+                style={styles.kmAwayText}
               >
                 Km away
               </Text>
             </View>
           </View>
           <View
-            style={{
-              paddingTop: 12,
-              flex: 0.5,
-              marginLeft: 20,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={styles.catMainView}
           >
             <Badge
               value="French cuisine"
-              badgeStyle={{
-                backgroundColor: "#476A70",
-                height: 28,
-                borderRadius: 20,
-              }}
-              textStyle={{
-                marginLeft: 10,
-                marginRight: 10,
-                fontSize: 14,
-              }}
+              badgeStyle={styles.badgeStyle}
+              textStyle={styles.badgeTextStyle}
             />
           </View>
         </View>
@@ -267,32 +188,14 @@ for (let i = 0; i < profile.length; i++) {
         {/* //? -------------------- Date -------------------- */}
 
         <View
-          style={{
-            flex: 0.5,
-            alignItems: "flex-start",
-            justifyContent: "center",
-            paddingLeft: 15,
-            marginTop: -4,
-          }}
+          style={styles.dateMainView}
         >
           <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: -2,
-            }}
+            style={styles.calendarIconView}
           >
             <Calendar />
             <Text
-              style={{
-                paddingTop: 10,
-                fontSize: 16,
-                justifyContent: "flex-start",
-                marginRight: 3,
-                marginBottom: 3,
-                fontFamily: "Poppins_400Regular",
-              }}
+              style={styles.dateText}
             >
               {" "}
               {date}
@@ -302,27 +205,14 @@ for (let i = 0; i < profile.length; i++) {
 
         {/* //? -------------------- Created by -------------------- */}
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={styles.createdByMainView}>
           <Text
-            style={{
-              paddingTop: 2,
-              fontSize: 12,
-              justifyContent: "flex-start",
-              opacity: 0.4,
-              fontFamily: "Poppins_400Regular",
-              paddingLeft: 15,
-            }}
+            style={styles.createdByText}
           >
             Created by: {event.creator}
           </Text>
           <Text
-            style={{
-              paddingTop: 0,
-              fontWeight: "400",
-              fontSize: 16,
-              justifyContent: "flex-start",
-              fontFamily: "Poppins_400Regular",
-            }}
+            style={styles.creatorText}
           >
             John Doe
           </Text>
@@ -331,17 +221,9 @@ for (let i = 0; i < profile.length; i++) {
 
       {/* //! -------------------- Button -------------------- */}
 
-      <View style={{ alignItems: "center" }}>
+      <View style={styles.buttonView}>
         <Button
-          containerStyle={{
-            shadowColor: "grey",
-            shadowOffset: { width: 0, height: 10 },
-            shadowOpacity: 0,
-            shadowRadius: 10,
-            elevation: 15,
-            borderRadius: 25,
-            width: "auto",
-          }}
+          containerStyle={styles.buttonContainerStyle}
           buttonStyle={{
             marginTop: 25,
             shadowRadius: 10,
@@ -350,20 +232,12 @@ for (let i = 0; i < profile.length; i++) {
             paddingTop: 12,
             paddingBottom: 12,
           }}
-          titleStyle={{
-            marginLeft: 32,
-            marginRight: 8,
-            color: "white",
-            fontFamily: "Poppins_400Regular",
-          }}
+          titleStyle={styles.buttonTextStyle}
           title={join}
           iconRight={true}
           icon={
             <ButtonArrow
-              style={{
-                marginRight: 32,
-                
-              }}
+              style={styles.buttonArrow}
             />
           }
           onPress={() => {
@@ -374,26 +248,15 @@ for (let i = 0; i < profile.length; i++) {
 
       {/* //! -------------------- Participants -------------------- */}
 
-      <View style={{ flexDirection: "row", alignItems: "flex-end", marginTop: 5, }}>
+      <View style={styles.participantsSliderMainView}>
         <Text
-          style={{
-            marginTop: 30,
-            color: "#8A8C90",
-            marginLeft: 15,
-            fontSize: 12,
-            fontFamily: "Poppins_400Regular",
-          }}
+          style={styles.participantsTitle}
         >
           {" "}
           Participants{"    "}
         </Text>
         <Text
-          style={{
-            fontWeight: "400",
-            fontSize: 16,
-            justifyContent: "flex-start",
-            fontFamily: "Poppins_400Regular",
-          }}
+          style={styles.counter}
         >
           {userJoin}
         </Text>
@@ -412,42 +275,19 @@ for (let i = 0; i < profile.length; i++) {
       {/* //! -------------------- Description -------------------- */}
 
       <Text
-        style={{
-          alignItems: "flex-start",
-          marginTop: 15,
-          color: "#8A8C90",
-          marginLeft: 15,
-          fontSize: 12,
-          fontFamily: "Poppins_400Regular",
-        }}
+        style={styles.descriptionTitle}
       >
         {" "}
         Description{" "}
       </Text>
       <View
-        style={{
-          marginTop: 10,
-        }}
+        style={styles.descriptionMainView}
       >
         <View
-          style={{
-            flex: 0.5,
-            alignItems: "flex-start",
-            marginLeft: 10,
-          }}
+          style={styles.descriptionTextView}
         >
           <Text
-            style={{
-              fontSize: 16,
-              justifyContent: "flex-start",
-              marginLeft: 8,
-              marginBottom: 3,
-              marginRight: 10,
-              color: "#011936",
-              lineHeight: 24,
-              fontFamily: "Poppins_400Regular",
-              paddingBottom: 20,
-            }}
+            style={styles.descriptionText}
           >
             This is an event description, just to show how cool it can be to
             read a description on this page. Imagine that you could be reading
@@ -501,5 +341,179 @@ const styles = StyleSheet.create({
   horizontalFilterScrollContent: {
     alignItems: "flex-start",
     justifyContent: "space-between",
+  },
+  participantsSliderView: {
+    alignItems: "center",
+    paddingLeft: 10,
+    marginTop: 10,
+    marginLeft: 6,
+    marginRight: 6,
+  },
+  participantsImg: {
+    backgroundColor: "white",
+    color: "grey",
+    height: 50,
+    width: 50,
+    padding: 5,
+    borderRadius:100
+  },
+  scrollView: { backgroundColor: "#FDFDFD" },
+  headerImgView: { alignItems: "center", marginTop: 20 },
+  headerImg: {
+    borderRadius: 10,
+    height: 220,
+    width: Dimensions.get("window").width * 0.95,
+  },
+  cardInsideView: { alignItems: "flex-start", paddingLeft: 10 },
+  eventName: {
+    paddingTop: 0,
+    fontWeight: "bold",
+    fontSize: 24,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+  cardLine: { paddingLeft: 10, fontWeight: "100", color: "#C5CBD3" },
+  firstTextRowMainView: { flexDirection: "row", justifyContent: "center" },
+  kmMainView: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingTop: 15,
+    paddingLeft: 15,
+  },
+  markerView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  distanceText: {
+    paddingTop: 10,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+    fontFamily: "Poppins_400Regular",
+  },
+  kmAwayText: {
+    paddingTop: 8,
+    color: "#AEB1B5",
+    fontSize: 12,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+ catMainView: {
+    paddingTop: 12,
+    flex: 0.5,
+    marginLeft: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeStyle: {
+    backgroundColor: "#476A70",
+    height: 28,
+    borderRadius: 20,
+  },
+  badgeTextStyle: {
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 14,
+  },
+  dateMainView: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingLeft: 15,
+    marginTop: -4,
+  },
+  calendarIconView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -2,
+  },
+  dateText: {
+    paddingTop: 10,
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginRight: 3,
+    marginBottom: 3,
+    fontFamily: "Poppins_400Regular",
+  },
+  createdByMainView: { flexDirection: "row", alignItems: "center" },
+  createdByText: {
+    paddingTop: 2,
+    fontSize: 12,
+    justifyContent: "flex-start",
+    opacity: 0.4,
+    fontFamily: "Poppins_400Regular",
+    paddingLeft: 15,
+  },
+  creatorText: {
+    paddingTop: 0,
+    fontWeight: "400",
+    fontSize: 16,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+  buttonView: { alignItems: "center" },
+  buttonContainerStyle: {
+    shadowColor: "grey",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0,
+    shadowRadius: 10,
+    elevation: 15,
+    borderRadius: 25,
+    width: "auto",
+  },
+  buttonTextStyle: {
+    marginLeft: 32,
+    marginRight: 8,
+    color: "white",
+    fontFamily: "Poppins_400Regular",
+  },
+  buttonArrow: {
+    marginRight: 32,
+  },
+  participantsSliderMainView: { flexDirection: "row", alignItems: "flex-end", marginTop: 5, },
+  participantsTitle: {
+    marginTop: 30,
+    color: "#8A8C90",
+    marginLeft: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+  },
+  counter: {
+    fontWeight: "400",
+    fontSize: 16,
+    justifyContent: "flex-start",
+    fontFamily: "Poppins_400Regular",
+  },
+  descriptionTitle: {
+    alignItems: "flex-start",
+    marginTop: 15,
+    color: "#8A8C90",
+    marginLeft: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+  },
+  descriptionMainView: {
+    marginTop: 10,
+  },
+  descriptionTextView: {
+    flex: 0.5,
+    alignItems: "flex-start",
+    marginLeft: 10,
+  },
+  descriptionText: {
+    fontSize: 16,
+    justifyContent: "flex-start",
+    marginLeft: 8,
+    marginBottom: 3,
+    marginRight: 10,
+    color: "#011936",
+    lineHeight: 24,
+    fontFamily: "Poppins_400Regular",
+    paddingBottom: 20,
   },
 });

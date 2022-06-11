@@ -10,11 +10,7 @@ import Svg, {
   TSpan,
 } from "react-native-svg";
 export function ProfileImg({}) {
-  return <Svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={109.179} height={109.179} viewBox="0 0 109.179 109.179" onPress={() => {
-    props.navigation.navigate("ProfileFromMenu", {
-      screen: "Profile"
-    });
-  }}>
+  return <Svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={109.179} height={109.179} viewBox="0 0 109.179 109.179" >
     <Defs>
       <LinearGradient id="linear-gradient" y1={1} x2={1} gradientUnits="objectBoundingBox">
         <Stop offset={0} stopColor="#bcea64" />

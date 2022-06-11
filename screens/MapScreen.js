@@ -54,13 +54,9 @@ export default function Map(props) {
 
   var width = Dimensions.get("window").width; //full width
   var height = Dimensions.get("window").height; //full height
-  const CARD_WIDTH = width * 0.8;
   var places;
   var pinsAroundMe = [];
   var restaurants;
-
-  let mapIndex = 0;
-  let animation = new Animated.Value(0);
 
   // Load map + location on loading of the screen
   useEffect(() => {
