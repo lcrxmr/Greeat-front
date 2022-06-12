@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
     marginRight: 3,
     marginBottom: 3,
   },
-  kmAwayText: {
+  kmAway: {
     paddingTop: 10,
     fontSize: 12,
     justifyContent: "flex-start",
