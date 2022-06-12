@@ -34,12 +34,11 @@ function myEvents(props) {
       .then((response) => response.json())
       .then((data) => setMyEventList(data));
 
-    console.log("EventCount" + props.eventCount);
+    // console.log("EventCount" + props.eventCount);
   }, [props.eventCount]);
 
   let eventList = myEventList.map((event, i) => {
     //? to calculate distance from our location to the event
-    //TODO Reducer to put in place to receive location from user
     // var dis = (
     //   getDistance(
     //     { latitude: location.lat, longitude: location.long },
@@ -248,13 +247,7 @@ function myEvents(props) {
 //! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
-  cardSlider: {
-    flex: 1,
-    bottom: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    width: Dimensions.get("window").width,
-  },
+
   card: {
     marginLeft: 10,
     marginBottom: 10,

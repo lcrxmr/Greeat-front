@@ -89,12 +89,9 @@ function EditRecipe(props) {
   const [ingredientName, setIngredientName] = useState([]);
   const [ingredientQty, setIngredientQty] = useState([]);
   const [ingredientUnit, setIngredientUnit] = useState([]);
-
   const [ingredientList, setIngredientList] = useState([]);
-
   const [desc, setDesc] = useState("");
   const [steps, setSteps] = useState([]);
-
   const [ingredientCount, setIngredientCount] = useState([]);
   const [stepCount, setStepCount] = useState(1);
   const [stepText, setStepText] = useState(Steps);

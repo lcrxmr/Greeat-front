@@ -10,7 +10,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
