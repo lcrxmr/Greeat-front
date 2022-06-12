@@ -6,7 +6,7 @@ import {
   View,
   Image,
   Dimensions,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
@@ -19,44 +19,34 @@ function SignIn(props) {
   // const [userExists, setUserExists] = useState(false);
 
   const [errorsSignin, setErrorsSignin] = useState([]);
-  const [user, setUser] = useState("")
-  const [userExist, setUserExist] = useState(false)
+  const [user, setUser] = useState("");
+  const [userExist, setUserExist] = useState(false);
   // console.log(email), console.log(password);
 
   useEffect(() => {
-    
-var client = AsyncStorage.getItem("token")
-  
+    var client = AsyncStorage.getItem("token");
+
     if (client) {
-      props.navigation.navigate("BottomNavigator", { screen: "Map" })
-      // 
-    }else{
-      console.log('------------ no token found')
+      props.navigation.navigate("BottomNavigator", { screen: "Map" });
+      //
+    } else {
+      console.log("------------ no token found");
     }
-
   }, []);
-
-
 
   // console.log(email), console.log(password);
 
-
   // install reducer and connect to store
-useEffect(() => {
-    AsyncStorage.getItem("token").then((token) => {
-      if (token) {
-        props.navigation.navigate("BottomNavigator", { screen: "Map" });
-      }
-      console.log("Token:",token)
-    }
-    ).catch(
-        console.log("No token")
-    )
-  }
-  , []);
-
-  
-
+  useEffect(() => {
+    AsyncStorage.getItem("token")
+      .then((token) => {
+        if (token) {
+          props.navigation.navigate("BottomNavigator", { screen: "Map" });
+        }
+        console.log("Token:", token);
+      })
+      .catch(console.log("No token"));
+  }, []);
 
   var handleSubmitSignIn = async () => {
     const data = await fetch(
@@ -71,10 +61,9 @@ useEffect(() => {
     const body = await data.json();
     // console.log("**********BODY", body);
     if (body.result == true) {
-      
-      setUserExist(true)
+      setUserExist(true);
       // on fait body.user.token car body a un object user
-     
+
       props.navigation.navigate("BottomNavigator", { screen: "Map" });
       // garder le user en storage local
       AsyncStorage.setItem("token", body.user.token);
@@ -82,10 +71,8 @@ useEffect(() => {
     } else {
       setErrorsSignin(body.error);
     }
-    
-    await AsyncStorage.setItem("token", props.token);
-     
 
+    await AsyncStorage.setItem("token", props.token);
   };
 
   console.log("-----Error", errorsSignin);
@@ -197,19 +184,20 @@ useEffect(() => {
 
 function mapStateToProps(state) {
   return {
-    token: state.token
+    token: state.token,
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
     addToken: function (token) {
-      dispatch({ type: 'addToken', token: token });
+      dispatch({ type: "addToken", token: token });
     },
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
 
 
+//! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
   mailInput: {

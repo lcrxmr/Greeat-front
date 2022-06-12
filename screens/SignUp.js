@@ -130,6 +130,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(null, mapDispatchToProps)(SignUp);
 
 
+//! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
   mainView: {
