@@ -1,6 +1,6 @@
 import { PlusIcon } from './../components/plus-icon';
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, Text } from "react-native";
+import { View, TextInput, StyleSheet, Text, TouchableHighlight, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -17,18 +17,7 @@ const handleEdit = (name, date, location, desc, event) => {
 
   console.log(body);
 
-  /* const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
-  /* 
-      console.log('stringified' + JSON.stringify(body))
-      console.log('unstringified' + JSON.parse(JSON.stringify(body))) */
 
-  /* fetch('http://172.17.188.13:3000/create-event', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-      body: formBody
-    }); */
 
   fetch('https://damp-mountain-22575.herokuapp.com/edit-event', {
     method: 'PUT',
@@ -80,180 +69,166 @@ export default function CreateEvent(props) {
   };
 
   return (
-    <View>
-      <Text
-        style={{
-          fontWeight: "500",
-          fontSize: 12,
-          opacity: 0.3,
-          marginLeft: 10,
-        }}
-      >
-        {" "}
-        Images{" "}
-      </Text>
-      <View
-        style={{
-          alignItems: "center",
-          margin: 10,
-          padding: 30,
-          borderStyle: "dashed",
-          borderWidth: 1,
-          borderColor: "#C5CBD3",
-          borderRadius: 20,
-          height: 100,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          icon={
-           <PlusIcon     />
-          }
-          buttonStyle={{
-            backgroundColor: null,
+
+
+    <View style={{ flex: 1 }}>
+
+      <ScrollView style={{ flex: 1 }}>
+
+        <Text
+          style={{
+            fontWeight: "500",
+            fontSize: 12,
+            opacity: 0.3,
+            marginLeft: 10,
           }}
-        ></Button>
-      </View>
-      <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
-          Event's name
+        >
+          {" "}
+          Images{" "}
         </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TextInput
-          style={styles.input}
-          placeholder="Event's name"
-          onChangeText={setName}
-          value={name}
-        //placeholder="Give a name to your event"
-        />
-      </View>
-
-      <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
-          Adress of the event
-        </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setLocation}
-          value={location}
-          placeholder="Adress of the event"
-        />
-      </View>
-      <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
-          Date
-        </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TextInput
-          style={styles.input}
-          onFocus={showDatepicker}
-          onChangeText={setDate}
-          value={date.toLocaleDateString()}
-          placeholder="Date"
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
-          Time
-        </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TextInput
-          style={styles.input}
-          onFocus={showTimepicker}
-          onChangeText={setTime}
-          value={date.toLocaleTimeString()}
-          placeholder="Time"
-          keyboardType="numeric"
-        />
-
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            onChange={onChange}
+        <View
+          style={styles.imageField}
+        >
+          <Button
+            icon={
+              <PlusIcon />
+            }
+            buttonStyle={{
+              backgroundColor: null,
+            }}
+          ></Button>
+        </View>
+        <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
+          <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
+            Event's name
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            style={styles.input}
+            placeholder="Event's name"
+            onChangeText={setName}
+            value={name}
+          //placeholder="Give a name to your event"
           />
-        )}
-      </View>
+        </View>
 
-      <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
-          Event Category
-        </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setEvent}
-          value={event}
-          placeholder="Event Category"
-        />
-      </View>
+        <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
+          <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
+            Adress of the event
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setLocation}
+            value={location}
+            placeholder="Adress of the event"
+          />
+        </View>
+        <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
+          <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
+            Date
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            style={styles.input}
+            onFocus={showDatepicker}
+            onChangeText={setDate}
+            value={date.toLocaleDateString()}
+            placeholder="Date"
+            keyboardType="numeric"
+          />
+        </View>
 
-      <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
-        <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
-          Description
-        </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TextInput
-          style={styles.inputDesc}
-          onChangeText={setDesc}
-          value={desc}
-          placeholder="Description"
-        />
-      </View>
+        <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
+          <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
+            Time
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            style={styles.input}
+            onFocus={showTimepicker}
+            onChangeText={setTime}
+            value={date.toLocaleTimeString()}
+            placeholder="Time"
+            keyboardType="numeric"
+          />
+
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              onChange={onChange}
+            />
+          )}
+        </View>
+
+        <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
+          <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
+            Event Category
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setEvent}
+            value={event}
+            placeholder="Event Category"
+          />
+        </View>
+
+        <View style={{ alignItems: "flex-start", marginLeft: 15, marginTop: 10 }}>
+          <Text style={{ fontWeight: "500", fontSize: 12, opacity: 0.3 }}>
+            Description
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            style={styles.inputDesc}
+            onChangeText={setDesc}
+            value={desc}
+            placeholder="Description"
+          />
+        </View>
+
+      </ScrollView>
+
+
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          marginRight: 15,
-          marginTop: 10,
-        }}
+        style={styles.bottomBar}
       >
-        <Button
-          title="Cancel"
-          titleStyle={{ fontSize: 18, color: "#476A70" }}
-          buttonStyle={{
-            marginTop: 20,
-            marginRight: -20,
-            width: 150,
-            height: 50,
-            shadowRadius: 10,
-            backgroundColor: null,
-            borderRadius: 25,
-          }}
-          onPress={() => {
-            props.navigation.navigate("Event", { screen: "EventScreen" });
-          }}
-        />
-        <Button
-          title="Update"
-          titleStyle={{ fontSize: 18, color: "white" }}
-          buttonStyle={{
-            marginTop: 20,
-            width: 150,
-            height: 50,
-            shadowRadius: 10,
-            backgroundColor: "#476A70",
-            borderRadius: 25,
-          }}
+        <TouchableHighlight onPress={() => {
+          props.navigation.navigate("Event", { screen: "EventScreen" });
+        }} >
+          <Text
+            style={styles.buttonCancel}
+          >
+            {" "}
+            Cancel{" "}
+          </Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          style={{ marginBottom: 10 }}
           onPress={() => {
             handleEdit(name, date, location, desc, Event);
             props.navigation.navigate("Event", { screen: "EventScreen" });
           }}
-        />
+        >
+          <Text
+            style={styles.buttonCreate}
+          >
+            {" "}
+            Update Event{" "}
+          </Text>
+        </TouchableHighlight>
       </View>
+
     </View>
   );
 }
@@ -297,4 +272,37 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 10,
   },
+  buttonCreate: {
+    alignItems: "center",
+    backgroundColor: "#476A70",
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    color: "white",
+    marginLeft: 10,
+    borderRadius: 20,
+    padding: 10,
+  },
+  buttonCancel: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    color: "#011936",
+    marginLeft: 10,
+    borderRadius: 20,
+    padding: 10,
+  },
+  bottomBar: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "white",
+    padding: 20,
+  },
+  imageField: {
+    alignItems: "center",
+    margin: 10,
+    padding: 30,
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderColor: "#C5CBD3",
+    borderRadius: 20,
+  }
 });
