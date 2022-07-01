@@ -7,7 +7,9 @@ import { EventsFocused } from "./components/events-focused";
 import { MapIcon } from "./components/map-icon";
 import { MapFocused } from "./components/map-focused";
 import { Logo } from "./components/logo";
+import {Edit} from "./components/edit"
 import Search from "./components/search";
+import Header from "./components/profileHeader"
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -16,7 +18,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import token from "./reducers/token";
-import { LogBox } from "react-native";
+import { LogBox, Image, View, Text } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
 
@@ -46,8 +48,13 @@ import ForgetPassword from "./screens/ForgetPasswordScreen";
 // Import reducers
 import eventCount from "./reducers/eventCount";
 import recipeCount from "./reducers/recipeCount";
+import profilePic from "./reducers/profilePic"
 
-const store = createStore(combineReducers({ token, eventCount, recipeCount }));
+import profileBio from "./reducers/profileBio"
+
+
+const store = createStore(combineReducers({ token, eventCount, recipeCount, profilePic, profileBio }));
+
 
 // Bottom navigation
 function BottomNavigator() {
@@ -118,6 +125,27 @@ function BottomNavigator() {
   );
 }
 
+// const pour component header
+
+// const screens = {
+//   Profile: {
+//     name: "Profile",
+//     component: {Profile},
+//     options:{ 
+//       headerShown: true , 
+//       // headerTitle: props => <LogoTitle {...props} />, 
+//       headerBackTitleVisible: false,
+//       headerTitle: () => <Header />
+//     },
+//     navigationOptions : ({navigation}) => {
+//       return {
+//       headerTitle: () => <Header />
+//       }
+//     },
+//   }
+//   }
+
+
 // Main navigation component
 export default function App() {
   return (
@@ -127,7 +155,7 @@ export default function App() {
           <Stack.Screen
             name="SignIn"
             component={SignIn}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, headerBackTitleVisible: false }}
           />
           <Stack.Screen
             name="SignUp"
@@ -136,9 +164,13 @@ export default function App() {
           />
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
           <Stack.Screen
-            name="ProfileFromMenu"
+            name="Profile"
             component={Profile}
-            options={{ headerShown: true }}
+            options={{ 
+              headerShown: true ,
+              headerBackTitleVisible: false,
+              headerTitle: () => <Header />,
+            }}
           />
           <Stack.Screen
             name="RestaurantDetailScreen"

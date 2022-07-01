@@ -24,7 +24,7 @@ export default function Menu(props) {
         <Text style={styles.name}>John Doe</Text>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate("ProfileFromMenu", {
+            props.navigation.navigate("Profile", {
               screen: "Profile",
             });
           }}

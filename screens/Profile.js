@@ -8,13 +8,25 @@ import MyRecipesScreen from './MyRecipesScreen'
 
 const Tab = createMaterialTopTabNavigator();
 
+// class LogoTitle extends React.Component {
+//     render() {
+//       return (
+//         <Image
+//           source={require('../assets/favicon.png')}
+//           style={{ width: 30, height: 30 }}
+//         />
+//       );
+//     }
+//   }
 
 export default function ProfileContent() {
 
 
     return (
 
-    <Tab.Navigator style={{flex:1, justifyContent:'center'}}>
+    <Tab.Navigator style={{flex:1, justifyContent:'center'}} defaultNavigationOptions= {{
+        headerBackTitleVisible: false,
+      }} >
 
         <Tab.Screen name="Profile" component={ProfileView} />
         <Tab.Screen name="Events" component={MyEventsScreen} />
