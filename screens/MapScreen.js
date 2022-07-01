@@ -10,7 +10,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import CardSlider from "react-native-cards-slider";
 import { Card, Badge, Button } from "react-native-elements";
@@ -671,7 +670,7 @@ const styles = StyleSheet.create({
     marginRight: 3,
     marginBottom: 3,
   },
-  kmAwayText: {
+  kmAway: {
     paddingTop: 10,
     fontSize: 12,
     justifyContent: "flex-start",
