@@ -58,6 +58,7 @@ export default function Map(props) {
   var pinsAroundMe = [];
   var restaurants;
 
+
   // Load map + location on loading of the screen
   useEffect(() => {
     //? Get our location
@@ -438,7 +439,6 @@ export default function Map(props) {
     >
       {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-         
       > */}
 
       <MapView
@@ -468,6 +468,7 @@ export default function Map(props) {
 
         {eventsAroundMe}
         {pinsAroundMe}
+        
       </MapView>
       {/* </KeyboardAvoidingView> */}
 

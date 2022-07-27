@@ -4,13 +4,33 @@ import { Image } from "react-native";
 import React, { useState } from "react";
 import Carousel from "simple-carousel-react-native";
 import { Heart } from "./../components/heart";
+import { connect } from "react-redux";
 
-export default function Profile() {
+function Profile(props) {
   const [greeat, setGreeat] = useState(247);
   const [switchEventsButtonBgColor, setSwitchEventsButtonBgColor] =
     useState("#A8DD62");
   const [greeatClick, setGreeatClick] = useState(false);
   const [greatButtonBgColor, setGreeatButtonBgColor] = useState("#476A70");
+
+  let piclist;
+  console.log(props.pic)
+  piclist = props.pic.map((url, i)=> {
+    console.log('-------- image from reducer', piclist)
+    return (
+      <View style={{ borderRadius: 20 }}>
+        <Image
+       key={i}
+       source={{ uri: url}}
+       style={styles.images}
+     />
+      </View>
+       
+    );
+  });
+
+  let text = props.txt
+  console.log(text)
 
   var onPressGreat = () => {
     setGreeatClick(!greeatClick);
@@ -39,6 +59,7 @@ export default function Profile() {
           Greeats: {greeat}
           {/* //voir le onPress plus bas pour la valeur de 'greeat'  */}
         </Text>
+       
       </View>
       <View style={{ alignItems: "center", borderRadius: 15 }}>
         <Carousel
@@ -48,43 +69,15 @@ export default function Profile() {
           backgroundRadius={15}
           style={{ padding: 5 }}
         >
-          <View style={{ borderRadius: 20 }}>
-            <Image
-              source={require("../assets/profile.png")}
-              style={styles.images}
-            />
-          </View>
-
-          <View>
-            <Image
-              source={require("../assets/photo2.jpg")}
-              style={styles.images}
-            />
-          </View>
-
-          <View>
-            <Image
-              source={require("../assets/photo3.jpg")}
-              style={styles.images}
-            />
-          </View>
-
-          <View>
-            <Image
-              source={require("../assets/photo4.jpg")}
-              style={styles.images}
-            />
-          </View>
+          
+           {piclist}
+         
         </Carousel>
 
         <Text
           style={styles.bio}
         >
-          Un paragraphe est une section de texte en prose vouée au développement
-          d'un point particulier souvent au moyen de plusieurs phrases, dans la
-          continuité du précédent et du suivant. Sur le plan typographique, le
-          paragraphe est compris entre deux alinéas, qui s'analysent aussi comme
-          une « ponctuation blanche ».
+          {text}
         </Text>
 
         <Button
@@ -122,6 +115,15 @@ export default function Profile() {
   );
 }
 
+function mapStateToProps(state) {
+  // bien penser à appeler le state tel qu'il est nommé dans le store!
+  return { pic: state.profilePic, txt: state.profileBio }
+ }
+ 
+ export default connect(
+  mapStateToProps,
+  null
+ )(Profile);
 
 const styles = StyleSheet.create({
  view1:{
@@ -155,4 +157,9 @@ bio:{
   marginBottom: 20,
   marginTop: 40,
 },
+profilePic: {
+  width: 80,
+  height: 80,
+  borderRadius: 20
+}
 });
