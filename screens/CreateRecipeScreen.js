@@ -12,6 +12,9 @@ import { connect } from "react-redux";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import SelectDropdown from "react-native-select-dropdown";
 
+
+//create a new recipe in the DB
+
 const handleCreate = (
   name,
   ingredientName,
@@ -79,6 +82,7 @@ function CreateRecipe(props) {
   console.log(stepText);
 
 
+  // create field to fill with the step information 
   const addStep = () => {
     setStepCount(stepCount + 1);
 
@@ -97,6 +101,7 @@ function CreateRecipe(props) {
     return step;
   };
 
+  // create field to fill with the ingredient information 
   const addIngredient = () => {
     setIngredientCount(ingredientCount + 1);
 
@@ -156,22 +161,6 @@ function CreateRecipe(props) {
     return ingredient;
   };
 
-  var ingredientListView = ingredientList.map((ingredient, i) => {
-    return (
-      <View
-        key={i}
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ borderWidth: 1, width: "50%", margin: 5 }}>
-          {" "}
-          {ingredient.name} / {ingredient.qty} / {ingredient.unit}{" "}
-        </Text>
-      </View>
-    );
-  });
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,

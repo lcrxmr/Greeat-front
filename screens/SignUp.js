@@ -1,45 +1,44 @@
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input, Button } from 'react-native-elements';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import React, { useState } from "react";
 import { View, TextInput, Text, Dimensions, Image, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import { Button } from "react-native-elements";
 import { LogoSignin } from "./../components/logo-signin";
 
-const SignUp = (props) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [userExists, setUserExists] = useState(false);
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
-  const [listErrorsSignup, setErrorsSignup] = useState([]);
+const auth = getAuth();
 
-  var handleSubmitSignUp = async () => {
-    const data = await fetch(
-      "https://damp-mountain-22575.herokuapp.com/sign-up",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `username=${name}&email=${email}&password=${password}`,
-      }
-    );
-    const body = await data.json();
-    console.log("***********BODY", body);
+const SignUpScreen = ({ navigation }) => {
+  const [value, setValue] = React.useState({
+    email: '',
+    password: '',
+    error: ''
+  })
 
-    if (body.result == true) {
-      props.addToken(body.token);
-      props.navigation.navigate("BottomNavigator", { screen: "Map" });
-      console.log("***********BODY", body.token);
-      await AsyncStorage.setItem("token", props.token);
-    } else {
-      setErrorsSignup(body.error);
+  async function signUp() {
+    if (value.email === '' || value.password === '') {
+      setValue({
+        ...value,
+        error: 'Email and password are mandatory.'
+      })
+      return;
     }
 
-  };
-
-  var tabErrorsSignup = listErrorsSignup.map((error, i) => {
-    return <Text>{error}</Text>;
-  });
+    try {
+      await createUserWithEmailAndPassword(auth, value.email, value.password);
+      navigation.navigate('Sign In');
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message,
+      })
+    }
+  }
 
   var width = Dimensions.get("window").width; //full width
+
 
   return (
     <View
@@ -51,6 +50,8 @@ const SignUp = (props) => {
       />
 
       <LogoSignin />
+      {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
+
 
       <View
         style={{
@@ -66,71 +67,68 @@ const SignUp = (props) => {
       </View>
 
       <TextInput
-        style={styles.nameInput}
-        placeholderTextColor={"#476A70"}
-        name="NAME"
-        value={name}
-        placeholder="name"
-        autoCapitalize="words"
-        autoCorrect={false}
-        onChangeText={(val) => setName(val)}
-      />
-      <TextInput
         style={styles.mailInput}
         placeholderTextColor={"#476A70"}
         name="EMAIL"
-        value={email}
+        value={value.email}
         placeholder="email"
         autoCompleteType="email"
         keyboardType="email-address"
-        onChangeText={(val) => setEmail(val)}
+        onChangeText={(text) => setValue({ ...value, email: text })}
       />
+      {/* <Input
+        placeholder='Email'
+        containerStyle={styles.control}
+        value={value.email}
+        onChangeText={(text) => setValue({ ...value, email: text })}
+        leftIcon={<Icon
+          name='envelope'
+          size={16}
+        />}
+      /> */}
+
       <TextInput
         placeholderTextColor={"#476A70"}
         style={styles.passwordInput}
         name="PASSWORD"
-        value={password}
+        value={value.password}
         placeholder="password"
         secureTextEntry={true}
         autoComplteType="password"
-        onChangeText={(val) => setPassword(val)}
+        onChangeText={(text) => setValue({ ...value, password: text })}
       />
-
+      {/* <Input
+        placeholder='Password'
+        containerStyle={styles.control}
+        value={value.password}
+        onChangeText={(text) => setValue({ ...value, password: text })}
+        secureTextEntry={true}
+        leftIcon={<Icon
+          name='key'
+          size={16}
+        />}
+      /> */}
       <Button
         buttonStyle={styles.button}
         titleStyle={{ color: "white" }}
         title="Sign Up"
-        onPress={() => {
-          handleSubmitSignUp();
-        }}
+        onPress={signUp}
       />
 
-      {tabErrorsSignup}
 
-      <Text>
-        <Text>Already Joined? </Text>
-        <Text
-          onPress={() => props.navigation.navigate("SignIn")}
-          color="#ff2222"
-        >
-          Sign In
-        </Text>
+      <Text>Already Joined? </Text>
+      <Text
+        style={{ fontWeight: "400", fontSize: 20 }}
+
+        onPress={() => navigation.navigate("Sign In")}
+        color="#ff2222"
+      >
+        Sign In
       </Text>
+
     </View>
   );
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addToken: function (token) {
-      dispatch({ type: "addToken", token: token });
-    },
-  };
 }
-export default connect(null, mapDispatchToProps)(SignUp);
-
-
-//! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
   mainView: {
@@ -159,7 +157,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     opacity: 0.22,
-    fontColor: "#8A8C90",
+    color: "#8A8C90",
     backgroundColor: "#C5CBD3",
   },
   passwordInput: {
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     opacity: 0.22,
-    fontColor: "#8A8C90",
+    color: "#8A8C90",
     backgroundColor: "#C5CBD3",
   },
   button: {
@@ -182,3 +180,5 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
 });
+
+export default SignUpScreen;

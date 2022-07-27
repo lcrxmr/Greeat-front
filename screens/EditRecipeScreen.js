@@ -11,6 +11,8 @@ import { connect } from "react-redux";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import SelectDropdown from "react-native-select-dropdown";
 import { Card, Badge, Button } from "react-native-elements";
+import { PlusIcon } from "../components/plus-icon";
+
 
 const handleEdit = (
   recipe,
@@ -48,18 +50,6 @@ const handleEdit = (
 
   console.log(body);
 
-  /* const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&'); */
-  /* 
-      console.log('stringified' + JSON.stringify(body))
-      console.log('unstringified' + JSON.parse(JSON.stringify(body))) */
-
-  /* fetch('http://172.17.188.13:3000/create-recipe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-      body: formBody
-    }); */
 
   fetch("https://damp-mountain-22575.herokuapp.com/edit-recipe", {
     method: "PUT",
@@ -99,26 +89,6 @@ function EditRecipe(props) {
   const [stepCount, setStepCount] = useState(1);
   const [stepText, setStepText] = useState(Steps);
 
-  /*   useEffect(() => {
-        setState(temp_state)
-      }, [temp_state]) */
-
-  /* const handleNameChange = (text, index) => {
-  
-  
-      let temp_state = [...state];
-  
-      console.log(temp_state)
-  
-      let temp_element = { ...temp_state[index] };
-  
-  
-      temp_element.name = text;
-  
-      temp_state[index] = temp_element;
-  
-      return temp_state
-    } */
 
   const addStep = () => {
     setStepCount(steps.length + 1);
@@ -243,15 +213,7 @@ function EditRecipe(props) {
           <SelectDropdown
             data={["mg", "g", "mL", "L"]}
             defaultValue="mg"
-            buttonStyle={{
-              width: "100%",
-              marginTop: 10,
-              height: 40,
-              borderRadius: 20,
-              padding: 5,
-              backgroundColor: "#00000012",
-              borderColor: "white",
-            }}
+            buttonStyle={styles.dropDown}
             buttonTextStyle={{ fontSize: 14, color: "#8A8C90" }}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
@@ -292,30 +254,16 @@ function EditRecipe(props) {
         <Text style={styles.fieldName}> Images </Text>
 
         <View
-          style={{
-            alignItems: "center",
-            margin: 10,
-            padding: 30,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: "#C5CBD3",
-            borderRadius: 20,
-          }}
+          style={styles.imageField}
         >
-          <TouchableHighlight
-            onPress={() => {
-              setIngredientList([
-                ...ingredientList,
-                {
-                  name: ingredientName,
-                  qty: ingredientQty,
-                  unit: ingredientUnit,
-                },
-              ]);
+          <Button
+            icon={
+              <PlusIcon />
+            }
+            buttonStyle={{
+              backgroundColor: null,
             }}
-          >
-            <Text style={{ fontSize: 30 }}> + </Text>
-          </TouchableHighlight>
+          ></Button>
         </View>
 
         <Text style={styles.fieldName}> Recipe Name </Text>
@@ -333,15 +281,7 @@ function EditRecipe(props) {
         {ingredientList}
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 20,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: "#C5CBD3",
-            borderRadius: 20,
-          }}
+          style={styles.addField}
         >
           <Text style={{ flex: 4, margin: 5 }}> Add an ingredient </Text>
           <TouchableHighlight
@@ -361,15 +301,8 @@ function EditRecipe(props) {
         {steps}
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 20,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: "#C5CBD3",
-            borderRadius: 20,
-          }}
+          style={styles.addField}
+
         >
           <Text style={{ flex: 4, margin: 5 }}> Add a step</Text>
           <TouchableHighlight
@@ -391,16 +324,9 @@ function EditRecipe(props) {
           bottom: 10,
         }}
       >
-        <TouchableHighlight onPress={() => {}}>
+        <TouchableHighlight onPress={() => { }}>
           <Text
-            style={{
-              fontFamily: "Poppins_400Regular",
-              fontSize: 15,
-              color: "#011936",
-              marginLeft: 10,
-              borderRadius: 20,
-              padding: 10,
-            }}
+            style={styles.buttonCancel}
           >
             {" "}
             Cancel{" "}
@@ -416,13 +342,7 @@ function EditRecipe(props) {
             borderRadius: 25,
             width: "auto",
           }}
-          buttonStyle={{
-            shadowRadius: 10,
-            backgroundColor: "#476A70",
-            borderRadius: 25,
-            paddingTop: 8,
-            paddingBottom: 8,
-          }}
+          buttonStyle={styles.buttonCreate}
           titleStyle={{
             marginLeft: 20,
             marginRight: 20,
@@ -479,6 +399,53 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 10,
   },
+  dropDown: {
+    width: "100%",
+    marginTop: 10,
+    height: 40,
+    borderRadius: 20,
+    padding: 5,
+    backgroundColor: "#00000012",
+    borderColor: "white",
+  },
+  addField: {
+
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 20,
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderColor: "#C5CBD3",
+    borderRadius: 20,
+
+  },
+  buttonCreate: {
+    alignItems: "center",
+    backgroundColor: "#476A70",
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    color: "white",
+    marginLeft: 10,
+    borderRadius: 20,
+    padding: 10,
+  },
+  buttonCancel: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    color: "#011936",
+    marginLeft: 10,
+    borderRadius: 20,
+    padding: 10,
+  },
+  imageField: {
+    alignItems: "center",
+    margin: 10,
+    padding: 30,
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderColor: "#C5CBD3",
+    borderRadius: 20,
+  }
 });
 
 function mapDispatchToProps(dispatch) {

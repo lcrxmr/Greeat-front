@@ -4,6 +4,9 @@ import { Button } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileImg } from "./../components/profile-img";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { getAuth, signOut } from "firebase/auth";
+
+const auth = getAuth();
 
 const Stack = createStackNavigator();
 
@@ -57,7 +60,8 @@ export default function Menu(props) {
           titleStyle={styles.buttonTextStyle}
           title="Logout"
           onPress={() => {
-            props.navigation.navigate("SignIn", { screen: "SignIn" });
+            signOut(auth)
+            //props.navigation.navigate("SignIn", { screen: "SignIn" });
           }}
         ></Button>
       </View>

@@ -1,3 +1,6 @@
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input, Button } from 'react-native-elements';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState, useEffect } from "react";
 import {
   ScrollView,
@@ -8,84 +11,38 @@ import {
   Dimensions,
   StyleSheet,
 } from "react-native";
-import { connect } from "react-redux";
-import { Button } from "react-native-elements";
 import { LogoSignin } from "./../components/logo-signin";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function SignIn(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [userExists, setUserExists] = useState(false);
+const auth = getAuth();
 
-  const [errorsSignin, setErrorsSignin] = useState([]);
-  const [user, setUser] = useState("");
-  const [userExist, setUserExist] = useState(false);
-  // console.log(email), console.log(password);
+const SignInScreen = ({ navigation }) => {
 
-  useEffect(() => {
-    var client = AsyncStorage.getItem("token");
+  const [value, setValue] = React.useState({
+    email: '',
+    password: '',
+    error: ''
+  })
 
-    if (client) {
-      props.navigation.navigate("BottomNavigator", { screen: "Map" });
-      //
-    } else {
-      console.log("------------ no token found");
-    }
-  }, []);
-
-  // console.log(email), console.log(password);
-
-  // install reducer and connect to store
-  useEffect(() => {
-    AsyncStorage.getItem("token")
-      .then((token) => {
-        if (token) {
-          props.navigation.navigate("BottomNavigator", { screen: "Map" });
-        }
-        console.log("Token:", token);
+  async function signIn() {
+    if (value.email === '' || value.password === '') {
+      setValue({
+        ...value,
+        error: 'Email and password are mandatory.'
       })
-      .catch(console.log("No token"));
-  }, []);
-
-  var handleSubmitSignIn = async () => {
-    const data = await fetch(
-      "https://damp-mountain-22575.herokuapp.com/sign-in",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `email=${email}&password=${password}`,
-      }
-    );
-
-    const body = await data.json();
-    // console.log("**********BODY", body);
-    if (body.result == true) {
-      setUserExist(true);
-      // on fait body.user.token car body a un object user
-
-      props.navigation.navigate("BottomNavigator", { screen: "Map" });
-      // garder le user en storage local
-      AsyncStorage.setItem("token", body.user.token);
-      // console.log('******** PROPS TOKEN ***', props.token)
-    } else {
-      setErrorsSignin(body.error);
+      return;
     }
 
-    await AsyncStorage.setItem("token", props.token);
-  };
-
-  console.log("-----Error", errorsSignin);
-
-  // if (userExists) {
-  //   console.log("utilisateur existe");
-  //    props.navigation.navigate("MapScreen");
-  // };
-
-  var tabErrorsSignin = errorsSignin.map((error, i) => {
-    return <Text>{error}</Text>;
-  });
+    try {
+      await signInWithEmailAndPassword(auth, value.email, value.password);
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message,
+      })
+    }
+  }
   var width = Dimensions.get("window").width; //full width
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -98,11 +55,13 @@ function SignIn(props) {
         style={{ width: width, marginLeft: 0, marginTop: -180 }}
         source={require("../assets/MaskGroup.png")}
       />
+
       <View
         style={{ justifyContent: "center", alignItems: "center", marginTop: 0 }}
       >
         <LogoSignin />
       </View>
+
       <View
         style={{
           marginBottom: 30,
@@ -116,28 +75,53 @@ function SignIn(props) {
         </Text>
       </View>
 
+      {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
+
       <TextInput
         style={styles.mailInput}
         name="EMAIL"
         placeholder="email"
         placeholderTextColor={"#476A70"}
-        value={email}
+        value={value.email}
         // setValue={setEmail}
         autoCompleteType="email"
         keyboardType="email-address"
-        onChangeText={(val) => setEmail(val)}
+        onChangeText={(text) => setValue({ ...value, email: text })}
       />
+
+      {/* <Input
+          placeholder='Email'
+          containerStyle={styles.control}
+          value={value.email}
+          onChangeText={(text) => setValue({ ...value, email: text })}
+          leftIcon={<Icon
+            name='envelope'
+            size={16}
+          />}
+        /> */}
+
       <TextInput
         name="PASSWORD"
         placeholder="password"
         placeholderTextColor={"#476A70"}
-        value={password}
+        value={value.password}
         style={styles.passwordInput}
         // setValue={setPassword}
         secureTextEntry={true}
         autoComplteType="password"
-        onChangeText={(val) => setPassword(val)}
+        onChangeText={(text) => setValue({ ...value, password: text })}
       />
+      {/* <Input
+          placeholder='Password'
+          containerStyle={styles.control}
+          value={value.password}
+          onChangeText={(text) => setValue({ ...value, password: text })}
+          secureTextEntry={true}
+          leftIcon={<Icon
+            name='key'
+            size={16}
+          />}
+        /> */}
       <Text
         style={{
           marginTop: 5,
@@ -149,17 +133,17 @@ function SignIn(props) {
       >
         Forgot password?{" "}
       </Text>
-      <Text style={{ color: "red", marginTop: 20 }}>{tabErrorsSignin}</Text>
 
       <Button
         buttonStyle={styles.button}
         titleStyle={{ color: "white" }}
         title="Sign In"
         onPress={() => {
-          handleSubmitSignIn();
-          // props.navigation.navigate('BottomNavigator')
+          signIn
         }}
       />
+      {/*         <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
+ */}
       <View
         style={{
           marginBottom: 0,
@@ -171,33 +155,17 @@ function SignIn(props) {
         <Text
           style={{ fontWeight: "400", fontSize: 20 }}
           onPress={() =>
-            props.navigation.navigate("SignUp", { screen: "SignUp" })
+            navigation.navigate("Sign Up")
           }
           color="#ff2222"
         >
           Sign Up
         </Text>
+
       </View>
     </ScrollView>
   );
 }
-
-function mapStateToProps(state) {
-  return {
-    token: state.token,
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    addToken: function (token) {
-      dispatch({ type: "addToken", token: token });
-    },
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
-
-
-//! ---------------------- STYLES ----------------------
 
 const styles = StyleSheet.create({
   mailInput: {
@@ -208,7 +176,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     opacity: 0.22,
-    fontColor: "#8A8C90",
+    color: "#8A8C90",
     backgroundColor: "#C5CBD3",
   },
   passwordInput: {
@@ -219,7 +187,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     opacity: 0.22,
-    fontColor: "#8A8C90",
+    color: "#8A8C90",
     backgroundColor: "#C5CBD3",
   },
   button: {
@@ -231,3 +199,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
 });
+
+
+export default SignInScreen;
