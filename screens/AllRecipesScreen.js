@@ -18,7 +18,7 @@ const Tab = createMaterialTopTabNavigator();
 const handleDelete = (value) => {
   console.log(value);
 
-  fetch("https://damp-mountain-22575.herokuapp.com/delete-recipe?recipeID=" + value, {
+  fetch("http://localhost:3000/delete-recipe?recipeID=" + value, {
     method: "DELETE",
   });
 };
@@ -27,7 +27,7 @@ function Recipe(props) {
   const [myRecipeList, setMyRecipeList] = useState([]);
 
   useEffect(() => {
-    fetch("https://damp-mountain-22575.herokuapp.com/recipes")
+    fetch("http://localhost:3000/recipes")
       .then((response) => response.json())
       .then((data) => setMyRecipeList(data));
 

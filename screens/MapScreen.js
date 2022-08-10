@@ -80,14 +80,14 @@ export default function Map(props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
 
-      await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
+      await fetch("http://localhost:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,
       });
 
       var rawResponse = await fetch(
-        "https://damp-mountain-22575.herokuapp.com/nearby-places",
+        "http://localhost:3000/nearby-places",
         {
           method: "GET",
         }
@@ -98,7 +98,7 @@ export default function Map(props) {
       //? Events from back
 
       var rawEvent = await fetch(
-        "https://damp-mountain-22575.herokuapp.com/events",
+        "http://localhost:3000/events",
         {
           method: "GET",
         }

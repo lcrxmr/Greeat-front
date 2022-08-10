@@ -35,7 +35,7 @@ export default function EventDetails(props) {
     (async () => {
       //? Fetch places from backend route /nearby-places
       //setListPins([]);
-      await fetch("https://damp-mountain-22575.herokuapp.com/nearby-places", {
+      await fetch("http://localhost:3000/nearby-places", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `lat=${location.lat}&long=${location.long}`,

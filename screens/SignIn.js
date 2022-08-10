@@ -52,7 +52,7 @@ const SignInScreen = ({ navigation }) => {
       }}
     >
       <Image
-        style={{ width: width, marginLeft: 0, marginTop: -180 }}
+        style={{ width: width, marginLeft: 0, marginTop: -200 }}
         source={require("../assets/MaskGroup.png")}
       />
 
@@ -138,9 +138,7 @@ const SignInScreen = ({ navigation }) => {
         buttonStyle={styles.button}
         titleStyle={{ color: "white" }}
         title="Sign In"
-        onPress={() => {
-          signIn
-        }}
+        onPress={signIn}
       />
       {/*         <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
  */}

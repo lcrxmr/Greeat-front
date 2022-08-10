@@ -55,7 +55,7 @@ const handleCreate = (
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(body[key]))
     .join("&");
 
-  fetch("https://damp-mountain-22575.herokuapp.com/create-recipe", {
+  fetch("http://localhost:3000/create-recipe", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -51,7 +51,7 @@ const handleEdit = (
   console.log(body);
 
 
-  fetch("https://damp-mountain-22575.herokuapp.com/edit-recipe", {
+  fetch("http://localhost:3000/edit-recipe", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

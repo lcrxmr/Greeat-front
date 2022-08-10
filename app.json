@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Greeat",
-    "slug": "greeat",
+    "name": "Leafy",
+    "slug": "leafy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,14 +19,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "greeat.com"
+      "bundleIdentifier": "leafy.com"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "greeat.com"
+      "package": "leafy.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"

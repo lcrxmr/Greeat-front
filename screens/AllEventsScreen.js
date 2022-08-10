@@ -19,7 +19,7 @@ const handleDelete = (value) => {
   };
 
   fetch(
-    "https://damp-mountain-22575.herokuapp.com/delete-event?eventID=" + value,
+    "http://localhost:3000/delete-event?eventID=" + value,
     {
       method: "DELETE",
     }
@@ -30,7 +30,7 @@ function myEvents(props) {
   const [myEventList, setMyEventList] = useState([]);
 
   useEffect(() => {
-    fetch("https://damp-mountain-22575.herokuapp.com/events")
+    fetch("http://localhost:3000/events")
       .then((response) => response.json())
       .then((data) => setMyEventList(data));
 

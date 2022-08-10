@@ -18,7 +18,7 @@ const handleCreate = (name, date, location, desc) => {
   };
 
 
-  fetch("https://damp-mountain-22575.herokuapp.com/create-event", {
+  fetch("http://localhost:3000/create-event", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
