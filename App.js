@@ -6,8 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-
-
 // const pour component header
 
 // const screens = {

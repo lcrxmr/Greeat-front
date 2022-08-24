@@ -1,6 +1,8 @@
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
+import { setDoc, doc, collection, getFirestore } from "firebase/firestore";
+
 
 import React, { useState } from "react";
 import { View, TextInput, Text, Dimensions, Image, StyleSheet } from "react-native";
@@ -8,7 +10,8 @@ import { LogoSignin } from "./../components/logo-signin";
 
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
-const auth = getAuth();
+
+
 
 const SignUpScreen = ({ navigation }) => {
   const [value, setValue] = React.useState({
@@ -16,6 +19,12 @@ const SignUpScreen = ({ navigation }) => {
     password: '',
     error: ''
   })
+
+  const auth = getAuth();
+
+  //initialisation de la BDD
+  const db = getFirestore();
+
 
   async function signUp() {
     if (value.email === '' || value.password === '') {
@@ -27,8 +36,16 @@ const SignUpScreen = ({ navigation }) => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, value.email, value.password);
+      const userCredential = await createUserWithEmailAndPassword(auth, value.email, value.password);
       navigation.navigate('Sign In');
+      const user = userCredential.user;
+      console.log(userCredential)
+
+      const docRef = await setDoc(doc(db, "user", user.uid), {
+        email: user.email,
+      });
+      console.log('docRef' + docRef)
+
     } catch (error) {
       setValue({
         ...value,
